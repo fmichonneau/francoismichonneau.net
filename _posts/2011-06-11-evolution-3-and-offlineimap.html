@@ -1,0 +1,56 @@
+---
+layout: single
+title: Evolution 3 and offlineimap
+date: 2011-06-11 15:01:59.000000000 -04:00
+type: post
+published: true
+status: publish
+categories:
+- Hacking
+tags:
+- evolution
+- linux
+- ubuntu
+meta:
+  _edit_last: '1'
+  _flattr_btn_disabled: ''
+  _flattr_post_hidden: '0'
+  _flattr_post_category: images
+  _flattr_post_language: en_GB
+author:
+  login: francois
+  email: francois.michonneau@gmail.com
+  display_name: François
+  first_name: François
+  last_name: Michonneau
+---
+<p>I use <a href="https://github.com/nicolas33/offlineimap">offlineimap</a> to fetch my emails from my Gmail account. I use labels as folders, some are nested, and some contains a dot in their names. I have about 120 of them. They contain my about 30000 messages and weight about 6 Gb.</p>
+<p>After migrating to <a href="https://launchpad.net/~danilo/+archive/evolution">Evolution 3</a>, new mails that go directly in folders stopped showing up in Evolution. Further, some of my emails starting to get their labels removed on my Gmail account.</p>
+<p>As Evolution 3 stores messages in the maildir format, when you point it out to the folder where offlineimap synchronizes your emails, it starts by creating hidden folders with the same names and moves the current messages in them. So, if you start with a folder called let's say "Alerts", evolution will create a folder called ".Alerts". Your current ("cur") folder under "Alerts" will be emptied and moved in the "cur" folder under ".Alerts". The issue with this is that offlineimap interprets that you just removed the "Alerts" label to all your messages.</p>
+<p>For the labels that are nested, Evolution actually now follows the maildir standard and use the dot as a separator. For instance, a Gmail labeled called "Alerts/Comments" will become in your maildir folder ".Alerts.Comments".</p>
+<p>Furthermore, if you had a dot in the name of your label, let's say "2010.Archives", during the renaming folder process, Evolution 3 will convert this to ".2010_Archives".</p>
+<p>How to fix this and make it work again?</p>
+<ol>
+<li>First, stop offlineimap to check for your account (cancel the cron job if it's how you tell offlineimap to check your account).</li>
+<li>Second delete your <code>~/.offlineimap</code> folder so that modifications to your maildir folder are not interpreted as labels being removed.</li>
+<li>Start Evolution 3 and let it do all the renaming and moving around of your messages</li>
+<li>Close Evolution, delete all the cmeta, index and data files created by Evolution in the maildir directory</li>
+<li>Delete all the folders that used to contain your messages (after making sure that they're all empty)</li>
+<li>Edit your <code>.offlinemaprc</code> file:
+<ol>
+<li>change <code>sep=/</code> to <code>sep=.</code></li>
+<li>change your nametrans line to: <code>nametrans = lambda folder: re.sub('\s+', '', re.sub('(.+)(\\.)(.+)', '\\1_\\3', re.sub('(^.{1})', '.\\1', re.sub('.*Trash$', 'Trash', re.sub('.*Drafts$', 'Drafts', re.sub('.*Sent Mail$', 'Sent', re.sub('.*Starred$', 'Starred', re.sub('.*All Mail$', 'Archive', re.sub('^(INBOX)', ' ', folder)))))))))</code></li>
+<li>This series of regular expressions does the following:
+<ol>
+<li>Every folder gets a dot appended in the front. <code>'(^.{1})', '.\\1'</code></li>
+<li>Dots inside your labels are replaced with underscores (you'll need to change it if you have more than one dot in your labels): <code>'(.+)(\\.)(.+)', '\\1_\\3'</code></li>
+<li>All the Gmail special folders are moved to the root (i.e., "[Gmail]/Trash" becomes "Trash")</li>
+<li>The Inbox folder is moved to the root of your directory. This is done in three steps, first "INBOX" is replaced by a space <code>'^(INBOX)', ' '</code>, then a dot is appended in front (like all the other folders) and the extra trailing space is then deleted <code>'\s+', ''</code>.</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>Restart offlineimap and make sure that everything is working the way it's supposed to.</li>
+</ol>
+<p>The process was a little bumpy but I can now read my emails in Evolution again.</p>
+<p>Here you can download the full version of the <a href="http://francoismichonneau.net/wp-uploads/2011/06/exampleOfflineimaprc.txt"><code>.offlineimaprc</code></a> file.</p>

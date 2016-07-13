@@ -1,0 +1,95 @@
+---
+layout: single
+title: 'rncl: A new package to import NEXUS and Newick trees in R'
+date: 2014-12-03 13:46:55.000000000 -05:00
+type: post
+published: true
+status: publish
+categories:
+- Hacking
+tags:
+- phylobase
+- phylogenetics
+- R
+- rncl
+meta:
+  _wpcom_is_markdown: '1'
+  _edit_last: '9'
+  _wpas_done_all: '1'
+  _wpas_skip_6113480: '1'
+author:
+  login: francois
+  email: francois.michonneau@gmail.com
+  display_name: François
+  first_name: François
+  last_name: Michonneau
+---
+<p><code><a href="http://cran.r-project.org/package=rncl" title="rncl on CRAN">rncl</a></code> is now officially on CRAN. This package provides an interface with the <a href="http://phylo.bio.ku.edu/ncldocs/v2.1/funcdocs/index.html" title="the nexus class library website">NEXUS Class Library</a> (NCL). NCL, written in C++, is included in several popular phylogenetic packages including Garli. NCL is comprehensive and is intended to parse and write valid NEXUS files, and has been extended to also support Newick files. <code>rncl</code> provides an interface to this library to import phylogenetic files in R.</p>
+<h1>What are NEXUS files? What are Newick files?</h1>
+<p>NEXUS files are commonly used files in phylogenetic and can be used to represent data used to build phylogenetic trees (e.g., DNA sequence alignment), phylogenetic trees, and/or data associated with species in the tree. Each element of a NEXUS file is found in a &ldquo;block&rdquo;.</p>
+<p>The trees in NEXUS files are represented using the <a href="http://en.wikipedia.org/wiki/Newick_format" title="wikipedia article about the Newick format">Newick notation</a> (e.g., <code>((A,B),C);</code>), but typically the list of taxa are defined first in a TAXA block, and represented later in the tree with a corresponding number.</p>
+<p>NEXUS is an extension of the Newick file format. The Newick file format could represent either sequence data or trees. It was first designed in the mid-1980&#39;s and was most famously implemented in Felsenstein&#39;s PHYLIP program. NEXUS extended Newick by allowing the inclusion in a single file of both sequence and trees, and providing more flexibility by allowing programs to add additional blocks. If you are interested more in the topic, I suggest you read the <a href="http://dx.doi.org/10.1093/sysbio/46.4.590">original paper</a> by Maddison, Swofford, Maddison describing the NEXUS file format.</p>
+<h1>Why rncl?</h1>
+<p>Because NEXUS files can contain a lot information, presented several ways, writing a good parser is very difficult. The NEXUS Class Library has been developed since the early 2000&#39;s, first by <a href="http://phylogeny.uconn.edu/">Paul O. Lewis</a> and more recently by <a href="http://phylo.bio.ku.edu/content/mark-t-holder">Mark Holder</a>. Because it is mature and used by several popular programs, its implementation is comprehensive and robust.</p>
+<p>Importing NEXUS and Newick files in R is working for many cases, but is not ideal. Additionally, NCL can parse trees, and is able to deal with situations that the phylogenetic packages in R cannot deal with.</p>
+<p>Last September, I participated in the <a href="http://ropensci.org/blog/2014/08/15/open-tree-of-life-hackathon/">hackathon</a> for the Open Tree of Life. There, with <a href="http://cartwrig.ht/people/#david-j-winter">David Winter</a> and <a href="http://www-personal.umich.edu/%7Ejosephwb/">Joseph Brown</a>, we started to develop a package that interfaces with the Open Tree of Life API (<a href="https://github.com/fmichonneau/rotl">rotl</a>), and will allow users to get in R parts of the Tree of Life for them to work with. It is common for the API to return trees with singletons represented as in this example:</p>
+<p><code>(((((A)cats,B)dogs,(C,D)mammals)tetrapods)animals,E)life;</code></p>
+<p>Currently, it&#39;s difficult to read such trees in R. When using <a href="http://cran.r-project.org/package=ape">ape</a>:</p>
+<pre><code class="r">library(ape)
+singTree &lt;- &#39;(((((A)cats,B)dogs,(C,D)mammals)tetrapods)animals,E)life;&#39;
+ape::read.tree(text=singTree)
+</code></pre>
+<pre><code>## Error in if (sum(obj[[i]]$edge[, 1] == ROOT) == 1 &amp;&amp; dim(obj[[i]]$edge)[1] &gt; :
+   missing value where TRUE/FALSE needed</code></pre>
+<p><code><a href="http://cran.r-project.org/package=phytools">phytools</a></code> has a function that allows it but is slow on large trees as it has to parse characters one by one:</p>
+<pre><code class="r">library(phytools)
+phytools::read.newick(text=singTree)
+</code></pre>
+<pre><code>##
+## Phylogenetic tree with 5 tips and 6 internal nodes.
+##
+## Tip labels:
+## [1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot;
+## Node labels:
+## [1] &quot;life&quot;      &quot;animals&quot;   &quot;tetrapods&quot; &quot;dogs&quot;      &quot;cats&quot;      &quot;mammals&quot;
+##
+## Rooted; no branch lengths.
+</code></pre>
+<p><code>rncl</code> can read files with singleton without issues.</p>
+<pre><code class="r">library(rncl)
+tmpFile &lt;- tempfile()
+cat(singTree, file=tmpFile)
+rncl::read_newick_phylo(file=tmpFile)
+</code></pre>
+<pre><code>##
+## Phylogenetic tree with 5 tips and 4 internal nodes.
+##
+## Tip labels:
+## [1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot;
+## Node labels:
+## [1] &quot;life&quot;      &quot;tetrapods&quot; &quot;dogs&quot;      &quot;mammals&quot;
+##
+## Rooted; no branch lengths.
+</code></pre>
+<p>You may notice that the tree returns doesn&#39;t include the node labels associated with the singleton nodes whereas phytools does. This is because the exported function for rncl collapses the singletons before returning the object while phytools does not.</p>
+<p><code>rncl</code> is also efficient on large trees. For instance here is how the three functions perform on a 3000+ tip tree:</p>
+<pre><code class="r">library(microbenchmark)
+microbenchmark(tr_ape(), tr_phytools(), tr_rncl(), times=10)
+</code></pre>
+<pre><code>## Unit: milliseconds
+##           expr        min         lq      mean    median        uq
+##       tr_ape()  543.02340  551.91244  583.0824  572.0407  588.4832
+##  tr_phytools() 3947.90586 4029.03325 4337.5111 4168.4067 4643.2461
+##      tr_rncl()   84.62412   93.07477  103.2693  100.4018  114.4568
+##        max neval
+##   706.5012    10
+##  5069.9927    10
+##   124.0237    10
+</code></pre>
+<p>rncl is about 7 times faster than ape and 50 times faster than phytools.</p>
+<h1>rncl and phylobase</h1>
+<p>Most of the current code in rncl actually comes from the <a href="https://github.com/fmichonneau/phylobase">phylobase</a> package. Given the need to have an efficient parser for the package that will interface with the Open Tree of Life&#39;s API, it made sense to take NCL out of phylobase and have it in a package of its own. The main difference is that rncl can build the edge matrix directly from NCL outputs, and does not rely on ape&#39;s parser of newick strings, making it faster and allowing for the singleton nodes.</p>
+<p>Not having ncl inside phylobase will also make the development of phylobase easier as it will include a lot less code to be compiled. However, phylobase will remain very efficient at parsing NEXUS files that contain data associated with tips of trees but will depend on rncl to do so. These changes will be part of the next version of phylobase (0.8.0) that I am planning to release in January.</p>
+<h1>What&#39;s next?</h1>
+<p>Currently rncl only parses trees and data associated with tips in the trees. It should be relatively easy to extend it to also parse sequence data. rncl could also be used to generate NEXUS and Newick files directly from phylogenetic objects in R.</p>
+<p>In the mean time, please report bugs and request features on github where the <a href="https://github.com/fmichonneau/rncl">development of rncl</a> takes place.</p>

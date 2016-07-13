@@ -1,0 +1,109 @@
+---
+layout: single
+title: How to do UBSAN and Valgrind tests on a R package that includes C/C++ code
+  before submitting to CRAN
+date: 2014-03-23 19:59:22.000000000 -04:00
+type: post
+published: true
+status: publish
+categories:
+- Hacking
+tags:
+- R
+meta:
+  _edit_last: '9'
+  _syntaxhighlighter_encoded: '1'
+  _wpas_done_all: '1'
+  _wp_old_slug: how-to-do-ubsan-tests-on-a-r-package-that-includes-cc-code-before-submitting-to-cran
+  _wpas_skip_6113473: '1'
+  _wpas_skip_6113480: '1'
+  _wpcom_is_markdown: '1'
+author:
+  login: francois
+  email: francois.michonneau@gmail.com
+  display_name: François
+  first_name: François
+  last_name: Michonneau
+---
+<p>After a trying to submit <a href="http://cran.r-project.org/web/packages/phylobase/index.html">phylobase</a> to CRAN, I learned a lot about the quality checks that go into a package before being available to the public. Beyond the typical checks you should perform routinely during the development of your package, CRAN maintainers also check for "Memory access" in your C/C++ code. There are some indications on how to do this in the "Writing R Extensions" <a href="http://cran.r-project.org/doc/manuals/r-devel/R-exts.html#Checking-memory-access">manual</a>, but if you haven't done this before it can be a little overwhelming. I thought it would be useful to have a guide of the things you might want to check for yourself before submitting your package to CRAN, and be able to reproduce the issues CRAN maintainers might detect on your package.</p>
+<p>To run the memory addressing tests, you need to compile R with special flags. And, given that you have to compile R yourself to do this, you might as well use the latest development version, so you can check your code against it at the same time.</p>
+<p>While you are it, it will be useful to use a different compiler than the one that your "normal" R installation has so you can see how your code behaves. For instance, in my package, I didn't have any C++ dialect defined, but on CRAN, the  r-devel-linux-x86_64-debian-clang flavor used the flag c++11 which raised some warnings I didn't know about before submitting to CRAN.</p>
+<p>The complete list of flavors used by CRAN to check packages is listed here: <a href="http://cran.r-project.org/web/checks/check_flavors.html" title="CRAN check flavors">http://cran.r-project.org/web/checks/check_flavors.html</a>. As initially some issues were raised on Debian Testing with my package, (and given that I'm most familiar with Debian as I use Ubuntu), I did my testing using this flavor, but you could choose something else used by CRAN.</p>
+<h2>1. Install Debian in your Virtual Machine (I use VirtualBox for this).</h2>
+<p>Make sure you provide enough hard drive space to / during the installation (>4 Gb), as all the dependencies needed to compile R add up pretty quickly. You probably don't need to install a<br />
+desktop environment. Install <code>sudo</code>, and add the user you created (below <code><username /></code>) to the list of sudoers.<br />
+[code language="bash"]<br />
+su root<br />
+apt-get install sudo<br />
+sudo adduser &lt;username&gt; sudo<br />
+su &lt;username&gt;<br />
+[/code]</p>
+<h2>2. Switch to Debian testing.</h2>
+<p>Update your /etc/apt/sources.list (replace the Debian version name --e.g. wheezy-- with "testing"), and run<br />
+[code language="bash"]<br />
+sudo apt-get update<br />
+sudo apt-get upgrade<br />
+[/code]</p>
+<h2>3. Install needed software</h2>
+<p>[code language="bash"]<br />
+sudo apt-get install valgrind subversion r-base-dev clang-3.4 texlive-fonts-extra texlive-latex-extra<br />
+[/code]</p>
+<p>From what I understand, the older version of <code>clang</code>, which are the default even on Debian Testing as I write this, cannot deal with <code>-fsanitize=undefined</code> for packages.</p>
+<h2>4. Get latest R-devel</h2>
+<p>[code language="bash"]<br />
+svn co https://svn.r-project.org/R/trunk ~/R-devel<br />
+[/code]</p>
+<h2>5. Configure the compilation</h2>
+<p>Edit the the config.site file uncomment and choose the right options, I have successfully used:<br />
+[code language="bash"]<br />
+CC=&quot;clang -std=gnu99 -fsanitize=undefined&quot;<br />
+CFLAGS=&quot;-fno-omit-frame-pointer -Wall -pedantic -mtune=native&quot;<br />
+F77=&quot;gfortran&quot;<br />
+LIBnn=&quot;lib64&quot;<br />
+LDFLAGS=&quot;-L/usr/local/lib64 -L/usr/local/lib&quot;<br />
+CXX=&quot;clang++ -std=c++11 -fsanitize=undefined&quot;<br />
+CXXFLAGS=&quot;-fno-omit-frame-pointer -Wall -pedantic -mtune=native&quot;<br />
+FC=${F77}<br />
+[/code]</p>
+<p>Otherwise, go ahead and compile R-devel<br />
+[code language="bash"]<br />
+cd R-devel<br />
+./configure --with-x=no --without-recommended-packages<br />
+make<br />
+sudo make install<br />
+[/code]</p>
+<p>If it's not the first time you are doing this:<br />
+[code language="bash"]<br />
+make clean<br />
+[/code]</p>
+<p>JAVA is missing so <code>make</code> complains about it, but unless your package needs JAVA it should be fine.</p>
+<h2>6. Create a <code>Makevars</code> file</h2>
+<p>Create a <code>Makevars</code> file in <code>~/.R/Makevars</code> that contains:<br />
+[code language="bash"]<br />
+CC = clang -std=gnu99 -fsanitize=undefined -fno-omit-frame-pointer<br />
+CXX = clang -fsanitize=undefined -fno-omit-frame-pointer<br />
+[/code]</p>
+<h2>7. Test your package</h2>
+<p>At this stage, it should all work fine, and you can check your package using the "Undefined Behaviour Sanitizer". If your package is called "yourPackage":<br />
+[code language="bash"]<br />
+R CMD build yourPackage/<br />
+R CMD check yourPackage_0.0.1.tar.gz<br />
+[/code]</p>
+<h2>8. Check the results</h2>
+<p>If the compilation goes without any issues, the check should perform as usual.</p>
+<p>Make sure you see something like: <code>R Under development (unstable) (2014-03-23 r65264)</code> in your <code>yourPackage.Rcheck/00check.log</code> (with a recent date and a higher revision number to indicate you are actually using the latest version of R-devel).</p>
+<p>If your test files have their <code>*.Rout.save</code> counterpart then, issues will be listed in the 00check.log. Otherwise, this command should list where to look for UBSAN issues:<br />
+[code language="bash"]<br />
+grep runtime\ error yourPackage.Rcheck/tests/*.Rout -R<br />
+[/code]</p>
+<h2>9. Run the Valgrind tests</h2>
+<p>You will also want to use Valgrind to check for possible problems in your C/C++ code. First, you probably want to use on all your test files (as well as examples and vignettes) during a regular <code>R CMD check</code>:<br />
+[code language="bash"]<br />
+R CMD check --as-cran --use-valgrind yourPackage_0.0.1.tar.gz<br />
+[/code]</p>
+<p>and while you are debugging your issues, you can run it on a specific file:<br />
+[code language="bash"]<br />
+R -d valgrind --vanilla &lt; tests/myTest1.R<br />
+[/code]</p>
+<p>More details can be found in the <a href="http://cran.r-project.org/doc/manuals/r-devel/R-exts.html#Using-valgrind">R manual</a>.</p>
+<p>Feedback on this document is welcome.</p>
