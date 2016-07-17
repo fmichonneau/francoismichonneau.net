@@ -1,9 +1,57 @@
 ---
-layout: archive
+layout: splash
 author_profile: true
+header:
+  overlay_image: header_millenium.JPG
+excerpt: "Biodiversity scientist <br/> Biodiversity, Informatics, Sea cucumbers and other marine invertebrates"
+feature_row:
+  - image_path: Phyrella_mookiei_Guam_UF10336-1024x680.jpg
+    title: Phyrella mookiei
+    excerpt: "Revision of _Phyrella_ and a new species from Guam"
+    url: /phyrella-revision/
+  - image_path: 201311-GuamCukes-1024x614.jpg
+    title: The sea cucumbers from Guam
+    excerpt: "There is still a lot to learn even from a well-studied fauna."
+    url: /the-sea-cucumbers-from-guam/
+  - image_path: 2013EvolutionCover.jpg
+    title: Palm trees across Wallace's Line
+    url: /palm-tree-wallace-line/
+    excerpt: "Only a few lineages of palm trees have crossed Wallace's Line. But the ones that did diversified at higher rates."
 ---
 
+
 {% include base_path %}
+
+<p>My research interests are centered around understanding the origin, maintenance,
+and distribution of biodiversity. I am interested to understand how diversity is
+generated, how species are related to each others, and how ecological and
+historical factors shape the geographic distribution of diversity. To address
+these questions, I use integrative approaches combining molecular and
+morphological data, modern statistical and computing tools.</p>
+
+<p>I am currently a postdoctoral researcher at the Whitney Laboratory for Marine
+Bioscience at the University of Florida, where I document the diversity of
+planktonic communities using meta-barcoding. For my PhD, I investigated species
+limits and cryptic diversity in sea cucumbers, and conducted a taxonomic
+revision of a genus of small sea cucumbers. In addition to my research, I
+develop open-source software for biodiversity data, and the analysis of
+phylogenetic data in R.</p>
+
+<p>Because I believe that science would progress faster if more scientists knew
+basic programming skills, I developed my own programming course for graduate
+students (<a href="http://r-bio.github.io">R programming for biologists</a>). As
+a certified instructor and an active member of
+the <a href="https://software-carpentry.org">Software Carpentry</a>
+and <a href="https://datacarpentry.org">Data Carpentry</a> organizations, I have
+been invited to teach programming workshops in the US and in Europe.</p>
+
+<h2>Highlights from Recent Publications</h2>
+
+{% include feature_row %}
+
+<p>If you are looking for my CV, it’s here.</p>
+
+<div class="archive">
 
 <h3 class="archive__subtitle">{{ site.data.ui-text[site.locale].recent_posts }}</h3>
 
@@ -12,3 +60,4 @@ author_profile: true
 {% endfor %}
 
 {% include paginator.html %}
+</div>
