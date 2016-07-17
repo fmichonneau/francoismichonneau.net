@@ -30,7 +30,17 @@
       {% endif %}
       {% if author.email %}
         <li><a href="mailto:{{ author.email }}"><i class="fa fa-fw fa-envelope-square" aria-hidden="true"></i> {{ site.data.ui-text[site.locale].email_label }}</a></li>
+	{% endif %}
+	      {% if author.impactstory %}
+	<li><a href="https://impactstory.org/u/{{ author.impactstory }}"><i class="ai ai-impactstory" aria-hidden="true"></i> Impactstory</a></li>
       {% endif %}
+      {% if author.googlescholar %}
+	<li><a href="http://scholar.google.com/citations?user={{ author.googlescholar }}"><i class="ai ai-google-scholar fa-fw" aria-hidden="true"></i>Google Scholar</a></li>
+      {% endif %}
+      {% if author.orcid %}
+        <li><a href="http://orcid.org/{{ author.orcid }}"><i class="ai ai-orcid fa-fw" aria-hidden="true"></i>Orcid</a></li>
+      {% endif %}
+
       {% if author.keybase %}
         <li><a href="https://keybase.io/{{ author.keybase }}"><i class="fa fa-fw fa-key" aria-hidden="true"></i> Keybase</a></li>
       {% endif %}

@@ -10,7 +10,7 @@ locale                   : "en"
 title                    : "François Michonneau"
 title_separator          : "|"
 name                     : "François Michonneau"
-description              : 
+description              :
 url                      : https://fmichonneau.github.io ##https://francoismichonneau.net # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : /francoismichonneau.net #TO DELETE!!!!  # the subpath of your site, e.g. "/blog"
 gh_repo                  : https://github.com/fmichonneau/francoismichonneau.net
@@ -52,7 +52,7 @@ social:
    - "https://github.com/fmichonneau"
    - "https://twitter.com/fmic_"
    - "https://impactstory.org/fmic_"
-   - "https://plus.google.com/+FrancoisMichonneau/" 
+   - "https://plus.google.com/+FrancoisMichonneau/"
    - "https://keybase.io/fmic"
    - "http://instagram.com/fmic_/"
 
@@ -72,9 +72,9 @@ author:
   name             : "François Michonneau"
   avatar           : "michonneau.francois_square.jpg"
   bio              : "Genus: Evolutionary Biologist; Species: Biodiversity Scientist."
-  location         : "Gainesville, FL"
-  email            : 
-  uri              : 
+  location         : "University of Florida, Gainesville, FL"
+  email            : "francois.michonneau@gmail.com"
+  uri              :
   bitbucket        :
   codepen          :
   dribbble         :
@@ -82,9 +82,9 @@ author:
   facebook         :
   foursquare       :
   github           : "fmichonneau"
-  google_plus      : "FrancoisMichonneau" 
+  google_plus      :
   keybase          : "fmic"
-  instagram        : "fmic_"
+  instagram        :
   lastfm           :
   linkedin         :
   pinterest        :
@@ -97,8 +97,9 @@ author:
   weibo            :
   xing             :
   youtube          :
-  impactstory      : "fmic_"
-
+  impactstory      : "0000-0002-9092-966X"
+  googlescholar    : "6wJ8BtAAAAAJ"
+  orcid            : "0000-0002-9092-966X"
 
 # Reading Files
 include:
@@ -230,7 +231,3 @@ defaults:
     values:
       layout: single
       author_profile: true
-
-
-
-
