@@ -1,19 +1,19 @@
 ---
 layout: splash
-author_profile: true
 header:
   overlay_image: header_millenium.JPG
+  overlay_filter: 0.1
 excerpt: "Biodiversity scientist <br/> Biodiversity, Informatics, Sea cucumbers and other marine invertebrates"
 feature_row:
-  - image_path: Phyrella_mookiei_Guam_UF10336-1024x680.jpg
+  - image_path: Phyrella_mookiei_Guam_UF10336-1024x610.jpg
     title: Phyrella mookiei
     excerpt: "Revision of _Phyrella_ and a new species from Guam"
     url: /phyrella-revision/
-  - image_path: 201311-GuamCukes-1024x614.jpg
+  - image_path: 201311-GuamCukes-1024x610.jpg
     title: The sea cucumbers from Guam
-    excerpt: "There is still a lot to learn even from a well-studied fauna."
+    excerpt: "We still have a lot to learn from a well-studied fauna."
     url: /the-sea-cucumbers-from-guam/
-  - image_path: 2013EvolutionCover.jpg
+  - image_path: 2013EvolutionCover-1024x610.jpg
     title: Palm trees across Wallace's Line
     url: /palm-tree-wallace-line/
     excerpt: "Only a few lineages of palm trees have crossed Wallace's Line. But the ones that did diversified at higher rates."
@@ -22,42 +22,33 @@ feature_row:
 
 {% include base_path %}
 
-<p>My research interests are centered around understanding the origin, maintenance,
-and distribution of biodiversity. I am interested to understand how diversity is
-generated, how species are related to each others, and how ecological and
-historical factors shape the geographic distribution of diversity. To address
+<img src="{{ site.baseurl }}/images/michonneau.francois_square.jpg" width="200"
+     height="200" class="align-right"/>
+
+<p>My research interests are centered around understanding the origin,
+maintenance, and distribution of biodiversity: How is diversity generated? How
+are species related to each others? What have been the relative contributions of
+biotic and abiotic factors in shaping the distribution of diversity? To address
 these questions, I use integrative approaches combining molecular and
-morphological data, modern statistical and computing tools.</p>
+morphological data, with modern statistical and computing tools.</p>
 
 <p>I am currently a postdoctoral researcher at the Whitney Laboratory for Marine
 Bioscience at the University of Florida, where I document the diversity of
 planktonic communities using meta-barcoding. For my PhD, I investigated species
 limits and cryptic diversity in sea cucumbers, and conducted a taxonomic
 revision of a genus of small sea cucumbers. In addition to my research, I
-develop open-source software for biodiversity data, and the analysis of
-phylogenetic data in R.</p>
+develop open-source software to analyze biodiversity and phylogenetic data in
+R.</p>
 
 <p>Because I believe that science would progress faster if more scientists knew
 basic programming skills, I developed my own programming course for graduate
-students (<a href="http://r-bio.github.io">R programming for biologists</a>). As
-a certified instructor and an active member of
+students (<a href="http://r-bio.github.io">R programming for biologists</a>). I
+am also a certified instructor and an active member of
 the <a href="https://software-carpentry.org">Software Carpentry</a>
-and <a href="https://datacarpentry.org">Data Carpentry</a> organizations, I have
-been invited to teach programming workshops in the US and in Europe.</p>
+  and <a href="https://datacarpentry.org">Data Carpentry</a> organizations.</p>
+
+<p>For updates, follow me on Twitter <a href="https://twitter.com/fmic_" class="btn btn--info">@fmic_</a></p>
 
 <h2>Highlights from Recent Publications</h2>
 
 {% include feature_row %}
-
-<p>If you are looking for my CV, it’s here.</p>
-
-<div class="archive">
-
-<h3 class="archive__subtitle">{{ site.data.ui-text[site.locale].recent_posts }}</h3>
-
-{% for post in paginator.posts %}
-  {% include archive-single.html %}
-{% endfor %}
-
-{% include paginator.html %}
-</div>
