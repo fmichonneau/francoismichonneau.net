@@ -130,6 +130,7 @@ exclude:
   - tmp
   - "*.Rmd"
   - "*packrat*"
+  - "*cache/"
 keep_files:
   - .git
   - .svn
