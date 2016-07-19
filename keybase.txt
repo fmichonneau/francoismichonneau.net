@@ -1,0 +1,68 @@
+==================================================================
+https://keybase.io/fmic
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://francoismichonneau.net
+  * I am fmic (https://keybase.io/fmic) on keybase.
+  * I have a public key with fingerprint B006 8A5E 65F6 09AD 0ED3  F312 F880 00E1 0E83 70CF
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "fingerprint": "b0068a5e65f609ad0ed3f312f88000e10e8370cf",
+            "host": "keybase.io",
+            "key_id": "f88000e10e8370cf",
+            "kid": "010184b80ff2c0502ca9d38652d2789c8a30bb0b0ea2c24bdfe58d7888412cda07050a",
+            "uid": "aa44e0310f8878a9424568bed0058d19",
+            "username": "fmic"
+        },
+        "service": {
+            "hostname": "francoismichonneau.net",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1428192993,
+    "expire_in": 157680000,
+    "prev": "906409e38883f8b5144aed57b8d362cc03901c2040954cde0420aa798a9970cd",
+    "seqno": 3,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.8
+Comment: https://keybase.io/crypto
+
+yMIdAnicbZJdSBRRGIZ3LTXFQsFIikhHUAmxM/9nNihDXMIbgxTMH7YzM2d01nVm
+3Zn1Z83CMCuFfsjEoKgostJSRCIkSEXzokTtIqlEkQzqrosoRM3OSN51dTjf977P
+d96PM75zmyvenfJ5prjUPfTI/XbUG3YVp55daqJkU22kPE1UNd48NN2oxKFgSDds
+ykPJAAgQ8VjgNQFISAVYZTWWZjQIAQCYBhiyIlA0KpuqMi3HQTAysnCObpIaufh0
+lVT/o6/ebAAa0JCTIdA0RgE8YBQkqSwUeEZlRCgpELFAloEMMGIUhpNVDfNQFSGE
+HM0oKgIiMSGCC2/iEOI4DFgakIEiRBLHcLwAZawCQGy05AgtHDJQDXZeVaMrVHM2
+RSp1uoKd+E6KrW4IGYqpW0RUZRoGRuEcA9uEEAyZtqmYAaKpsu2gx0HYjUHHU49l
+3z+aT9YNlSyTGOpwyNJNg/LQRKnYuoOnOQbSEiNJbDaFG4J6CPt0R8GLgrMq4IzB
+dQQpAYEDEmZJZFaDMk9zHMIqL8pQZQVGUQArAVphABHxnKJiwDEAIVEi6SWyapVy
+8tUaJuUhk2xUSZCWXmkgOxzCVPPYSPl2lzveFRMd5XwHV3xc4tYn6W6N3cgr9Uct
+HCp7nPEsa+7lLfXXyYnMqNz8jIA4Wl80k/WJbUm1itMW75Zp10ryx2PC6Qk9KdL3
+2ygpY+1Av3/kVXkkUni6NmoK7x3s3NORklyb4FmUllcK8NNdkfzY3QHTy+vRx9OY
+4Hx/9cNB1F5/LveK3nWn1Uo8ll3yuudHWlyFVTSeG/fz3peuN5GGjc62SzHs3PnZ
+2stCb9KY/KQl/t1Eu18Y8D9wV0wnpy1MX1zNay38EFhfGerdP7ns/z2cOvXnenfy
+13Tvi/fmN++F4aN9K0UbzJF6b/Ha4UDmwX2dAwU3kldnr56JPJ8fWr95Kqljsq/t
+xPCOqY/3W5aqm/8CZckkZg==
+=oKxW
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/fmic
+
+==================================================================
+
