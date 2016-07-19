@@ -226,6 +226,7 @@ defaults:
       type: posts
     values:
       read_time: true
+      comments: true
       author_profile: true
   # _pages
   - scope:
