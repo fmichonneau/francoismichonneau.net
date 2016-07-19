@@ -2,6 +2,7 @@
 title: Using GMYC for species delineation
 author: François Michonneau
 layout: single
+excerpt: "a tutorial for doing species delineation on COI sequences with GMYC"
 permalink: /gmyc-tutorial/
 author_profile: false
 ---
@@ -9,6 +10,101 @@ author_profile: false
 
 
 
+
+
+> # About
+>
+> This tutorial was written by François Michonneau with input from [Matthieu
+> Leray](https://matthieuleray.com/) for the
+> [Marine Biodiversity Methods](http://depts.washington.edu/fhl/studentSummer2016.html#SumB-4)
+> course taught at the Friday Harbor Laboratories, University of Washington.
+>
+> This tutorial is released under a
+> [Creative Commons Attribution (CC-BY) licence](https://creativecommons.org/licenses/by/3.0/us/).
+{: .notice--primary}
+
+
+# Background
+
+To demonstrate how to use GMYC, we will use sequences from a sea cucumber
+species complex, _Holothuria impatiens_. These sequences are a simplified
+dataset from a real study that investigated this species complex to uncover that
+under the name _Holothuria impatiens_ there were at least 13 species. For the
+sake of simplicity and efficiency, we will cut some corners, especially with the
+way we build the tree on which we will run GMYC but this example will
+demonstrate how to use GMYC and will easily be adaptable to other datasets.
+
+GMYC (which stands for Generalized Mixed Yule Coalescent) is a very popular
+method that can be used to delineate species using sequence data. It uses an
+ultrametric tree and attempts to detect the transition in the tree where the
+branching pattern switches from being attributed to speciation (one lineage per
+species) to when it can be attributed to the intra-species coalescent process
+(multiple lineages per species). Therefore, for this method to work, the tree
+provided needs to be (1) fully resolved (without any mutlifurcations); (2)
+ultrametric (all the tips have the same age).
+
+One way to obtain such a tree is to use the software BEAST. This popular and
+robust software for phylogenetic inference generates ultrametric trees. BEAST
+provides a very comprehensive framework for phylogenetic inference, but we will
+use only a few set of options for our purposes. BEAST uses a Bayesian framework
+for estimating the tree, and therefore returns trees sampled from the posterior
+distribution of the possible trees. We will need to summarize these trees to
+obtain a credible tree, that in turn we will use in GMYC.
+
+Because BEAST uses a Bayesian framework, we will need to provide priors to be
+able to infer the topology and the branch lengths of the tree. Priors are an
+important component of Bayesian inference. They allow you to express your prior
+knowledge of the process you are attempting to model, reducing the number of
+options to explore, in turn maximizing your chance of getting the correct
+answer. However, deciding good priors in the case of a species delineation study
+is challenging because we need to model both processes that happen at the
+species level (speciation) and processes that happen at the population level
+(coalescent processes). Therefore, the correct choice for the priors is not
+always obvious. Methods are being developed to assess which priors are best
+suited for your data, but they are still very computationally intensive and a
+little impractical to use. In this tutorial, we will explore how the choice of
+the priors can affect the results of a GMYC analysis. We chose these examples to
+illustrate that you need to be mindful of the method you use to reconstruct the
+tree you will provide to GMYC.
+
+There are other methods that can be used to obtain an ultrametric tree. They are
+typically done once the topology has been estimated by a phylogenetic method
+that represent the expected number of substitutions as their branch lengths
+(e.g., RAxML, MrBayes). However, they tend to not be as accurate as the joint
+estimation provided by BEAST.
+
+In this tutorial, we will build 3 trees from the same DNA sequence alignment, by
+changing the priors we use with BEAST. In these 3 trees, the topologies will be
+very similar if not identical, however, the branch lengths will vary.  We will
+vary two priors:
+
+- the model used to express the expected branching pattern on the tree. We will
+  either use:
+  * a **Yule model** (also known as pure birth) in which all branching in the tree
+    can be explained by a constant speciation rate.
+  * a **Coalescent model with constant population size**. This is typically the
+    prior the most adapted to model the relationships among individuals from the
+    same species.
+- the rate of molecular evolution that we will model either as:
+  * a **constant clock** that assumes that mutations accumulates at a constant
+    rate of evolution throughout the tree. This simplistic assumption works well
+    when applied to related species, especially when a single marker is
+    involved.
+  * a **relaxed clock** that assumes that rates of molecular evolution vary over
+    the tree and are drawn from a statistical distribution. Here we will use a
+    log-normal distribution (it is similar to a normal distribution but all
+    values of the distribution are positive -- we wouldn't want to try to model
+	negative rates of molecular evolution!). This is a good model to use if your
+    tree includes many species, but you may need a lot of data to get accurate
+    estimates of the paramters for this model.
+
+We will thus build trees using:
+
+- a **Yule model** and a **constant clock** that we will refer to as `yule`
+- a **Yule model** and a **relaxed clock** that we will refer to as
+  `relaxed_clock`
+- a **Coalescent model with constant population size** and a **constant clock**
+  that we will refer to as `constant_coalescent`.
 
 
 > # Pre-requisites
@@ -30,47 +126,6 @@ author_profile: false
 > * Aligned sequences: [`impatiens.fasta`]({{ site.baseurl }}/assets/gmyc-tutorial/impatiens.fasta)
 {: .notice--info}
 
-
-# Background
-
-To demonstrate how to use GMYC, we will use sequences from a sea cucumber
-species complex, _Holothuria impatiens_. These sequences are a simplified
-dataset from a real study that investigated this species complex to uncover that
-under the name _Holothuria impatiens_ there were at least 13 species. For the
-sake of simplicity and efficiency, we will cut some corners, especially with the
-way we build the tree on which we will run GMYC but this example will
-demonstrate how to use GMYC and will easily be adaptable to other datasets.
-
-GMYC (which stands for Generalized Mixed Yule Coalescent) is a very popular
-method that can be used to delineate species from sequence data. It uses an
-ultrametric tree and attempts to detect the transition in the tree where the
-branching pattern switches from being attributed to speciation to when it can be
-attributed to the intra-species coalescent process. Therefore, for this method
-to work, the tree provided needs to be (1) fully resolved (without any
-mutlifurcations); (2) ultrametric (all the tips have the same age).
-
-One way to obtain such a tree is to use the software BEAST. This popular and
-robust software for phylogenetic inference generates ultrametric trees. BEAST
-provides a very comprehensive framework for phylogenetic inference, but we will
-use only a few set of options for our purposes. BEAST uses a Bayesian framework
-for estimating the tree, and therefore returns trees sampled from the posterior
-distribution of the possible trees. We will need to summarize these trees to
-obtain a credible tree, that we will use in GMYC.
-
-Because, BEAST uses a Bayesian framework, we will need to provide priors to be
-able to infer the topology and the branch lengths of the tree. However, deciding
-good priors in the case of a species delineation study is challenging because we
-need to model both processes that happen at the species level (speciation) and
-processes that happen at the population level (coalescent processes).
-
-There are other methods that can be used to obtain an ultrametric tree. They are
-typically done once the topology has been estimated by a phylogenetic method
-that represent the expected number of substitutions as their branch lengths
-(e.g., RAxML, MrBayes). However, they tend to not be as accurate as the joint
-estimation provided by BEAST.
-
-In this tutorial, we will demonstrate how the choice of the priors in BEAST may
-affect the number of species detected from your sequences when using GMYC.
 
 
 # Estimation of the topology with BEAST
@@ -106,10 +161,19 @@ each of the analysis we are going to carry based on the prior we will modify:
 2. `File` > `Import Alignment`
 3. Navigate to find the FASTA file for this exercise
 4. Go under the "Site Model" tab. We will use a HKY+Gamma model of molecular
-   evolution for this exercise. To do so:
-   - Change "Gamma Category Count" from 0 to 4
+   evolution for this exercise. This is a simple molecular of evolution that
+   works well for this small dataset. On more complex datasets, you may want to
+   use a tool like
+   [partitionfinder](http://www.robertlanfear.com/partitionfinder/) to identify
+   the most appropriate model of molecular evolution for your data. To do so:
+   - Change "Gamma Category Count" from 0 to 4. (Here we use 4 as it has been
+     shown to be enough to capture most of the rate variation. On more complex
+     datasets you can try to increase the number of categories to 6 or 10, see
+     [this paper](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0095722)
+	 for more information.)
    - A "Shape" dialog box will appear, click on the "estimate" check box
-   - In the "Subst Model", in the drop-down menu choose "HKY"
+   - In the "Subst Model", in the drop-down menu choose "HKY" <!-- explain why
+     we chose HKY -->
 5. Under the "Prior" tab, make sure the "Tree" parameter is set to "Yule model"
 6. Under the "MCMC" tab:
    - change the "Chain Length" from 10 million to 5 million
@@ -224,9 +288,9 @@ You will need to repeat this operation for the other 2 XML files
 > we are providing you with the output files for each of these analyses. Please
 > make sure that you save these files in their appropriate folders:
 >
-> - Yule: [yule.log]({{ site.baseurl}}/assets/yule.log){: .btn .btn--info}  [yule.trees]({{ site.baseurl}}/assets/yule.trees){: .btn .btn--success}
-> - Constant Coalescent: [constant_coalescent.log]({{ site.baseurl}}/assets/constant_coalescent.log){: .btn .btn--info}  [constant_coalescent.trees]({{ site.baseurl}}/assets/constant_coalescent.trees){: .btn .btn--success}
-> - Relaxed clock: [relaxed_clock.log]({{ site.baseurl}}/assets/relaxed_clock.log){: .btn .btn--info}  [relaxed_clock.trees]({{ site.baseurl}}/assets/relaxed_clock.trees){: .btn .btn--success}
+> - Yule: [yule.log]({{ site.baseurl}}/assets/gmyc-tutorial/yule.log){: .btn .btn--info}  [yule.trees]({{ site.baseurl}}/assets/gmyc-tutorial/yule.trees){: .btn .btn--success}
+> - Constant Coalescent: [constant_coalescent.log]({{ site.baseurl}}/assets/gmyc-tutorial/constant_coalescent.log){: .btn .btn--info}  [constant_coalescent.trees]({{ site.baseurl}}/assets/gmyc-tutorial/constant_coalescent.trees){: .btn .btn--success}
+> - Relaxed clock: [relaxed_clock.log]({{ site.baseurl}}/assets/gmyc-tutorial/relaxed_clock.log){: .btn .btn--info}  [relaxed_clock.trees]({{ site.baseurl}}/assets/gmyc-tutorial/relaxed_clock.trees){: .btn .btn--success}
 {: .notice--warning}
 
 ## Visualizing the posterior with Tracer
@@ -280,9 +344,12 @@ produce a summary tree.
 > If you had trouble generating the trees with treeannotator, you can download
 > the summarized trees below
 >
-> - Yule:
-> - Constant Coalescent
-> - Relaxed Clock
+> - Yule: [yule_tree.nex]({{ site.baseurl
+> }}/assets/gmyc-tutorial/yule_tree.nex){: .btn .btn--info}
+> - Constant Coalescent: [constant_coalescent_tree.nex]({{ site.baseurl
+> }}/assets/gmyc-tutorial/constant_coalescent_tree.nex){: .btn .btn--info}
+> - Relaxed Clock: [relaxed_coalescent_tree.nex]({{ site.baseurl
+> }}/assets/gmyc-tutorial/relaxed_clock_tree.nex){: .btn .btn--info}
 {: .notice--warning}
 
 
@@ -364,7 +431,7 @@ summary(yule_gmyc)
 
 The first couple of lines of this summary list the likelihood score of the model
 that consider that all the sequences belong to the same species, and then the
-likelihood score of the model that split the sequences into different
+likelihood score of the model that splits the sequences into different
 species. In our case, it is highly significant, indicating that there is
 probably more than one species in our sample.
 
@@ -372,44 +439,106 @@ The output then lists how many clusters, and entities, are associated with the
 highest likelihood score. In our case, the results are the same for both,
 indicating that all the species infered by GMYC are represented by at least 2
 sequences. If some of the infered species had only 1 sequence, the numbers of
-entity would be greater than the number of clusters.
+entities would be greater than the number of clusters.
 
 The last line indicates the threshold time. This is the time at which the model
 infers that the threshold transitioning from the speciation-level events to the
 coalescent-level events takes place. In our analysis, we didn't calibrate our
-tree, and therefore the unit of this time is not meaningful. However, if you use
-this method on a tree that is properly calibrated, the location of this
+tree, and therefore the unit of this value is not meaningful. However, if you
+use this method on a tree that is properly calibrated, the location of this
 threshold could be interpreted in a biological context.
 
 Note that when GMYC tries to estimate the location of the threshold, the tree is
 scaled such that its total length is equal to 1. Therefore, the amount of time
 elapsed represented by the phylogeny does not influence the number of species
-recovered by this analysis. The value given for the threshold is however
-converted back into the original time-scale to be interpreted.
+recovered by this analysis. The value given for the threshold in the results is
+however converted back into the original time-scale to be interpreted.
 
-The GMYC method provides plotting functions that show (1) the number of lineages
-through time, with a red vertical line showing the infered position of the
-threshold; (2) the profile of the likelihood through time; (3) the tree with the
-individual clusters highlighted in red.
+The R package that provides the GMYC method comes with plotting functions that
+show (1) the number of lineages through time, with a red vertical line showing
+the infered position of the threshold; (2) the profile of the likelihood through
+time; (3) the tree with the individual clusters highlighted in red. To see these
+plots, use the command below. You'll need to hit "Enter" on your keyboard to see
+the next plot:
 
 
 ```r
-plot(yule_gmyc, ask=FALSE)
+plot(yule_gmyc)
 ```
 
 ![plot of chunk yule-plot-diagnostics]({{ site.baseurl }}/assets/gmyc-tutorial/gmyc_yule-plot-diagnostics-1.png)
 
-You may want to use `plot(yule_gmyc)` at your terminal to get larger plots.
+Based on the trees alone, it can be difficult to figure out which samples are
+assigned to which species. To make this easier, the package has the function
+`spec.list()` that returns a 2-column table: the first column lists the species
+number as infered from GMYC, and the second column the sample identifier:
+
+
+```r
+spec.list(yule_gmyc)
+```
+
+```
+##    GMYC_spec   sample_name
+## 1          1         S0214
+## 2          1         C0202
+## 3          1         C0203
+## 4          1 FLMNH_043_G07
+## 5          1         N1156
+## 6          1 FLMNH_043_B09
+## 7          1 FLMNH_080_B04
+## 8          1 FLMNH_080_E05
+## 9          1         N1158
+## 10         1 FLMNH_043_A06
+## 11         1         N1155
+## 12         1         X0049
+## 13         1 FLMNH_094_B05
+## 14         1 FLMNH_036_B06
+## 15         1         X0036
+## 16         1         S0466
+## 17         1         S0459
+## 18         1         X0048
+## 19         1         X0035
+## 20         1         N0485
+## 21         1 FLMNH_036_C07
+## 22         1         S0467
+## 23         1 FLMNH_094_B03
+## 24         1 FLMNH_043_D11
+## 25         1         S0468
+## 26         1         S0417
+## 27         1         N0126
+## 28         1         S0460
+## 29         1 FLMNH_036_G11
+## 30         1 FLMNH_036_D07
+## 31         1         N0555
+## 32         1         N0124
+## 33         1         S0458
+## 34         1         S0449
+## 35         1         X0038
+## 36         2 FLMNH_112_G06
+## 37         2         J0419
+## 38         2         S0441
+## 39         2         G0108
+## 40         2         S0072
+## 41         3         N1168
+## 42         3         N1162
+## 43         3         N1167
+## 44         4         N1165
+## 45         4         N0583
+## 46         4         N1163
+## 47         4         N0584
+## 48         4         N1164
+```
 
 A final check to do on the results, is to plot the "support" for the delineated
 species. It can give an indication on whether you can trust the results or not.
 
 
 ```r
-yule_support <- gmyc.support(yule_gmyc) ## estimate support
-is.na(yule_support[yule_support == 0]) <- TRUE ## only show values for affected nodes
-plot(yule_tr, cex=.6, no.margin=TRUE)
-nodelabels(round(yule_support, 2), cex=.7)
+yule_support <- gmyc.support(yule_gmyc)        # estimate support
+is.na(yule_support[yule_support == 0]) <- TRUE # only show values for affected nodes
+plot(yule_tr, cex=.6, no.margin=TRUE)          # plot the tree
+nodelabels(round(yule_support, 2), cex=.7)     # plot the support values on the tree
 ```
 
 ![plot of chunk yule-support]({{ site.baseurl }}/assets/gmyc-tutorial/gmyc_yule-support-1.png)
@@ -420,6 +549,8 @@ there are multiple candidate nodes where the threshold could also be located,
 indicating that we might be dealing with more than one species within this
 cluster.
 
+
+
 > # Your turn
 > Re-use and modify the code we used to analyze the results of the tree infered
 > using the Yule prior on the other two trees.
@@ -428,3 +559,11 @@ cluster.
 > - How does the choice of the prior affect the branch lengths in the tree, in
 > turn affect the number of species infered?
 {: .notice--success}
+
+
+<!--- FIXME: add concluding paragraph, that ties back to the biological context -->
+<!--of this example: how many species are really in this sample? -->
+
+<!-- FIXME: add citations for GMYC, tell that the multiple threshold is not -->
+<!-- better, that you need to be careful to interpret this data without other -->
+<!-- biological information. -->
