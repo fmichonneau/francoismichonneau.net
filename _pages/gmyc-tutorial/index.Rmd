@@ -44,7 +44,7 @@ knitr::opts_chunk$set(fig.path = "../../assets/gmyc-tutorial/gmyc_",
 > course taught at the Friday Harbor Laboratories, University of Washington.
 >
 > This tutorial is released under a
-> [Creative Commons Attribution (CC-BY) licence](https://creativecommons.org/licenses/by/3.0/us/).
+> [Creative Commons Attribution (CC-BY) license](https://creativecommons.org/licenses/by/3.0/us/).
 {: .notice--primary}
 
 
@@ -120,7 +120,7 @@ vary two priors:
     values of the distribution are positive -- we wouldn't want to try to model
 	negative rates of molecular evolution!). This is a good model to use if your
     tree includes many species, but you may need a lot of data to get accurate
-    estimates of the paramters for this model.
+    estimates of the parameters for this model.
 
 We will thus build trees using:
 
@@ -334,11 +334,12 @@ between runs.
 Tracer shows the mean values for the parameters used to infer the phylogeny. For
 the purpose of this tutorial we don't need to get into the detail of what these
 numbers mean. However, an important source of information from this table are
-the values in the ESS column. They indicate whether or not you can be confident
-that the values for the parameters are accurate. For an analysis that you aim at
+the values in the ESS (Estimated Sample Sizes) column. They indicate whether or
+not you can be confident that the values for the parameters are
+accurate. For an analysis that you aim at
 publishing, all the ESS values should be > 200. If they are not, it means that
 you should run your analysis longer (include more steps in your MCMC), or it
-might reflect an issue with your analysis such as over-parametrisation.
+might reflect an issue with your analysis such as over-parametrization.
 
 > # Your turn:
 >
@@ -350,7 +351,7 @@ might reflect an issue with your analysis such as over-parametrisation.
 Now that we confirmed that our analysis were adequate, we can summarize the
 trees that have been samples from the posterior distribution into a single tree
 that we can visualize. To do so, we will use the `treeannotator` program. We
-will use the command line as it provides more flexbility. We need to run
+will use the command line as it provides more flexibility. We need to run
 `treeannotator` for each of the 3 analyses:
 
 ```{bash, eval=FALSE}
@@ -380,7 +381,7 @@ We can now visualize the trees obtained for each of these priors. To do so, we
 will use Figtree.
 
 Start Figtree, and open the files generated with `treeannotator` (with the
-`.nex` extention): `File` > `Open`.
+`.nex` extension): `File` > `Open`.
 
 > # Your turn
 >
@@ -392,7 +393,7 @@ Start Figtree, and open the files generated with `treeannotator` (with the
 
 Now that we have our tree files, we can analyze them using GMYC.
 
-## Gettting ready: installing the packages we'll use
+## Getting ready: installing the packages we'll use
 
 Before we can use GMYC, we need to install a few packages that will allow us to
 read the trees we generated in R, and do the actual GMYC analysis. Start R, and
@@ -422,7 +423,7 @@ relclock_gmyc <- gmyc(relclock_tr)
 ```
 
 We can use the function `summary()` on the results of these analyses to see how
-many species are found. Let's start with the tree infered using a Yule prior:
+many species are found. Let's start with the tree inferred using a Yule prior:
 
 ```{r}
 summary(yule_gmyc)
@@ -436,8 +437,8 @@ probably more than one species in our sample.
 
 The output then lists how many clusters, and entities, are associated with the
 highest likelihood score. In our case, the results are the same for both,
-indicating that all the species infered by GMYC are represented by at least 2
-sequences. If some of the infered species had only 1 sequence, the numbers of
+indicating that all the species inferred by GMYC are represented by at least 2
+sequences. If some of the inferred species had only 1 sequence, the numbers of
 entities would be greater than the number of clusters.
 
 The last line indicates the threshold time. This is the time at which the model
@@ -455,7 +456,7 @@ however converted back into the original time-scale to be interpreted.
 
 The R package that provides the GMYC method comes with plotting functions that
 show (1) the number of lineages through time, with a red vertical line showing
-the infered position of the threshold; (2) the profile of the likelihood through
+the inferred position of the threshold; (2) the profile of the likelihood through
 time; (3) the tree with the individual clusters highlighted in red. To see these
 plots, use the command below. You'll need to hit "Enter" on your keyboard to see
 the next plot:
@@ -471,7 +472,7 @@ plot(yule_gmyc, ask=FALSE)
 Based on the trees alone, it can be difficult to figure out which samples are
 assigned to which species. To make this easier, the package has the function
 `spec.list()` that returns a 2-column table: the first column lists the species
-number as infered from GMYC, and the second column the sample identifier:
+number as inferred from GMYC, and the second column the sample identifier:
 
 ```{r yule-species-list}
 spec.list(yule_gmyc)
@@ -495,12 +496,12 @@ within this cluster.
 
 
 > # Your turn
-> Re-use and modify the code we used to analyze the results of the tree infered
+> Re-use and modify the code we used to analyze the results of the tree inferred
 > using the Yule prior on the other two trees.
 >
 > - How many species do you think we are dealing with?
 > - How does the choice of the prior affect the branch lengths in the tree, in
-> turn affect the number of species infered?
+> turn affect the number of species inferred?
 {: .notice--success}
 
 
@@ -534,8 +535,8 @@ published last week (Kapli et al 2016) seems promising.
 
 What about the sea cucumbers used in this tutorial? The dataset includes 4
 species that are part of the _Holothuria impatiens_ species complex. To learn
-more about this species complex and how GMYC was used to reveal these species,
-speciesyou can read my paper on it (Michonneau 2015).
+more about this species complex and how GMYC was used to reveal them,
+you can read my paper on it (Michonneau 2015).
 
 <div class="notice--primary">
 
