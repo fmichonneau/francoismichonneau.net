@@ -5,6 +5,11 @@ layout: single
 excerpt: "a tutorial for doing species delineation on COI sequences with GMYC"
 permalink: /gmyc-tutorial/
 author_profile: false
+date: 2016-07-20
+comments: true
+sidebar:
+  - title: Feedback?
+    text: "Please report issues or suggestions [here](https://github.com/fmichonneau/francoismichonneau.net/issues/new?title=[GMYC-tutorial])"
 ---
 
 
@@ -223,7 +228,7 @@ In BEAUTI:
 
 At this stage your folder should look like this:
 
-![]({{ site.baseurl }}/assets/gmyc-tutorial/gmyc_file_organization.png)
+![]({{ site.baseurl }}/assets/gmyc-tutorial/gmyc_file_organization.png){: .align-center}
 
 It is also a good idea to make sure that each one of your XML files are correct,
 so you may want to open them again in BEAUTI to check that all the parameters
@@ -466,7 +471,7 @@ the next plot:
 plot(yule_gmyc)
 ```
 
-![plot of chunk yule-plot-diagnostics]({{ site.baseurl }}/assets/gmyc-tutorial/gmyc_yule-plot-diagnostics-1.png)
+<img src="{{ site.baseurl }}/assets/gmyc-tutorial/gmyc_yule-plot-diagnostics-1.png" title="plot of chunk yule-plot-diagnostics" alt="plot of chunk yule-plot-diagnostics" class="align-center" />
 
 Based on the trees alone, it can be difficult to figure out which samples are
 assigned to which species. To make this easier, the package has the function
@@ -541,14 +546,13 @@ plot(yule_tr, cex=.6, no.margin=TRUE)          # plot the tree
 nodelabels(round(yule_support, 2), cex=.7)     # plot the support values on the tree
 ```
 
-![plot of chunk yule-support]({{ site.baseurl }}/assets/gmyc-tutorial/gmyc_yule-support-1.png)
+<img src="{{ site.baseurl }}/assets/gmyc-tutorial/gmyc_yule-support-1.png" title="plot of chunk yule-support" alt="plot of chunk yule-support" class="align-center" />
 
-For this particular example, it shows that GMYC is confident for the 3
-delineated species at the top (all have values of 1), but for the other one,
-there are multiple candidate nodes where the threshold could also be located,
-indicating that we might be dealing with more than one species within this
-cluster.
-
+For this particular example, it shows that GMYC confidently delineates the 3
+putative species at the top of the tree (all have support values of 1), but for
+the other one, there are multiple candidate nodes where the threshold could also
+be located, indicating that we might be dealing with more than one species
+within this cluster.
 
 
 > # Your turn
@@ -561,9 +565,67 @@ cluster.
 {: .notice--success}
 
 
-<!--- FIXME: add concluding paragraph, that ties back to the biological context -->
-<!--of this example: how many species are really in this sample? -->
+# Epilogue
 
-<!-- FIXME: add citations for GMYC, tell that the multiple threshold is not -->
-<!-- better, that you need to be careful to interpret this data without other -->
-<!-- biological information. -->
+The main goal of this tutorial is to illustrate that while GMYC is easy to use,
+the tree used as input in this method can affect the results. It is therefore
+important to be careful of choosing a method that will give the most accurate
+tree for your species complex such that GMYC can delineate species more
+accurately. Many factors can affect the branch lengths of your tree, and
+therefore the number of species that GMYC will estimate. Besides the ones
+covered in this tutorial, taxon sampling and the number of individuals sampled
+for each species can affect the results.
+
+* Adding more distantly related species (e.g., outgroups) in the tree will tend
+  to compress the coalescent events towards the tips of the trees, making closely
+  related species more difficult to distinguish for GMYC.
+* If many sequences from a species are sampled, the likelihood of recovering
+  rare, divergent haplotypes increases. These sequences could end up being
+  interpreted as additional species by GMYC.
+
+The GMYC method was initially published in 2006 (Pons et al 2006). A few years
+later, an extension of it, that estimates multiple thresholds on the tree was
+developed (Monaghan et al. 2009). However, the multiple-thresholds approach
+tends to overestimate the number of delineated species, and generally performs
+poorly (Fujisawa & Barraclough 2013). A Bayesian extension of GMYC has also been
+developed (Reid & Carsen 2012). More recently, new methods using a different
+approach have emerged, and are worth testing on your datasets. For instance,
+mPTP (that has a webserver at: <http://mptp.h-its.org/#/tree>) that was just
+published last week (Kapli et al 2016) seems promising.
+
+What about the sea cucumbers used in this tutorial? The dataset includes 4
+species that are part of the _Holothuria impatiens_ species complex. To learn
+more about this species complex and how GMYC was used to reveal these species,
+speciesyou can read my paper on it (Michonneau 2015).
+
+<div class="notice--primary">
+
+# References
+
+* Fujisawa, T., and T. G. Barraclough. 2013. Delimiting species using
+  single-locus data and the generalized mixed yule coalescent approach: a
+  revised method and evaluation on simulated data sets. Syst. Biol. 62:707–24.
+
+* Pons, J., T. Barraclough, J. Gomez-Zurita, A. Cardoso, D. Duran, S. Hazell,
+  S. Kamoun, W. Sumlin, and A. Vogler. 2006. Sequence-Based Species Delimitation
+  for the DNA Taxonomy of Undescribed Insects. Syst. Biol. 55:595–609.
+
+* Monaghan, M. T., R. Wild, M. Elliot, T. Fujisawa, M. Balke, D. J. G. Inward,
+  D. C. Lees, R. Ranaivosolo, P. Eggleton, T. G. Barraclough, and
+  A. P. Vogler. 2009. Accelerated species inventory on Madagascar using
+  coalescent-based models of species delineation. Syst. Biol. 58:298–311.
+
+* Kapli, P., S. Lutteropp, J. Zhang, K. Kobert, P. Pavlidis, and
+  T. Flouri. 2016. Multi-rate Poisson Tree Processes for single-locus species
+  delimitation under Maximum Likelihood and Markov Chain Monte
+  Carlo. bioRxiv. doi: 10.1101/063875
+
+* Michonneau, F. 2015. Cryptic and not-so-cryptic species in the complex
+  _Holothuria (Thymiosycia) impatiens_ (Forsskal, 1775) (Echinodermata:
+  Holothuroidea). bioRxiv, doi: 10.1101/014225.
+
+* Reid, N. M., and B. C. Carstens. 2012. Phylogenetic estimation error can
+  decrease the accuracy of species delimitation: a Bayesian implementation of
+  the general mixed Yule-coalescent model. BMC Evol. Biol. 12:196.
+
+</div>
