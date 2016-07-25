@@ -1,27 +1,14 @@
 ---
-layout: single
-title: Photos
-date: 
-type: page
-published: true
-status: publish
+layout: archive
+title: "Photos"
 permalink: /photos/
-categories: []
-tags: []
-meta:
-  _wp_page_template: default
-  _edit_last: '9'
-  _flattr_post_language: en_GB
-  _flattr_post_category: images
-  _flattr_post_hidden: '0'
-  _flattr_btn_disabled: ''
-author:
-  login: francois
-  email: francois.michonneau@gmail.com
-  display_name: François
-  first_name: François
-  last_name: Michonneau
+author_profile: false
 ---
-<div style="float:right; margin-left:1em; margin-right: -2em;"><a class="FlattrButton" style="display:none;" href="http://francoismichonneau.net/photos"></a></div>
-<p>Click on the thumbnails below to explore the galleries. All the pictures are released under a Creative Commons licence, which means that you can download and use my photographies for free -- as long as you credit me as the author.</p>
-<p>KPICASA_GALLERY(TerrestrialArthropods, Fishes, Echinoidea, Asteroidea, Crinoidea, Holothuroidea, Ophiuroidea, Cnidaria, Mollusca, Annelida, DaintreeRainforestNationalPark, FloridaWildlife, Butterflies, MarineArthropods, Ectoprocta, Urochordata, WormsOtherThanAnnelida, AxolotlAmbystomaMexicanum)</p>
+
+{% include base_path %}
+
+<div class="grid__wrapper">
+  {% for post in site.photos %}
+    {% include archive-single.html type="grid" %}
+  {% endfor %}
+</div>

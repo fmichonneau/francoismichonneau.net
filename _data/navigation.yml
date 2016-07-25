@@ -14,3 +14,6 @@ main:
 
   - title: "Students"
     url: /students/
+
+  - title: "Photos"
+    url: /photos/
