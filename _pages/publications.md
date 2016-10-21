@@ -55,7 +55,7 @@ I strive to make all the outputs from my research accessible. Below, in addition
     [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF file]({{ site.baseurl}}/articles/Hart+2016.pdf){: .btn .btn--small .btn--warning}
 
 * **Invertébrés benthiques des Marquises, les Echinodermes** <i class="fa fa-unlock-alt" aria-hidden="true" style="color:#62c462"></i><br>
-  Paulay G., Michonneau F., Starmer J., Evans N. (Salvat B., ed) *in* Biodiversité terrestre et marine des îles Marquises, Polynésie française. Galzin R., Duron S.-D., Meyer J.-Y. (eds). Paris: Société française d'Ichtyologie. 526 pages.
+  Paulay G., Michonneau F., Starmer J., Evans N. (Salvat B., ed) *in* Biodiversité terrestre et marine des îles Marquises, Polynésie française. Galzin R., Duron S.-D., Meyer J.-Y. (eds). Paris: Société française d'Ichtyologie. 526 pages.<br>
    [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF file]({{ site.baseurl}}/articles/Salvat+2016.pdf){: .btn .btn--small .btn--warning}
 
 
