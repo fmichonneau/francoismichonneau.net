@@ -1,0 +1,17 @@
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+.jekyll-metadata
+.sass-cache
+_asset_bundler_cache
+_site
+codekit-config.json
+node_modules
+npm-debug.log*
+*packrat/
+_pages/gmyc-tutorial/yule/*
+_pages/gmyc-tutorial/constant_coalescent/*
+_pages/gmyc-tutorial/relaxed_clock/*
+_pages/gmyc-tutorial/cache/*
+*.Rprofile
+*.Rhistory

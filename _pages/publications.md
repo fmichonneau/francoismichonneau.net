@@ -49,6 +49,7 @@ I strive to make all the outputs from my research accessible. Below, in addition
 
 * **Ten Simple Rules for Digital Data Storage** <i class="fa fa-unlock" aria-hidden="true" style="color: #f89406"></i> <br>
   Hart T., Barmby P., LeBauer D.,  Michonneau F.,  Mount S., Mulrooney P., Poisot T., Woo K.H., Zimmerman N. B., Hollister J.<br>
+  *PLOS Computational Biology*<br>
   [<i class="fa fa-book" aria-hidden="true"></i> Journal](https://doi.org/10.1371/journal.pcbi.1005097){: .btn .btn--small .btn--danger}
   [<i class="fa fa-file-text-o" aria-hidden="true"></i> Preprint](https://doi.org/10.7287/peerj.preprints.1448v2){: .btn .btn--small}
   [<i class="fa fa-github" aria-hidden="true"></i> GitHub Repository](https://github.com/emhart/10-simple-rules-data-storage){: .btn .btn--small .btn--info}
