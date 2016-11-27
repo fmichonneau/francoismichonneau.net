@@ -36,7 +36,7 @@ I strive to make all the outputs from my research accessible. Below, in addition
 
 
 * **Cryptic and not-so-cryptic species in the complex <em>Holothuria (Thymiosycia) impatiens</em> (Forsskal, 1775) (Echinodermata: Holothuroidea)** <i class="fa fa-unlock" aria-hidden="true" style="color: #f89406"></i><br>
-   Michonneau F<br>
+   Michonneau F.<br>
    [<i class="fa fa-file-text-o" aria-hidden="true"></i> Preprint](https://doi.org/10.1101/014225){: .btn .btn--small}
 
 * **More than meets the eye: diversity and geographic patterns in sea cucumbers** <i class="fa fa-unlock" aria-hidden="true" style="color: #f89406"></i><br>
