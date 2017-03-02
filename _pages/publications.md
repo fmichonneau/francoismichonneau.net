@@ -46,7 +46,7 @@ I strive to make all the outputs from my research accessible. Below, in addition
 
 ## 2017
 
-* **Molecular phylogeny of Didemnidae (Ascidiacea: Tunicata)**
+* **Molecular phylogeny of Didemnidae (Ascidiacea: Tunicata)** <br>
    da Silva Oliveira F. A., Michonneau F., da Cruz Lotufo T. <br>
    *Zoological Journal of the Linnean Society*<br>
   [<i class="fa fa-book" aria-hidden="true"></i> Journal]({{ page.doi }}/10.1093/zoolinnean/zlw002){: .btn .btn--small .btn--danger}
