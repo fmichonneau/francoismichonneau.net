@@ -1,10 +1,12 @@
 ---
 layout: single
-title: "Demonstration of `tidytext` using Darwin's \"On the Origins of Species\"."
+title: "Demonstration of `tidytext` using Darwin's \"On the Origin of Species\"."
 date: 2017-04-17
 type: post
 published: true
-categories: ["Teaching", "Hacking"]
+categories: ["Hacking"]
+tags: ["R", "Demonstration", "tidytext"]
+excerpt: "A short demonstration of the R package tidytext using the 1st edition of 'the Origin of Species'."
 ---
 
 
@@ -12,7 +14,7 @@ categories: ["Teaching", "Hacking"]
 > This post is an extended version of what I put together for
 > the
 > [Gainesville R User Group](https://www.meetup.com/R-Users-Group-Gainesville-FL/) meetup
-> of April 4th, 2017.
+> of April 4th, 2017. The Rmd file for this post is on [GitHub](https://github.com/fmichonneau/francoismichonneau.net/blob/gh-pages/_posts/2017-04-17-tidytext-origins-of-species.Rmd)
 
 We are going to use the "Origin of Species" (1st edition, published in 1859) to explore some of the functionalities of the `tidytext` package. Most of the code used here is coming from the book written by the authors of the package, Julia Silge & David Robinson: "[Text Mining with R](http://tidytextmining.com/)". I encourage you to read the book if you want to learn more about this topic. It's really clear and entertaining to read!
 
@@ -469,29 +471,31 @@ sessionInfo()
 ## [1] stats     graphics  grDevices datasets  utils     methods   base     
 ## 
 ## other attached packages:
-##  [1] gdtools_0.1.4         gutenbergr_0.1.2.9000 hrbrthemes_0.1.0     
-##  [4] purrr_0.2.2           stringr_1.2.0         tidyr_0.6.1          
-##  [7] ggplot2_2.2.1         readr_1.1.0           dplyr_0.5.0          
-## [10] tidytext_0.1.2        svglite_1.2.0         devtools_1.12.0      
+##  [1] gutenbergr_0.1.2.9000 hrbrthemes_0.1.0      stringr_1.2.0        
+##  [4] dplyr_0.5.0           purrr_0.2.2           readr_1.1.0          
+##  [7] tidyr_0.6.1           tibble_1.3.0          ggplot2_2.2.1        
+## [10] tidyverse_1.1.1       tidytext_0.1.2        devtools_1.12.0      
 ## [13] BiocInstaller_1.24.0 
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] clisymbols_1.1.0  reshape2_1.4.2    lattice_0.20-35  
-##  [4] colorspace_1.3-2  SnowballC_0.5.1   XML_3.98-1.6     
-##  [7] foreign_0.8-67    withr_1.0.2       DBI_0.6          
-## [10] selectr_0.3-1     hunspell_2.3      fortunes_1.5-4   
-## [13] plyr_1.8.4        munsell_0.4.3     gtable_0.2.0     
-## [16] rvest_0.3.2       psych_1.7.3.21    evaluate_0.10    
-## [19] memoise_1.0.0     labeling_0.3      knitr_1.15.1     
-## [22] extrafont_0.17    curl_2.4          parallel_3.3.3   
-## [25] highr_0.6         triebeard_0.3.0   urltools_1.6.0   
-## [28] Rttf2pt1_1.3.4    broom_0.4.2       tokenizers_0.1.4 
-## [31] Rcpp_0.12.10      scales_0.4.1      mnormt_1.5-5     
-## [34] hms_0.3           digest_0.6.12     stringi_1.1.3    
-## [37] grid_3.3.3        foghorn_0.4.2     tools_3.3.3      
-## [40] magrittr_1.5      lazyeval_0.2.0    tibble_1.3.0     
-## [43] janeaustenr_0.1.4 crayon_1.3.2      extrafontdb_1.0  
-## [46] Matrix_1.2-8      xml2_1.1.1        assertthat_0.2.0 
-## [49] httr_1.2.1.9000   R6_2.2.0          nlme_3.1-131     
-## [52] git2r_0.18.0      compiler_3.3.3
+##  [1] Rcpp_0.12.10      lubridate_1.6.0   lattice_0.20-35  
+##  [4] clisymbols_1.1.0  assertthat_0.2.0  digest_0.6.12    
+##  [7] psych_1.7.3.21    R6_2.2.0          plyr_1.8.4       
+## [10] evaluate_0.10     httr_1.2.1.9000   highr_0.6        
+## [13] lazyeval_0.2.0    curl_2.4          readxl_0.1.1     
+## [16] rstudioapi_0.6    extrafontdb_1.0   Matrix_1.2-8     
+## [19] urltools_1.6.0    labeling_0.3      extrafont_0.17   
+## [22] selectr_0.3-1     foreign_0.8-67    triebeard_0.3.0  
+## [25] munsell_0.4.3     hunspell_2.3      broom_0.4.2      
+## [28] compiler_3.3.3    janeaustenr_0.1.4 modelr_0.1.0     
+## [31] mnormt_1.5-5      notifier_1.0.0    XML_3.98-1.6     
+## [34] crayon_1.3.2      withr_1.0.2       SnowballC_0.5.1  
+## [37] grid_3.3.3        nlme_3.1-131      jsonlite_1.3     
+## [40] Rttf2pt1_1.3.4    gtable_0.2.0      DBI_0.6          
+## [43] git2r_0.18.0      magrittr_1.5      scales_0.4.1     
+## [46] tokenizers_0.1.4  stringi_1.1.3     foghorn_0.4.2    
+## [49] reshape2_1.4.2    xml2_1.1.1        fortunes_1.5-4   
+## [52] tools_3.3.3       forcats_0.2.0     hms_0.3          
+## [55] parallel_3.3.3    colorspace_1.3-2  rvest_0.3.2      
+## [58] memoise_1.0.0     knitr_1.15.1      haven_1.0.0
 ```
