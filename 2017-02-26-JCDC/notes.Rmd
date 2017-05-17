@@ -1,0 +1,64 @@
+
+* We don't really know how many species are there? Yet, it's the basic unit for
+  conservation and to understand change
+* Another critical aspect is that we don't know enough about the distribution of
+  species, and it's probably one of the most important parameter that will be
+  affected with global change
+* What can we do?
+* Metabarcoding:
+  - description of the approach
+  - tell us how many species
+  - tell us where they are distributed
+  - but species names critical to use historical knowledge, natural history,
+    predicting traits that are sensitive to global change
+  - tell us the proportion of species we don't know about
+* Project design:
+  - sampling plankton because all/most species reproduce through larval stage
+  - groundtruthing metabarcoding with individually barcoding larvae
+  - no metabarcoding data yet
+  - larva data
+* Larva data
+  - How many larvae
+  - Map of where the larvae come from
+  - How many species, breakdown per phylum
+  - Proportion of larvae with matches in public databases
+  - What does this number mean?
+    + is it high? low?
+	+ are some of the groups over or under represented?
+* If we knew all the species that live in the sea, or even the number of species
+  that lived at the Whitney lab, we could look at how many of the species have
+  been barcoded, and we would get the answer to this question. Instead we only
+  have access to partial sources of information:
+  - list of species that occur in an area (expert lists)
+  - list of species based on museum specimens
+  - list of described species
+  - list of barcoded species
+* In the past, it was difficult to summarize and synthesize this information
+  because it was disparate, scattered among institutions, ... Here first attempt
+  to summarize this information
+* Expert list
+  - How much of it is in museum collections?
+  - How much of it has been barcoded?
+* What is in museum collections?
+  - map of sampling effort
+  - map of diversity
+  - how much of it has been barcoded?
+* How can we use this knowledge to assess how much (or rather how little we know
+  about biodiversity)?
+  - we need more sampling
+	+ correlation between number of samples and diversity
+	+ knowledge through time plots
+  - we can use the information to identify taxonomic groups that deserve more
+    attention
+  - but we need to be careful because this is based on current knowledge and
+    some of it probably grossly underestimate how little we know about some
+    groups (check out the hemichordate paper)
+* Compare species in iDigBio and proportion of what I have matched in my
+  barcodes?
+  - sampling the plankton is probably a reasonable approach to estimate diversity of an area
+  - compare with other meta-barcoding studies, what's the proportion of species
+    with no match?
+  - re-analyze the data by taxonomic groups/family to see which groups are
+    closer/further from estimates based on what we know about total diversity
+  - to do that we need better tools to estimate closest match --> we got funding
+    to do that!

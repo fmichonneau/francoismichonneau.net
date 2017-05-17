@@ -1,0 +1,606 @@
+---
+title: "How does plankton inform what we know about marine biodiversity? "
+subtitle: ""
+author: "François Michonneau"
+date: "February 27th, 2017"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, message=FALSE, echo=FALSE}
+library(remake)
+library(dplyr)
+library(ggplot2)
+library(devtools)
+library(remake)
+
+load_all("~/R-dev/labmanager")
+```
+
+# We don't know enough about biodiversity
+
+### How many species?
+
+--
+
+```{r, echo=FALSE, fig.width=10, fig.height=5, dev='CairoSVG'}
+
+data.frame(
+    source = c("Known Species (WoRMS)",
+               "Appletans et al (2012) -- model",
+               "Appletans et al (2012) -- model",
+               "Appletans et al (2012) -- experts",
+               "Appletans et al (2012) -- experts",
+               "Costello et al (2013)",
+               "Costello et al (2013)",
+               "Mora et al (2011)",
+               "Poore & Wilson (1993)",
+               "Grasslet & Maciolek (1992)"),
+    estimate_type = c("expert",
+                      "stat model (low)",
+                      "stat model (high)",
+                      "expert (low)",
+                      "expert (high)",
+                      "stat model (low)",
+                      "stat model (high)",
+                      "extrapolation",
+                      "extrapolation",
+                      "extrapolation"),
+    number_species = c(226000,
+                       320000,
+                       760000 - 320000,
+                       704000,
+                       972000 - 704000,
+                       5000000 - 3000000,
+                       5000000 + 3000000 - 2000000,
+                       2200000,
+                       5000000,
+                       10000000),
+    stringsAsFactors = FALSE) %>%
+    ggplot(aes(x = reorder(source, number_species), y = number_species, fill = estimate_type)) +
+    geom_col() +
+    theme_minimal() +
+    coord_flip() +
+    xlab("Source") + ylab("Number of Species") +
+    theme(legend.position = "none")
+
+```
+
+---
+
+# We don't know enough about biodiversity
+
+### How many species?
+### Where do species live?
+
+--
+
+### Questions:
+
+- What is the impact of pollution, perturbations?
+- Which species are invasive?
+- How does global change affect communities?
+
+---
+class: inverse, center, middle
+
+# What can we do?
+
+---
+
+# What can we do?
+
+## Traditional Biodiversity Surveys
+
+---
+
+# What can we do?
+
+## DNA barcoding
+
+<img src="images/barcoding.png" height="400px"/>
+
+---
+
+# What can we do?
+
+## Metabarcoding
+
+<img src="images/metabarcoding.png" height="400px" />
+
+---
+
+# What can we do?
+
+## Barcoding
+
+
+.pull-left[
+
+### What can it tell us?
+
+* Species delineation, speeds up taxonomy
+* Works on all stages of the life cycle
+* Associated with museum specimens and photographs
+
+]
+
+
+.pull-right[<img src="images/barcoding.png" height="200px" />]
+
+---
+
+# What can we do?
+
+## Metabarcoding
+
+
+.pull-left[
+
+### What can it tell us?
+
+* Number of species
+* Where are the species distributed?
+* Applicable to many types of environmental samples
+* **Well-suited for monitoring**
+
+### Pre-requisites
+
+* Comprehensive and accurate databases
+* Need to ground truth the results
+
+
+]
+
+
+.pull-right[<img src="images/metabarcoding.png" height="200px" />]
+
+---
+
+# Questions
+
+## Which species live in the area?
+
+--
+
+## How well do we know the fauna?
+
+
+---
+
+# Project design
+
+## Plankton sampling
+
+- Capture in a single habitat a diversity of species
+- Bi-monthly sampling for a year
+- Document larval stages of local species
+
+--
+
+## DNA barcoding on individual larvae
+
+--
+
+## Metabarcoding on full plankton tows
+
+---
+
+# How many species?
+
+
+.pull-left[
+
+Sampling effort
+
+```{r sampling_stats, echo=FALSE, fig.width=3, fig.height=5, dev='CairoSVG', message=FALSE, warning=FALSE}
+library(maps)
+library(maptools)
+
+us_map <- maps::map("usa", fill = TRUE, plot = FALSE)
+ids <- sapply(strsplit(us_map$names, ":"), function(x) x[1])
+us_map <- map2SpatialPolygons(us_map, IDs = ids, proj4string = CRS("+proj=longlat +datum=WGS84"))
+us_map <- fortify(us_map)
+
+get_lab("sample_data") %>%
+    filter(is_plankton == 1) %>%
+    group_by(station_number) %>%
+    tally() %>%
+    left_join(get_lab("station_data")) %>%
+    dplyr::select(station_number, n, starts_with("latitude"), starts_with("longitude")) %>%
+    ggplot() +
+    geom_map(data = us_map, map = us_map,
+             aes(x = long, y = lat, map_id = id),
+             fill = "gray20", colour = "gray20", size = .05) +
+    coord_quickmap(xlim = c(-85, -80), ylim = c(24.5, 31)) +
+    geom_point(aes(x = longitude_start, y = latitude_start, size = n),
+               alpha = .3, color = "red") +
+    theme_bw() +
+    theme(legend.position = "none") +
+    xlab("Longitude") + ylab("Latitude")
+```
+]
+
+.pull-right[
+
+```{r larvae_stats, echo=FALSE}
+n_larvae_photo <- get_lab("sample_data") %>%
+    filter(is_plankton == 1 & has_photo == 1) %>%
+    nrow()
+n_larvae_photo_table <- get_lab("sample_data") %>%
+    filter(is_plankton == 1 &  has_photo == 1) %>%
+    group_by(phylum) %>%
+    tally() %>%
+    arrange(desc(n))
+pk_id <- get_lab("sample_data") %>%
+    filter(is_plankton == 1) %>%
+    dplyr::select(voucher_number) %>%
+    .[[1]]
+
+all_seqs <- list.files(path = "~/Documents/plankton-larvae-data/seqs/COI")
+n_plankton_seqs <- sum(all_seqs %in% pk_id)
+total_number_species <- get_lab("sample_esu") %>%
+    distinct(phylum, group_esu) %>%
+    nrow()
+
+n_species_table <- get_lab("sample_esu") %>%
+    distinct(phylum, group_esu) %>%
+    group_by(phylum) %>%
+    tally()
+
+bold_res <- summary_bold_store(cutoff = .935)
+
+spp_bold <- bold_res %>%
+    filter(db == "COX1_SPECIES",
+           taxonomicidentification != "Homo sapiens",
+           grepl("\\s", taxonomicidentification),
+           !grepl("sp\\.", taxonomicidentification)
+           ) %>%
+    distinct(sequences, .keep_all = TRUE) %>%
+    distinct(taxonomicidentification, .keep_all = TRUE)
+
+phylum_bold <- get_phylum(spp_bold$sequences)
+```
+
+- Number of larvae sequenced: `r n_plankton_seqs`
+- Number of species sequenced: `r total_number_species`
+
+```{r, dev="CairoSVG", echo=FALSE}
+div_plot <- ggplot(n_species_table,
+       aes(x = reorder(phylum, n), y = n, fill = phylum)) +
+    geom_col() +
+    coord_flip() +
+    theme_bw() +
+    xlab("") + ylab("Number of species") +
+    theme(legend.position = "none",
+          axis.text=element_text(size=16))
+div_plot
+```
+
+]
+
+---
+
+# Known diversity
+
+- Number of known species found in the plankton: `r nrow(spp_bold)` (out of `r total_number_species`)
+- Breakdown by phylum (0 match for Platyhelminthes, Phoronida, Acoelomorpha):
+
+```{r, dev="CairoSVG", echo=FALSE, fig.height=4.5}
+
+res <- phylum_bold %>%
+    table %>%
+    as.data.frame
+
+names(res) <- c("phylum", "n")
+
+bold_plot <- ggplot(res, aes(x = reorder(phylum, n), y = n, fill = phylum)) +
+    geom_col() +
+    coord_flip() +
+    theme_bw() +
+    xlab("") + ylab("Number of species") +
+    theme(legend.position = "none",
+          axis.text=element_text(size=16))
+bold_plot
+```
+
+---
+
+# Known diversity
+
+```{r, dev="CairoSVG", echo=FALSE, message=FALSE, warning=FALSE}
+
+p_bold_match <- n_species_table %>%
+    rename(n_spp = n) %>%
+    left_join(res) %>%
+    rename(n_bold_match = n) %>%
+    mutate(p_match = n_bold_match/n_spp) %>%
+    filter(!is.na(p_match))
+
+plot_p_bold <- p_bold_match %>%
+    ggplot(aes(x = reorder(phylum, p_match), y = p_match, fill = phylum)) +
+    geom_col() +
+    geom_text(aes(x = reorder(phylum,  p_match), y = p_match- .01,
+                  label = n_spp)) +
+    geom_hline(yintercept = length(phylum_bold)/total_number_species,
+               color = "red")+
+    coord_flip() +
+    theme_bw() +
+    xlab("") + ylab("Proportion of match") +
+    theme(legend.position = "none",
+          axis.text=element_text(size=16))
+
+plot_n_spp_bold <- p_bold_match %>%
+    dplyr::select(-p_match) %>%
+    gather(n, spp, -phylum) %>%
+    ggplot(aes(x = reorder(phylum, spp), y = spp, fill = n)) +
+    geom_col(position = "dodge") +
+    coord_flip() +
+    theme_bw() +
+    xlab("") + ylab("Number of Species") +
+    theme(legend.position = "none",
+          axis.text=element_text(size=16))
+
+```
+
+
+.pull-left[
+
+```{r, dev = "CairoSVG", height = 4.5, width=4, echo=FALSE}
+plot_n_spp_bold
+```
+
+]
+
+--
+
+.pull-right[
+
+```{r, dev = "CairoSVG", height = 4.5, width=4, echo=FALSE}
+plot_p_bold
+```
+
+]
+
+---
+class: inverse, center, middle
+
+# How to interpret these numbers?
+
+---
+
+# How to interpret these numbers?
+
+### If only we knew the total number of species...
+
+### Instead we have:
+
+* Expert faunistic lists
+
+  - most comprehensive, limited in geographic scope
+
+--
+
+* Museum specimens
+
+  - can be validated, not everything digitized
+
+--
+
+* Described species
+
+  - almost complete, only captures described species
+
+--
+
+* Species occurences
+
+  - good for species ranges, difficult to validate
+
+---
+
+# How to interpert these numbers?
+
+### Instead we have:
+
+* Expert faunistic lists
+
+* Museum specimens ⟶ **iDigBio**
+
+* Described species ⟶ **WoRMS**
+
+* Species occurences ⟶ **GBIF, OBIS**
+
+--
+
+### **First synthesis of knowledge for marine invertebrates**
+
+* How much of what we know is captured in these databases?
+
+* How much do we know?
+
+* What should we do next?
+
+---
+
+# Expert lists
+
+```{r list_stats, echo=FALSE, include=FALSE}
+owd <- setwd("~/Dropbox-uf/dark-taxa-plankton")
+gom_worms_ <- remake::fetch("gom_worms")
+kozloff_worms_ <- remake::fetch("kozloff_worms")
+create_bindings()
+plot_gom <- plot_richness_per_db(filter(summary_richness_per_db_gom,
+                                        taxon_name != "Platyhelminthes",
+                                        taxon_name != "Nematoda"),
+                                 data_source = "Gulf of Mexico") +
+    theme_bw() +
+    xlab("") + theme(legend.position = "none")
+plot_koz <- plot_richness_per_db(filter(summary_richness_per_db_koz,
+                                        taxon_name != "Platyhelminthes"),
+                                  data_source = "Pacific NW") +
+    theme_bw() +
+    xlab("") + theme(legend.position = "none")
+
+map_sampling <- make_heatmap_sampling(data_map_sampling_effort,
+                                      "Number of samples")
+map_diversity <- make_heatmap_sampling(data_map_diversity,
+                                       "Number of species")
+plot_sampling <- plot_sampling_effort(data_map_standardized_diversity)
+
+idig_samples_through_time <- plot_cum_samples_through_time(
+    idigbio_samples_through_time, facet = FALSE) +
+    theme_bw() + ylab("Number of samples")
+
+idig_spp_through_time <- plot_cum_spp_through_time(
+    idigbio_samples_through_time, facet = FALSE
+) + theme_bw() + ylab("Number of species")
+
+p_bold_table <- p_bold_match %>%
+    dplyr::select(taxon_name = phylum,
+           p_has_bold = p_match)
+
+prop_barcoded <- dplyr::bind_rows(
+               gom = bold_status(gom_bold),
+               koz = bold_status(kozloff_bold),
+               all_idigbio = bold_status(idigbio_bold),
+               plankton = p_bold_table,
+               .id = "data_source"
+               ) %>%
+    dplyr::mutate(taxon_name = capitalize(taxon_name)) %>%
+    dplyr::filter(
+               taxon_name %in% c("Annelida", "Arthropoda",
+                                 "Cnidaria",
+                                 "Echinodermata", "Mollusca",
+                                 "Porifera"
+                                 )
+           ) %>%
+            ggplot(aes(x = reorder(taxon_name, p_has_bold), y = p_has_bold, fill = data_source)) +
+            geom_col(position = "dodge") +
+            xlab("") + ylab("Proportion of species with available DNA barcodes") +
+            scale_fill_viridis(discrete = TRUE,
+                               name = "Data source",
+                               labels = c("all iDigBio", "Gulf of Mexico", "Pacific NW", "Florida Plankton")) +
+    coord_flip() +
+    theme_bw()
+
+p_singleton <- calc_prop_singleton_species(idigbio_records)
+
+p_less_than_5 <- idigbio_records %>%
+    group_by(worms_valid_name) %>%
+    tally() %>%
+    mutate(n_less_5 = n <= 5) %>%
+    filter(!is.na(n_less_5)) %>%
+    .$n_less_5 %>%
+    mean.default(na.rm = TRUE)
+
+p_less_than_5 <- format_output(p_less_than_5 * 100)
+
+p_not_since_1980 <- calc_prop_species_not_collected_since(idigbio_records, 1980)
+
+n_spp_comp <- calc_n_spp_comparison(idigbio_samples_through_time)
+
+delete_bindings()
+setwd(owd)
+
+```
+
+
+* Kozloff's "Marine Invertebrates of the Pacific Northwest"
+
+  - `r sum(kozloff_worms_$is_marine, na.rm=TRUE)` species
+
+* Felder and Camp's "Gulf of Mexico Origin, Waters, and Biota"
+
+  - `r sum(gom_worms_$is_marine, na.rm=TRUE)` species
+
+---
+
+# Expert lists ‒ Pacific Northwest
+
+```{r, echo=FALSE, dev="CairoSVG", fig.height=5.5}
+plot_koz
+```
+
+---
+
+# Expert lists ‒ Gulf of Mexico
+
+```{r, echo=FALSE, dev="CairoSVG", fig.height=5.5}
+plot_gom
+```
+
+---
+
+# Museum Records
+
+```{r, echo=FALSE, dev="CairoSVG", fig.height=5.5}
+map_sampling
+```
+---
+
+# Museum Records
+
+```{r, echo=FALSE, dev="CairoSVG", fig.height=5.5}
+map_diversity
+```
+
+---
+
+# Museum Records
+
+```{r, echo=FALSE, dev="CairoSVG", fig.height=5.5}
+plot_sampling
+```
+
+---
+
+# Museum Records
+
+```{r, echo=FALSE, dev="CairoSVG", fig.height=5.5, warning=FALSE}
+idig_samples_through_time
+```
+
+---
+
+# Museum Records
+
+```{r, echo=FALSE, dev="CairoSVG", fig.height=5.5, warning=FALSE}
+idig_spp_through_time
+```
+
+---
+
+# Proportion barcoded
+
+```{r, echo=FALSE, dev="CairoSVG", fig.height=5.5, warning=FALSE}
+prop_barcoded
+```
+
+---
+
+# Recommendations
+
+* More sampling
+
+  - Proportion of species known from a single specimen: `r p_singleton`%
+  - Proportion of species known from less than 5 specimens: `r p_less_than_5`%
+  - Proprotion of species not collected since 1980: `r p_not_since_1980`%
+  - Number of species added:
+      + between 1960 and 1970: `r n_spp_comp$n_spp_1970_1960`
+	  + since 2000: `r n_spp_comp$n_spp_2017_2000`
+  - Need more information about small phyla
+
+--
+
+* Use metabarcoding and existing data to inform future sampling effort
+
+--
+
+* Improve bioinformatics tools to get better species assignment of not barcoded
+  taxa
