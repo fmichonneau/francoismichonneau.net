@@ -26,7 +26,26 @@ Time in the field is precious. We want to work as efficiently as possible to max
 
 ## 0. Before going to the field
 
+### Print the datasheets and the labels
 
+To enter data in the field, we use pre-printed datasheets. We capture the station number, our best guess for the identity of the specimen collected, whether there is a photo, a tissue sample, and a voucher for this specimen, and any notes. We also capture who is filling up the sheet.
+
+To go with these sheets, we also print field labels. We print the field labels in multiples of the number of lines there are in the sheet, and they are clipped together. These can then easily be handled by a person, and everyone can have their own data sheet and associated field numbers.
+
+This system allows us to make sure:
+- the field numbers are unique. They are printed, we never write them
+  by hand (unless we run out), and so the risk of having duplicate numbers is
+  very low.
+- everyone uses the same system. It's a very easy to learn system, that even
+  people who are not familiar with who participate in our expedition can learn
+  quickly.
+- the specimens are tracked from the start. As soon as a specimen gets a field
+  number assigned, it will stay with it for the rest of its museum life. This is
+  the number that is associated with the photos and the tissue samples. Ideally
+  this number should be a global unique identifier, but this is impractical in
+  the field. Having these small numbers makes it easier to communicate with the
+  rest of the group ("Are you sure BCS16-0126 is Alpheus pinkfloydi?" is easier
+  than "Are you sure 3214546431432153424325412365245 is Alpheus pinkfloydi?"")
 
 ## 1. The collection
 
