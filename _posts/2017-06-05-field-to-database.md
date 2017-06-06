@@ -12,46 +12,51 @@ excerpt: "A write-up on data collection for large biodiversity surveys"
 
 ## Foreword
 
-This is our current workflow, it has been modified and perfected over dozen of field expeditions in various levels of sophistication and equipment availability. With this setup and workflow a team of 5-10 people can collect and process 150 to 400 specimens/lots a day. It has mostly been developed by Gustav Paulay but other people have contributed ideas and improvements.
-
-This workflow changes regularly, this is a write-up of the current one.
+This is the current workflow of the Paulay lab/Division of Invertebrate Zoology at the Florida Museum of Natural History since about 2015. It has been modified and perfected over dozen of field expeditions in diverse field conditions, and equipment availability. It can be adapted to work in an hotel room or a well-equiped marine lab. With this setup and workflow a team of 5-10 people can collect and process 150-400 specimens a day. This workflow gets modified regularly depending on tools and technologies. For instance, the availability of thermal field labels printed on plastic was a big improvement that has allowed us to increase our productivity.
 
 ## What are we trying to accomplish?
 
-When we are in the field to collect animals, we are trying to document the species that live in the area. We want to preserve physical specimens as evidence of their presence, live appearance to preserve characters that will damanged by fixation methods (loss of coloration), and tissues for genetic analyses. We also want to capture data about where the specimen was found, and when possible what the environment looked like.
+When we are in the field to collect specimens, we are trying to document the species that live in the area. We want to preserve physical specimens as evidence of their presence, live appearance to preserve characters that will damanged by fixation methods (e.g., loss of coloration), and tissues for genetic analyses. We also want to capture data about where the specimen was found, and when possible what the environment looked like.
 
-## The constraints
+## Constraints
 
-Time in the field is precious. We want to work as efficiently as possible to maximize the number of specimens we capture. The process needs to be as streamilined as possible to capture as much information as possible in little time.
+Time in the field is precious. We want to work as efficiently as possible to maximize the number of diversity of the specimens we capture. The process needs to be as streamilined as possible to capture as much information from as many species fromm as many different habitats as possible.
 
 ## 0. Before going to the field
 
 ### Print the datasheets and the labels
 
-To enter data in the field, we use pre-printed datasheets. We capture the station number, our best guess for the identity of the specimen collected, whether there is a photo, a tissue sample, and a voucher for this specimen, and any notes. We also capture who is filling up the sheet.
+To enter data in the field, we use pre-printed datasheets. These sheets allow us to capture the station number, our best guess for the identity of the specimen collected, whether there is a photo, a tissue sample, and a voucher for this specimen, and any notes we want to make about this specimen. We will go into more details about this below.
 
-To go with these sheets, we also print field labels. We print the field labels in multiples of the number of lines there are in the sheet, and they are clipped together. These can then easily be handled by a person, and everyone can have their own data sheet and associated field numbers.
+These sheets are accompanied of pre-printed field labels. We print the field labels in multiples of the number of lines there are in the sheet (there are 60 entries per data sheets, and 15 field labels per label sheet). They are clipped together to make a unit that can easily be handled by a person, and everyone can have their own data sheet and associated field numbers.
 
 This system allows us to make sure:
-- the field numbers are unique. They are printed, we never write them
-  by hand (unless we run out), and so the risk of having duplicate numbers is
-  very low.
-- everyone uses the same system. It's a very easy to learn system, that even
-  people who are not familiar with who participate in our expedition can learn
-  quickly.
-- the specimens are tracked from the start. As soon as a specimen gets a field
-  number assigned, it will stay with it for the rest of its museum life. This is
-  the number that is associated with the photos and the tissue samples. Ideally
-  this number should be a global unique identifier, but this is impractical in
-  the field. Having these small numbers makes it easier to communicate with the
-  rest of the group ("Are you sure BCS16-0126 is Alpheus pinkfloydi?" is easier
-  than "Are you sure 3214546431432153424325412365245 is Alpheus pinkfloydi?"")
+- the field numbers are unique. They are printed, we never write them by hand
+  (unless we run out), so there is no risk of having duplicated field numbers.
+- everyone uses the same system. It's a very easy to use and learn system, that
+  even people who are not familiar with it can learn quickly.
+- the specimens are tracked with this number almost from the start. As soon as a
+  specimen gets a field number assigned, it will stay with it for the rest of
+  its museum life. This is the number that is associated with the photos and the
+  tissue samples. Ideally this number should be a global unique identifier, but
+  this is impractical in the field. Having these field numbers makes it easier
+  to communicate with the rest of the group ("Are you sure BCS16-0126 is Alpheus
+  pinkfloydi?" is easier than "Are you sure 3214546431432153424325412365245 is
+  Alpheus pinkfloydi?"")
 
 ## 1. The collection
 
+
+> ### Things you will need
+>
+> * glass jars with metal lids
+> * ziplock bags
+> * underwater paper + pencil
+{: .notice--info}
+
 ### Rule #1: Keep the specimens you are collecting alive and in good shape.
 
-While in the field, underwater or on the intertidal, bring with you as many containers as possible. The ideal containers sink, this also applies to their lids. Using glass jars with metal lids (e.g., jam jars) work best. If diving/snorkelig do not forget to fill them with water at the surface. If collecting in the intertidal, do not fill the jars with water to the top as they will go anoxic quickly, killing whatever they contain.. Be careful to not bang the collecting bag or to put hammers in your bag to avoid breaking the jars. Ziplock bags are useful, but they float. The ziplock bags with a zipper are not good, as inevitably the zipper will come off.
+While in the field, underwater or on the intertidal, bring with you as many containers as possible. The ideal containers sink, this also applies to their lids. Using glass jars with metal lids (e.g., jam jars) works best. If diving/snorkeling do not forget to fill them with water at the surface. If collecting on the intertidal, do not fill the jars with water to the top as they will go anoxic quickly, killing whatever they contain. Be careful to not bang the collecting bag or to put hammers in your bag to avoid breaking the jars. Ziplock bags are useful, but they float (and they always end up with air bubbles trap in them). The ziplock bags with a slide-zipper are not good: the zipper will inevitably come off.
 
 Keep animals separated as much as possible in your jars.
 
@@ -59,24 +64,23 @@ Keep animals separated as much as possible in your jars.
   a lot of mucus that would damage or asphyxiate other specimens.
 * Many species of nudibranchs (especially phylidids) concentrate toxins of the
   sponges they feed on. They need to be on their own as these toxins will kill
-  most species they will put in jars with.
+  most species they will be in jars with.
 * Crabs tend to fight with each others, and lose arms and legs in the
   process.
-* Several worm phylum produce also a lot of mucuous (nemeretean) that
+* Several worm phylum also produce a lot of mucuous (nemeretean) that
   can be problematic to other specimens.
 * Sponges have lots of secondary compounds that will kill other organisms. Keep
   them separate.
 
-If coming back from a dive, stabalize what you collect. Split jars that have too many animals in it. Remove some water from the jars to allow for gas exchange and avoid anoxia. Place the jars in a cooler, in the shade to avoid the water to get too warm. If in really hot climate and long boat rides, having a little ice in the cooler can be useful. Otherwise, putting sea water in the cooler would be enough to avoid the temperature to rise too much during the trip back to the lab.
+When coming back from a dive, stabilize what you collected. Split jars that have too many animals in it. Remove some water from the jars to allow for gas exchange and avoid anoxia. Place the jars in a cooler/ice chest, in the shade to avoid the water to get too warm. If in really hot climate and long boat rides, having a little ice in the cooler can be useful. Otherwise, putting sea water in the cooler would be enough to avoid the temperature to rise too much during the trip back to the lab.
 
 ### Rule #2: Keep track of where you find what you collect
 
 Usually, time underwater is very limited, so it is best to keep mental notes of where you found what you collected. However, diving with a slate for quick reminders is useful.
 
-When stabalizing the specimen collected, add to the jar an identifier for the field site (e.g., A, B, C) if you are visiting multiple sites during a collecting trip, and/or a note to indicate who collected it. This will be helpful when you are back in the lab to record the information.
+When stabalizing the specimen collected, add to the jar an identifier for the field site (e.g., A, B, C) if you are visiting multiple sites during a collecting trip, and/or a note to indicate who collected it. This will be helpful when you are back in the lab to sort who collected what and record where the specimens were collected.
 
-
-As soon as possible, after stabilizing the animals just after the dive, write down on you slate any notes that will help you remember where you found the animals you collected. Writing down about the environment can also be useful (coral cover, species of coral or algae making up the bottom, etc.)
+As soon as possible, after stabilizing the animals just after the dive, write down on you slate any notes that will help you remember where you found the animals you collected. Writing notes about the environment can also be useful (coral cover, species of coral or algae making up the bottom, etc.)
 
 
 ## 2. Stabalizing at the lab
