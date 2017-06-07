@@ -31,6 +31,7 @@ To enter data in the field, we use pre-printed datasheets. These sheets allow us
 These sheets are accompanied of pre-printed field labels. We print the field labels in multiples of the number of lines there are in the sheet (there are 60 entries per data sheets, and 15 field labels per label sheet). They are clipped together to make a unit that can easily be handled by a person, and everyone can have their own data sheet and associated field numbers.
 
 This system allows us to make sure:
+
 - the field numbers are unique. They are printed, we never write them by hand
   (unless we run out), so there is no risk of having duplicated field numbers.
 - everyone uses the same system. It's a very easy to use and learn system, that
@@ -40,14 +41,135 @@ This system allows us to make sure:
   its museum life. This is the number that is associated with the photos and the
   tissue samples. Ideally this number should be a global unique identifier, but
   this is impractical in the field. Having these field numbers makes it easier
-  to communicate with the rest of the group ("Are you sure BCS16-0126 is Alpheus
-  pinkfloydi?" is easier than "Are you sure 3214546431432153424325412365245 is
-  Alpheus pinkfloydi?"")
+  to communicate with the rest of the group ("Are you sure BCS16-0126 is
+  _Alpheus pinkfloydi_?" is easier than "Are you sure
+  301fcb77-4e52-4817-94ce-91fd9d81a881 is _Alpheus pinkfloydi_?")
+
+
+### Packing and preparing the lab: the tools and equipment needed
+
+#### Large equipment
+
+* Sink
+* Fridge and freezer
+
+#### Medium equipment
+
+* Mops and other cleaning supplies
+* 5-gallon buckets
+* White board/easel and markers
+* Trash cans
+* Paper towels
+
+#### Small equipment
+
+* Plastic containers (different sizes)
+* Plastic cups
+* Spoons
+* Tweezers soft, long
+* 6-packs
+* Plastic pipettes
+* Paint brushes
+* Toothbrush
+* 2mL vials
+* Whrilpak bags
+* Permanent markers (ethanol resistant)
+* China ink pens for labels
+* Label paper
+
+#### Chemicals
+
+* Magnesium chloride
+* Clove oil
+* Menthol
+* Ethanol 75% and 95%
+* Formalin
+
+
+### How to set up the lab?
+
+The organization of the lab depends of the space and equipment available. There are typically 5 areas, that should be arranged in a way that makes it easy for specimens to flow through each step, and that people can move around the lab comfortably and safely.
+
+#### The sorting station
+
+> Equipment needed
+>
+> * sorting trays
+> * good lights (ikea)
+> * soft forceps
+> * long forceps
+> * spoons
+> * six-packs
+{: .notice--info}
+
+This is a wet and messy area. This is where bulk samples (rubble brought back from the field, clumps of algae, scrappings) are picked through to find the small specimens. Having good lighting is important. Use forceps (soft) and spoons to transfer the specimens into clean water in 6-packs or other individual containers, assign them station numbers or field numbers right away to keep track of their origin.
+
+#### The photo station
+
+> Equipment needed
+>
+> * small paint brushes and toothbrush
+> * tweezeers
+> * spoons, plastic pipettes
+> * coffee filters and fennel or filtered sea water supply
+> * turkey baster
+> * good lights
+> * bucket to discard dirty water
+> * kimwipes
+> * alcohol to clean the glass of the photo tank
+{: .notice--info}
+
+This is a semi-wet area. This should be organized to avoid spills and keep the photo equipment as dry as possible. Wiping the camera with a lightly wet cloth, followed by a dry cloth, at the end of the day to rinse off salt increases the life of the equipment significantly.
+
+#### The relaxing station
+
+This is a wet area, it should be close to the photo station, and usually the person in charge of the photo station is also responsible of supervising the relaxation: some specimens will need to be relaxed before photography, while the others will go to relaxation after getting their picture taken.
+
+Make sure to label containers that contain magnesium chloride to separate them from the ones that only contain sea water. Magnesium chloride solution can be re-used for a couple of days, especially if the container get cleaned regularly.
+
+Be careful clove oil doesn't get in contact with field labels (see below).
+
+Take care of keeping the specimens associated with their labels.
+
+#### The tissue sampling station
+
+> **Equipment needed**
+>
+> * Scisors (small, like iris scissors)
+> * Forceps
+> * Kimwipe
+> * Burner
+> * Molecular grade ethanol (95%)
+{: .notice--info}
+
+This station should be after relaxation and before fixation. It is a semi-dry area. It needs to be kept clean and tidy. It is usually best if one person is in charge of this task.
+
+
+#### The fixation station
+
+> **Equipment needed**
+>
+> * whirlpaks: 4oz, 16oz, 48oz
+> * carboy of 70% ethanol
+> * carboy of 10% formalin
+> * label paper + China ink pen/pencil
+> * 5 gallon buckets or other large containers
+{: .notice--info}
+
+The fixation station is where specimens go into ethanol or formalin. Safety precaution for handling these fuilds should be followed. The top of the whirlpak should be folded enough times to ensure a proper seal. The correct fixative should be used for the specimen. Adding a label to formalin-fixed samples makes it easier to deal with these specimens back at the museum (see below). The whirlpak bags filled with fixative should be stored in a plastic bags, themselves placed in buckets or plastic bins, in order to contain possible leaks.
+
+
+#### Other stations
+
+* **A computer station** a dry area of the lab where laptops can be used to
+  check field guides and species descriptions to help with identifications.
+* **A microscope station** a dry area where small specimens can be looked
+  at/sorted.
 
 ## 1. The collection
 
 
-> ### Things you will need
+> **Things you will need**
 >
 > * glass jars with metal lids
 > * ziplock bags
@@ -56,7 +178,7 @@ This system allows us to make sure:
 
 ### Rule #1: Keep the specimens you are collecting alive and in good shape.
 
-While in the field, underwater or on the intertidal, bring with you as many containers as possible. The ideal containers sink, this also applies to their lids. Using glass jars with metal lids (e.g., jam jars) works best. If diving/snorkeling do not forget to fill them with water at the surface. If collecting on the intertidal, do not fill the jars with water to the top as they will go anoxic quickly, killing whatever they contain. Be careful to not bang the collecting bag or to put hammers in your bag to avoid breaking the jars. Ziplock bags are useful, but they float (and they always end up with air bubbles trap in them). The ziplock bags with a slide-zipper are not good: the zipper will inevitably come off.
+While in the field, underwater or on the intertidal, bring with you as many containers as possible. The ideal containers (and their lids) sink. Using glass jars with metal lids (e.g., jam jars) works best. If diving/snorkeling do not forget to fill them with water at the surface. If collecting on the intertidal, do not fill the jars with water to the top as the water will go anoxic quickly, killing whatever they contain. Be careful to not bang the collecting bag or to put hammers in your bag to avoid breaking the jars. Ziplock bags are useful, but they float (and they always end up with air bubbles trapped in them). The ziplock bags with a slide-zipper are not good: the zipper will inevitably come off.
 
 Keep animals separated as much as possible in your jars.
 
@@ -72,77 +194,42 @@ Keep animals separated as much as possible in your jars.
 * Sponges have lots of secondary compounds that will kill other organisms. Keep
   them separate.
 
-When coming back from a dive, stabilize what you collected. Split jars that have too many animals in it. Remove some water from the jars to allow for gas exchange and avoid anoxia. Place the jars in a cooler/ice chest, in the shade to avoid the water to get too warm. If in really hot climate and long boat rides, having a little ice in the cooler can be useful. Otherwise, putting sea water in the cooler would be enough to avoid the temperature to rise too much during the trip back to the lab.
+When coming back from a dive, stabilize what you collected. Split jars that have too many animals in it. Remove some water from the jars to allow for gas exchange and avoid anoxia. Place the jars in a cooler/ice chest, in the shade to avoid the water to get too warm. If in really hot climate and long boat rides, having ice in the cooler can be useful. Otherwise, putting sea water in the cooler can be enough to avoid the temperature to rise too much during the trip back to the lab.
 
 ### Rule #2: Keep track of where you find what you collect
 
 Usually, time underwater is very limited, so it is best to keep mental notes of where you found what you collected. However, diving with a slate for quick reminders is useful.
 
-When stabalizing the specimen collected, add to the jar an identifier for the field site (e.g., A, B, C) if you are visiting multiple sites during a collecting trip, and/or a note to indicate who collected it. This will be helpful when you are back in the lab to sort who collected what and record where the specimens were collected.
+When stabalizing the specimen collected, add to the jar an identifier for the field site (e.g., A, B, C) if you are visiting multiple sites during a collecting trip, and/or a note to indicate who collected it. This will be helpful when you are back in the lab to sort who collected what, and record where the specimens were collected.
 
-As soon as possible, after stabilizing the animals just after the dive, write down on you slate any notes that will help you remember where you found the animals you collected. Writing notes about the environment can also be useful (coral cover, species of coral or algae making up the bottom, etc.)
-
-
-## 2. Stabalizing at the lab
-
-### How to set up the lab?
-
-At least 3 zones:
-
-- wet and messy
-- photo station
-- relaxation station
-- tissue subsampling station
-- data entry
+As soon as possible, after stabilizing the animals just after the dive, write down on your slate any notes that will help you remember where you found the animals you collected. Writing notes about the environment can also be useful (coral cover, species of coral or algae making up the bottom, etc.)
 
 
-### The tools needed in the lab
+## 2. Stabilizing the specimens at the lab
 
-* Sink
-* Mops
-* spoons
-* twizers
-* 5 gallon buckets
-* 6-packs
-* plastic pipettes
-* paint brushes
-* toothbrush
-* white board/easel
-
-* fridge/freezer
-
-* 2mL vials
-
-### Chemicals needed
-
-* Magnesium chloride
-* Clove oil
-* Menthol
-* Ethanol 75% and 95%
-* Formalin
 
 ### Rule #3: Keep your animals alive
 
-Once you arrive at the lab, open up your jars, and transfer your specimens into plastic containers. Having a good assortment of sizes and shapes for containers is useful. Sandwich-size containers are great for most organisms: they provide a good surface for gas exchange, and are shallow enough that it's easy to retrieve the specimens.
+Once you arrive at the lab from the field, open up your jars, and transfer your specimens into plastic containers. Having a good assortment of sizes and shapes for containers is useful. Sandwich-size containers are great for most organisms: they provide a good surface for gas exchange, and are shallow enough that it's easy to retrieve the specimens.
 
 Plastic cups are good because it's easy to get (even in remote locations), they are cheap, they don't take a lot of room.
 
 When transfering your specimens from the field into the containers in the lab, be mindful of the thermic shock. If the lab has A/C and the sea water from the lab is significantly cooler than the sea water you are bringing back from the field, the animals may not like the sudden change of water temperature. Mixing the sea waters to reduce the temperature difference may be necessary.
 
-As soon as the specimens are transfered into their own containers, they should have a label with them that can be used to tell from which station/dive they are coming form and who collected them. This is a good time to create the station numbers that can be used to assign the origin of each specimen. These station numbers should be displayed in the lab, so everyone can see them. They should have enough information to be identified unambiguously. You may want to create as many station numbers as needed (they are cheap). For instance, if you did a dive where you spent the first 20 minutes at 15 m, and focused on going through coral rubble, and spent 60 minutes at 5 m going through halimeda, before picking a dead coral head, that could represent 3 stations. The GPS coordinates would be the same, but the depths and habitat descriptions would be different.
+As soon as the specimens are transfered into their own containers, they should have a label with them that can be used to tell from which station/dive they are coming form and who collected them. This is a good time to create the station numbers that can be used to assign the origin of each specimen. These station numbers should be displayed in the lab, so everyone can see them. They should have enough information to be identified unambiguously. Create as many station numbers as needed (they are cheap). For instance, if you did a dive where you spent the first 20 minutes at 15 m, and focused on going through coral rubble, and spent 60 minutes at 5 m going through an Halimeda patch, before picking a dead coral head, that could easily be split into 3 stations. The GPS coordinates would be the same, but the depths and habitat descriptions would be different.
 
 At this stage, we are usually splitting jars from the field, so it is crucial to make sure every animal has a label associated with it that indicates the (newly created) station number, and if needed who collected it. These labels can be done quickly with archival or underwater paper and pencil.
 
-If you are dealing with very fragile animals that won't stay alive very long or that are already dead, they need to be processed (get a field number assigned, get their photo taken, get tissue sample, get preserved) right away. Otherwise, at this point, things are relatively stable, and it's a good time to rinse your diving gear/boat, take a shower, get a snack. You have many hours of work ahead of you. If the animals are put in clean containers, with fresh sea water, and the lab has A/C, most species can be kept in these containers for 12 hours or more.
+If you are dealing with very fragile animals that won't stay alive very long or that are already dead, they need to be processed (get a field number assigned, get their photo taken, get a tissue sample, get them fixed) right away. Otherwise, at this point, things are relatively stable, and it's a good time to rinse your diving gear/boat, take a shower, get a snack. You have many hours of work ahead of you. If the animals are put in clean containers, with fresh sea water, and the lab has A/C, most species can be kept in these containers for 12 hours or more.
 
 
 ### Rule #4: Assign field numbers early
 
-It is good practice to assign field numbers early, so it is easier to keep track of the specimen as it goes through processing.
+It is good practice to assign field numbers to specimens early to make it easier to keep track of them as they go through processing.
 
-Currently, we use field labels printed on plastic paper. We print them ahead of time and bring them with us in the field. Each field number is duplicated, but one of them as the suffix "-dna". The field numbers consist of a prefix that characterizes the field expedition. It should be unique for the institution. We currently use a 3 or 4 letter prefix folowed by a 2-digit number representing the year. For instance, last year we went to Bocas del Toro and used the prefix "BCS16-".
+Currently, we use field labels printed on plastic paper. We print them ahead of time and bring them with us in the field. Each field number is duplicated, but one of them as the suffix "-dna". The field numbers consist of a prefix that characterizes the field expedition. We currently use a 3 or 4 letter prefix folowed by a 2-digit number representing the year. For instance, last year we went to Bocas del Toro and used the prefix "`BCS16-`".
 
-At this stage, we assign a field number to each specimen. For the medium size animals (2-10 cm), we usually keep them in the sandwich boxes. For the smaller ones, (2-20 mm), we use the "6-packs", each animal is placed in a cell with a number.
+Medium size animals (2-10 cm) are kept them in the sandwich boxes; while smaller ones, (2-20 mm), are kept in "6-packs", each animal is placed in a cell with a number.
 
 As soon as a specimen has a field number associated with it, we write down on the field data sheet:
 
@@ -150,15 +237,14 @@ As soon as a specimen has a field number associated with it, we write down on th
 * our best guess for the identification
 * whether a photograph of the specimen will be taken, whether a tissue sample
   will be taken, and whether we will keep the specimen as a voucher for the
-  collection. Except for some unusual circumstances, the answer will be "yes" to
-  all of these questions.
-* any notes about the specimen that are important. These may include:
+  collection. In most cases, the answer will be "yes" to all of these questions.
+* any relavant notes about the specimen. These may include:
   morphospecies match (if the species has already been collected during the
   expedition, it can be useful to refer to the field number to which it
   corresponds), the association (if it's a parasite or a symbiont, we can put a
   note that indicates the field number of the partner of this biological
   association), the microhabitat (specific information about where the specimen
-  was found), etc...
+  was found), etc.
 
 ### Rule #5: Take informative pictures of the specimens
 
@@ -208,6 +294,8 @@ When taking a piece of tissue on an animal, it needs to be done in a way that do
 * Arthrpods: for shrimps it's best to take pleopods, but take care of keeping
   one side intact. For (larger) crabs, take meat from the articulations between
   the leg and the carapace.
+
+Tissue samples should be placed in freezer when available.
 
 If preserving tissues for RNA additional precautionary measures need to be taken. For instance, magnesium catalyzes RNA lysis, therefore the specimens can't be relaxed with magnesium chloride before preserving the tissues. In general, if you are preserving tissues for RNA analyses talk to people who are sued to working with it for advice.
 
