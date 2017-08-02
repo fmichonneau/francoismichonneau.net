@@ -6,7 +6,6 @@ excerpt: "a tutorial for doing species delineation on COI sequences with GMYC"
 permalink: /gmyc-tutorial/
 author_profile: false
 date: 2016-07-20
-self_contained: false
 comments: true
 sidebar:
   - title: Feedback?
@@ -26,11 +25,12 @@ sidebar:
 > course taught at the Friday Harbor Laboratories, University of Washington.
 >
 > This tutorial is released under a
-> [Creative Commons Attribution (CC-BY) license](https://creativecommons.org/licenses/by/4.0/us/). It was originally published <https://francoismichonneau.net/gmyc-tutorial>, and can be cited using the DOI deposited at Zenodo:
->
-> Michonneau, F. 2016. Using GMYC for species delination. Zenodo.
-> <https://doi.org/10.5281/zenodo.838260>
-{: .notice--primary}
+> [Creative Commons Attribution (CC-BY) license](https://creativecommons.org/licenses/by/3.0/us/),
+> and was originally published at <https://francoismichonneau.net/gmyc-tutorial>. The tutorial has
+> been archived with Zenodo, and can be cited as:
+> 
+>  Michonneau, F. 2016. Using GMYC for species delination. Zenodo. DOI: [10.5281/zenodo.838260](https://doi.org/10.5281/zenodo.838260)
+
 
 
 # Background
@@ -124,16 +124,16 @@ We will thus build trees using:
 > Mac, and Linux. However, some parts of this tutorial assume that you are using
 > either Mac or Linux.
 >
-> * [BEAST2](http://beast2.org/){: .btn .btn--info} (BEAST2 2.4.0 was used in this
+> * [BEAST2](http://beast2.org/) (BEAST2 2.4.0 was used in this
 >tutorial, but any recent version will work)
-> * [Tracer](http://tree.bio.ed.ac.uk/software/tracer/){: .btn .btn--info}
-> * [Figtree](http://tree.bio.ed.ac.uk/software/figtree/){: .btn .btn--info}
-> * [R](http://cran.r-project.org/){: .btn .btn--info}
+> * [Tracer](http://tree.bio.ed.ac.uk/software/tracer/)
+> * [Figtree](http://tree.bio.ed.ac.uk/software/figtree/)
+> * [R](http://cran.r-project.org/)
 >
 > ## Files
 >
-> * Aligned sequences: [`impatiens.fasta`]({{ site.baseurl }}/assets/gmyc-tutorial/impatiens.fasta)
-{: .notice--info}
+> * Aligned sequences: [`impatiens.fasta`](https://francoismichonneau.net/assets/gmyc-tutorial/impatiens.fasta)
+
 
 
 
@@ -232,7 +232,7 @@ In BEAUTI:
 
 At this stage your folder should look like this:
 
-![]({{ site.baseurl }}/assets/gmyc-tutorial/gmyc_file_organization.png){: .align-center}
+![](../../assets/gmyc-tutorial/gmyc_file_organization.png)
 
 It is also a good idea to make sure that each one of your XML files are correct,
 so you may want to open them again in BEAUTI to check that all the parameters
@@ -240,10 +240,10 @@ are accurate.
 
 > If you had trouble with making these files, you can download them below
 >
-> - [yule.xml]({{ site.baseurl }}/assets/gmyc-tutorial/yule.xml){: .btn .btn--info}
-> - [relaxed_clock.xml]({{ site.baseurl }}/assets/gmyc-tutorial/relaxed_clock.xml){: .btn .btn--info}
-> - [constant_coalescent.xml]({{ site.baseurl }}/assets/gmyc-tutorial/constant_coalescent.xml){: .btn .btn--info}
-{: .notice--warning}
+> - [yule.xml](https://francoismichonneau.net/assets/gmyc-tutorial/yule.xml)
+> - [relaxed_clock.xml](https://francoismichonneau.net/assets/gmyc-tutorial/relaxed_clock.xml)
+> - [constant_coalescent.xml](https://francoismichonneau.net/assets/gmyc-tutorial/constant_coalescent.xml)
+
 
 ## Running the BEAST analysis
 
@@ -297,10 +297,9 @@ You will need to repeat this operation for the other 2 XML files
 > we are providing you with the output files for each of these analyses. Please
 > make sure that you save these files in their appropriate folders:
 >
-> - Yule: [yule.log]({{ site.baseurl }}/assets/gmyc-tutorial/yule.log){: .btn .btn--info}  [yule.trees]({{ site.baseurl}}/assets/gmyc-tutorial/yule.trees){: .btn .btn--success}
-> - Constant Coalescent: [constant_coalescent.log]({{ site.baseurl }}/assets/gmyc-tutorial/constant_coalescent.log){: .btn .btn--info}  [constant_coalescent.trees]({{ site.baseurl }}/assets/gmyc-tutorial/constant_coalescent.trees){: .btn .btn--success}
-> - Relaxed clock: [relaxed_clock.log]({{ site.baseurl }}/assets/gmyc-tutorial/relaxed_clock.log){: .btn .btn--info}  [relaxed_clock.trees]({{ site.baseurl }}/assets/gmyc-tutorial/relaxed_clock.trees){: .btn .btn--success}
-{: .notice--warning}
+> - Yule: [yule.log](https://francoismichonneau.net/assets/gmyc-tutorial/yule.log) [yule.trees]({{ site.baseurl}}/assets/gmyc-tutorial/yule.trees)
+> - Constant Coalescent: [constant_coalescent.log](https://francoismichonneau.net/assets/gmyc-tutorial/constant_coalescent.log)[constant_coalescent.trees](https://francoismichonneau.net/assets/gmyc-tutorial/constant_coalescent.trees)
+> - Relaxed clock: [relaxed_clock.log](https://francoismichonneau.net/assets/gmyc-tutorial/relaxed_clock.log)  [relaxed_clock.trees](https://francoismichonneau.net/assets/gmyc-tutorial/relaxed_clock.trees)
 
 ## Visualizing the posterior with Tracer
 
@@ -312,7 +311,7 @@ them.
 Start the Tracer program, and open one of your files (`File` > `Import Trace
 file`). For instance for the `yule.log`, it should like:
 
-![Tracer screenshot](https://francoismichonneau.net/assets/gmyc-tutorial/gmyc_tracer_screenshot.png)
+![Tracer screenshot](../../assets/gmyc-tutorial/gmyc_tracer_screenshot.png)
 
 The exact numbers might differ for your analysis, as the results from a Bayesian
 inference are obtained through random sampling, and they may differ slightly
@@ -331,7 +330,7 @@ might reflect an issue with your analysis such as over-parametrization.
 > # Your turn:
 >
 > Inspect the log files for your 3 runs.
-{: .notice--success}
+
 
 ## Summarizing the posterior with `treeannotator`
 
@@ -355,12 +354,12 @@ produce a summary tree.
 > the summarized trees below
 >
 > - Yule: [yule_tree.nex]({{ site.baseurl
-> }}/assets/gmyc-tutorial/yule_tree.nex){: .btn .btn--info}
+> }}/assets/gmyc-tutorial/yule_tree.nex)
 > - Constant Coalescent: [constant_coalescent_tree.nex]({{ site.baseurl
-> }}/assets/gmyc-tutorial/constant_coalescent_tree.nex){: .btn .btn--info}
+> }}/assets/gmyc-tutorial/constant_coalescent_tree.nex)
 > - Relaxed Clock: [relaxed_coalescent_tree.nex]({{ site.baseurl
-> }}/assets/gmyc-tutorial/relaxed_clock_tree.nex){: .btn .btn--info}
-{: .notice--warning}
+> }}/assets/gmyc-tutorial/relaxed_clock_tree.nex)
+
 
 
 ## Visualizing the trees with Figtree
@@ -374,7 +373,7 @@ Start Figtree, and open the files generated with `treeannotator` (with the
 > # Your turn
 >
 > Open the 3 tree files and compare them. How do they differ?
-{: .notice--success}
+
 
 
 # Estimation of the number of species included in the tree with GMYC
@@ -476,7 +475,8 @@ the next plot:
 plot(yule_gmyc)
 ```
 
-<img src="{{ site.baseurl }}/assets/gmyc-tutorial/gmyc_yule-plot-diagnostics-1.png" title="plot of chunk yule-plot-diagnostics" alt="plot of chunk yule-plot-diagnostics" class="align-center" />
+
+\includegraphics{../..//assets/gmyc-tutorial/gmyc_yule-plot-diagnostics-1} 
 
 Based on the trees alone, it can be difficult to figure out which samples are
 assigned to which species. To make this easier, the package has the function
@@ -551,7 +551,8 @@ plot(yule_tr, cex=.6, no.margin=TRUE)          # plot the tree
 nodelabels(round(yule_support, 2), cex=.7)     # plot the support values on the tree
 ```
 
-<img src="{{ site.baseurl }}/assets/gmyc-tutorial/gmyc_yule-support-1.png" title="plot of chunk yule-support" alt="plot of chunk yule-support" class="align-center" />
+
+\includegraphics{../..//assets/gmyc-tutorial/gmyc_yule-support-1} 
 
 For this particular example, it shows that GMYC confidently delineates the 3
 putative species at the top of the tree (all have support values of 1), but for
@@ -567,7 +568,7 @@ within this cluster.
 > - How many species do you think we are dealing with?
 > - How does the choice of the prior affect the branch lengths in the tree, in
 > turn affect the number of species inferred?
-{: .notice--success}
+
 
 
 # Epilogue

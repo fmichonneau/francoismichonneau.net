@@ -131,6 +131,7 @@ exclude:
   - "*.Rmd"
   - "*packrat*"
   - "*cache/"
+  - "*_edit*"
 keep_files:
   - .git
   - .svn

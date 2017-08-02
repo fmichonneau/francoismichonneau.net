@@ -15,3 +15,4 @@ _pages/gmyc-tutorial/relaxed_clock/*
 _pages/gmyc-tutorial/cache/*
 *.Rprofile
 *.Rhistory
+_drafts/

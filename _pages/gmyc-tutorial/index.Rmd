@@ -44,7 +44,10 @@ knitr::opts_chunk$set(fig.path = "../../assets/gmyc-tutorial/gmyc_",
 > course taught at the Friday Harbor Laboratories, University of Washington.
 >
 > This tutorial is released under a
-> [Creative Commons Attribution (CC-BY) license](https://creativecommons.org/licenses/by/3.0/us/).
+> [Creative Commons Attribution (CC-BY) license](https://creativecommons.org/licenses/by/4.0/us/). It was originally published <https://francoismichonneau.net/gmyc-tutorial>, and can be cited using the DOI deposited at Zenodo:
+>
+> Michonneau, F. 2016. Using GMYC for species delination. Zenodo.
+> <https://doi.org/10.5281/zenodo.838260>
 {: .notice--primary}
 
 
