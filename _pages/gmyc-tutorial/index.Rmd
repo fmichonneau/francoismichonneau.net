@@ -310,9 +310,9 @@ You will need to repeat this operation for the other 2 XML files
 > we are providing you with the output files for each of these analyses. Please
 > make sure that you save these files in their appropriate folders:
 >
-> - Yule: [yule.log]({{ site.baseurl}}/assets/gmyc-tutorial/yule.log){: .btn .btn--info}  [yule.trees]({{ site.baseurl}}/assets/gmyc-tutorial/yule.trees){: .btn .btn--success}
-> - Constant Coalescent: [constant_coalescent.log]({{ site.baseurl}}/assets/gmyc-tutorial/constant_coalescent.log){: .btn .btn--info}  [constant_coalescent.trees]({{ site.baseurl}}/assets/gmyc-tutorial/constant_coalescent.trees){: .btn .btn--success}
-> - Relaxed clock: [relaxed_clock.log]({{ site.baseurl}}/assets/gmyc-tutorial/relaxed_clock.log){: .btn .btn--info}  [relaxed_clock.trees]({{ site.baseurl}}/assets/gmyc-tutorial/relaxed_clock.trees){: .btn .btn--success}
+> - Yule: [yule.log]({{ site.baseurl }}/assets/gmyc-tutorial/yule.log){: .btn .btn--info}  [yule.trees]({{ site.baseurl}}/assets/gmyc-tutorial/yule.trees){: .btn .btn--success}
+> - Constant Coalescent: [constant_coalescent.log]({{ site.baseurl }}/assets/gmyc-tutorial/constant_coalescent.log){: .btn .btn--info}  [constant_coalescent.trees]({{ site.baseurl }}/assets/gmyc-tutorial/constant_coalescent.trees){: .btn .btn--success}
+> - Relaxed clock: [relaxed_clock.log]({{ site.baseurl }}/assets/gmyc-tutorial/relaxed_clock.log){: .btn .btn--info}  [relaxed_clock.trees]({{ site.baseurl }}/assets/gmyc-tutorial/relaxed_clock.trees){: .btn .btn--success}
 {: .notice--warning}
 
 ## Visualizing the posterior with Tracer
@@ -325,7 +325,7 @@ them.
 Start the Tracer program, and open one of your files (`File` > `Import Trace
 file`). For instance for the `yule.log`, it should like:
 
-![Tracer screenshot]({{ site.baseurl }}/assets/gmyc-tutorial/gmyc_tracer_screenshot.png)
+![Tracer screenshot](https://francoismichonneau.net/assets/gmyc-tutorial/gmyc_tracer_screenshot.png)
 
 The exact numbers might differ for your analysis, as the results from a Bayesian
 inference are obtained through random sampling, and they may differ slightly
