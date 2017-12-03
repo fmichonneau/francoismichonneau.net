@@ -6,7 +6,7 @@ type: post
 published: true
 categories: ["Hacking"]
 tags: ["advent of code"]
-excerpt: "Solution for Advent of Code"
+excerpt: "Solution for Day 2 of Advent of Code"
 ---
 
 * [Problem](http://adventofcode.com/2017/day/2)
