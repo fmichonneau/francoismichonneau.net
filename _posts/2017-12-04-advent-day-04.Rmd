@@ -1,0 +1,50 @@
+---
+layout: single
+title: "Advent of Code: Day 4"
+date: 2017-12-04
+type: post
+published: true
+categories: ["Hacking"]
+tags: ["advent of code"]
+excerpt: "Solution for Day 4 of Advent of Code"
+---
+
+* [Problem](http://adventofcode.com/2017/day/4)
+
+Today's puzzle is easier than yesterday's.
+
+## Part 1
+
+Here I use `strsplit()` to create vector of words from each passphrase, and use the combination `any(duplicated())` to detect passphrases that contain duplicated words
+
+```{r}
+
+passphrases <- readLines("advent-data/2017-12-04-day4-data.txt")
+passphrases <- passphrases[nzchar(passphrases)]
+
+is_valid_passphrase <-  function(x) {
+    x <- unlist(strsplit(x, " "))
+    !any(duplicated(x))
+}
+
+n_valid <- sum(vapply(passphrases, is_valid_passphrase, logical(1)))
+n_valid
+```
+
+
+## Part 2
+
+Pretty similar as in part one, except that first, the words need to be sorted in alphabetical order to detect the anagram duplicates.
+
+```{r}
+
+is_valid_passphrase2 <- function(x) {
+    x <- unlist(strsplit(x, " "))
+    sorted_x <- vapply(x, function(.x)
+        paste0(sort(unlist(strsplit(.x, ""))), collapse = ""),
+        character(1))
+    !any(duplicated(sorted_x))
+}
+
+n_valid2 <- sum(vapply(passphrases, is_valid_passphrase2, logical(1)))
+n_valid2
