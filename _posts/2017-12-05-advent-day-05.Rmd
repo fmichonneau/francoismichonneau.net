@@ -1,0 +1,58 @@
+---
+layout: single
+title: "Advent of Code: Day 5"
+date: 2017-12-05
+type: post
+published: true
+categories: ["Hacking"]
+tags: ["advent of code"]
+excerpt: "Solution for Day 5 of Advent of Code"
+---
+
+* [Problem](http://adventofcode.com/2017/day/5)
+
+
+
+## Part 1
+
+```{r}
+maze_data <- scan("advent-data/2017-12-05-advent-day5.txt")
+
+escape_maze <- function(maze) {
+    i <- 1
+    steps <- 0
+    while (i <=  length(maze)) {
+        maze[i] <- maze[i] + 1
+        i <- (maze[i] - 1) + i
+        steps <- steps + 1
+
+    }
+    steps
+}
+
+escape_maze(c(0, 3, 0, 1, -3))
+escape_maze(maze_data)
+
+```
+
+## Part 2
+
+```{r}
+escape_maze2 <- function(maze) {
+    i <- 1
+    steps <- 0
+    while (i <=  length(maze)) {
+        if (maze[i] >= 3)
+            chg <- -1
+        else chg <- 1
+        maze[i] <- maze[i] + chg
+        i <- (maze[i] - chg) + i
+        steps <- steps + 1
+    }
+    steps
+}
+
+escape_maze2(c(0, 3, 0, 1, -3))
+escape_maze2(maze_data)
+
+```
