@@ -25,7 +25,6 @@ escape_maze <- function(maze) {
         maze[i] <- maze[i] + 1
         i <- (maze[i] - 1) + i
         steps <- steps + 1
-
     }
     steps
 }
