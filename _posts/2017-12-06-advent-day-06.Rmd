@@ -68,8 +68,8 @@ count_cycles <- function(input) {
 }
 
 
-count_cyles(c(0, 2, 7, 0))
-count_cyles(puzzle_input)
+count_cycles(c(0, 2, 7, 0))
+count_cycles(puzzle_input)
 
 
 ```
