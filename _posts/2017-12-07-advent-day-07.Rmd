@@ -1,0 +1,117 @@
+---
+layout: single
+title: "Advent of Code: Day 7"
+date: 2017-12-07
+type: post
+published: true
+categories: ["Hacking"]
+tags: ["advent of code"]
+excerpt: "Solution for Day 7 of Advent of Code"
+---
+
+* [Problem](http://adventofcode.com/2017/day/7)
+
+To solve today's problem, I used igraph as I wanted to learn a little more about this package. A little hackish at times, but again it worked.
+
+## Part 1
+
+
+```{r}
+library(tidyverse)
+library(igraph)
+
+input <- "pbga (66)
+xhth (57)
+ebii (61)
+havc (66)
+ktlj (57)
+fwft (72) -> ktlj, cntj, xhth
+qoyq (66)
+padx (45) -> pbga, havc, qoyq
+tknk (41) -> ugml, padx, fwft
+jptl (61)
+ugml (68) -> gyxo, ebii, jptl
+gyxo (61)
+cntj (57)"
+
+parse_input <- function(x) {
+    strsplit(x, "\\n")[[1]] %>% 
+        strsplit(" -> ") %>% 
+        map_df(function(.x) {
+            if (length(.x) == 1)
+                tibble(ancestor = .x)
+            else tibble(ancestor = .x[1],
+                        descendant = .x[2])
+        }) %>% 
+        separate(ancestor, c("ancestor", "weight"), sep = " ") %>%
+        mutate(weight = gsub("\\(|\\)", "", weight)) %>%
+        mutate(descendant = strsplit(descendant, ", ")) %>%
+        unnest() %>%
+        select(ancestor, descendant, weight)
+}
+
+get_tree <- function(input) {
+    tr_str <- parse_input(input)
+    graph_from_data_frame(d = filter(tr_str, !is.na(descendant)))
+}
+
+get_root <- function(input) {
+    g <- get_tree(input)
+    deg <- degree(g, mode = "in")
+    names(deg[deg == 0])
+}
+
+get_root(input)
+
+puzzle_input <- readLines("advent-data/2017-12-07-advent-day7.txt") %>%
+    paste(collapse = "\n")
+
+get_root(puzzle_input)
+```
+
+## Part 2
+
+```{r}
+
+node_degrees <- function(g) {
+    tibble(
+        node = names(V(g)),
+        depth = ego_size(g, vcount(g), mode = "out") - 1
+    )
+}
+
+weights_from_node <- function(node, g, d) {
+    sum(
+        as.numeric(d[d$ancestor %in%
+                     names(ego(g, vcount(g), node,
+                               mode="out", mindist=0)[[1]]),
+                     ]$weight)
+    )
+}
+
+get_inbalance <- function(input) {
+    g <- get_tree(input)
+    d <- parse_input(input) %>%
+        distinct(ancestor, weight) %>%
+        mutate(weight = as.numeric(weight))
+    
+    nd <- node_degrees(g) %>%
+        filter(depth > 0)
+
+    weights <- set_names(map(nd$node, function(x) {
+        nm <- names(ego(g, 1, x, mode = "out",
+                        mindist = 1)[[1]])
+        res <- map_dbl(nm, weights_from_node, g, d)
+        names(res) <- nm
+        res
+        }), nd$node)
+    inbalanced_node <- weights[map_lgl(weights, ~ n_distinct(.) ==  2L)]
+    diff_weight <- diff(range(inbalanced_node[[1]]))    
+    d$weight[d$ancestor == names(which.max(inbalanced_node[[1]]))] - diff_weight
+    
+}
+
+get_inbalance(input)
+get_inbalance(puzzle_input)
+
+```
