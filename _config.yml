@@ -132,6 +132,7 @@ exclude:
   - "*packrat*"
   - "*cache/"
   - "*_edit*"
+  - _posts/advent-data
 keep_files:
   - .git
   - .svn

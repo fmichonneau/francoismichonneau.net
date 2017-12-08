@@ -1,0 +1,72 @@
+---
+layout: single
+title: "Advent of Code: Day 8"
+date: 2017-12-08
+type: post
+published: true
+categories: ["Hacking"]
+tags: ["advent of code"]
+excerpt: "Solution for Day 8 of Advent of Code"
+---
+
+* [Problem](http://adventofcode.com/2017/day/8)
+
+
+When I first read the puzzle, I thought it would be a good way to deepen my knowledge of **`rlang`** and tidy evaluation. The variables kand the operations are going to be storred as strings and need to be evaluated. Because of the nature of the problem, I couldn't see a good way to vectorize the computation and resorted to using `purrrlyr::by_row`. Because the computations that happen for each row are contained in their own environment, I used the `<<-` operator.
+
+
+## Parts 1 and 2
+
+
+```{r}
+library(tidyverse)
+library(purrrlyr)
+
+raw_input <- "b inc 5 if a > 1
+a inc 1 if b < 5
+c dec -10 if a >= 1
+c inc -20 if c == 10"
+
+input <- read.table(text = raw_input, stringsAsFactors = FALSE)
+names(input) <- c("var", "dir", "amount", "if", "cond_var", "cond_test",
+                  "cond_val")
+input <- as_tibble(input)
+
+read_input <- function(f) {
+    out <- read.table(f, stringsAsFactors = FALSE)
+    names(out) <-  c("var", "dir", "amount", "if", "cond_var", "cond_test",
+                     "cond_val")
+    as_tibble(out)
+}
+
+process_registers <- function(input) {
+
+    ## create placeholder for all possible variables
+    rgstr <- unique(input$cond_var)
+    rgstr <- setNames(vector("integer", length(rgstr)),
+                      rgstr)
+
+    ## keep track of the max of the max for part 2
+    total_max <- 0
+    
+     input %>%
+         by_row(function(d) {
+            assign(d$cond_var, rgstr[[d$cond_var]])
+            test_res <- eval_tidy(sym(d$cond_test))(eval_tidy(sym(d$cond_var)), d$cond_val)
+            f <- switch(d$dir, inc = `+`, dec = `-`)
+            
+            if (test_res) {
+                rgstr[[d$var]] <<- f(rgstr[[d$var]], d$amount)
+            }
+            total_max <<- max(max(rgstr), total_max)
+         })
+
+    list(max_final = max(rgstr), max_seen = total_max)
+
+}
+
+puzzle_input <- read_input("advent-data/2017-12-08-advent-day8.txt")
+
+process_registers(input)
+process_registers(puzzle_input)
+```

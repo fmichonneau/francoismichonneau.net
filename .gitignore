@@ -16,3 +16,4 @@ _pages/gmyc-tutorial/cache/*
 *.Rprofile
 *.Rhistory
 _drafts/
+_posts/advent-data*
