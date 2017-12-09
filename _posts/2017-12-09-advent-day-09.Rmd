@@ -1,0 +1,126 @@
+---
+layout: single
+title: "Advent of Code: Day 9"
+date: 2017-12-09
+type: post
+published: true
+categories: ["Hacking"]
+tags: ["advent of code"]
+excerpt: "Solution for Day 9 of Advent of Code"
+---
+
+* [Problem](http://adventofcode.com/2017/day/9)
+
+{% raw %}
+
+## Part 1
+
+
+```{r}
+library(tidyverse)
+
+## remove the character following !
+rm_cancel <- function(x) {
+    gsub("!.{1}", "", x)
+}
+
+## remove anything in between < >
+rm_garbage <- function(x) {
+    gsub("<.*?>", "", x)    
+}
+
+## calculate the score: { have an increasing weight as they are getting nested
+## so we create a vector with a score of 1 when we encounter { and a score of -1
+## when we encounter }. The cumulative sum of the positions with a { will give
+## us the score.
+get_score <- function(x) {
+    x <- rm_cancel(x)
+    x <- rm_garbage(x)
+    x <- strsplit(x, "")[[1]]
+    pos <- integer(length(x))
+    pos[grep("\\{", x)] <- 1
+    pos[grep("\\}", x)] <- -1
+    sum(cumsum(pos)[grepl("\\{", x)])
+}
+
+
+## test rm_cancel
+test_cancel <- tribble(
+    ~ input, ~ output,
+    "<>",             "<>",
+    "<rnd, rnd>",     "<rnd, rnd>",
+    "<<<<>",          "<<<<>",
+    "<{!>}>",         "<{}>",
+    "<!!>",           "<>",
+    "<!!!>>",         "<>",
+    '<{o"i!a,<{i<a>', '<{o"i,<{i<a>')
+
+expect_true({
+    test_cancel %>%
+        mutate(res = rm_cancel(input),
+               test_res = res == output) %>%
+        pull(test_res) %>%
+        all()
+})
+
+## test rm_garbage
+test_grps <- tribble(
+    ~ input, ~ output, ~ n_grp, 
+    "{}",   "{}", 1,
+    "{{{}}}", "{{{}}}", 3,
+    "{{},{}}", "{{},{}}", 3,
+    "{{{},{},{{}}}}", "{{{},{},{{}}}}", 6,
+    "{<{},{},{{}}>}", "{}", 1,
+    "{<a>,<a>,<a>,<a>}", "{,,,}", 1,
+    "{{<a>},{<a>},{<a>},{<a>}}", "{{},{},{},{}}", 5,
+    "{{<!>},{<!>},{<!>},{<a>}}", "{{}}", 2
+)
+
+expect_true({
+    test_grps %>%
+        mutate(res = rm_garbage(rm_cancel(input)),
+               test_res = res == output) %>%
+        pull(test_res) %>%
+        all()    
+})
+
+## test get_score
+test_scores <- tribble(
+    ~input,  ~score, 
+    "{}",    1, 
+    "{{{}}}", 6, 
+    "{{},{}}", 5, 
+    "{{{},{},{{}}}}", 16, 
+    "{<a>,<a>,<a>,<a>}", 1,  
+    "{{<ab>},{<ab>},{<ab>},{<ab>}}",  9, 
+    "{{<!!>},{<!!>},{<!!>},{<!!>}}",  9, 
+    "{{<a!>},{<a!>},{<a!>},{<ab>}}", 3
+)
+
+expect_true(
+    test_scores %>%
+    mutate(res = map_dbl(input, ~ get_score(.)),
+           test_res = res == score) %>%
+    pull(test_res) %>% all()
+)
+
+## puzzle input
+puzzle_input <- readLines("advent-data/2017-12-09-advent-day9.txt")
+get_score(puzzle_input)
+
+```
+
+## Part 2
+
+We can't quite get the answer to this question with what we have because we fully remove the garbage, and we don't know how many times we do it, so there is no good way of just counting the number of characters within <>. Instead we use `gregexpr` that stores the match length of the regular expression, and remove 2 (for <>) to each value before getting the sum.
+
+```{r}
+garbage_size <- function(x) {
+    grbg <- gregexpr("<.*?>", rm_cancel(x))
+    sum(attr(grbg[[1]], "match.length") - 2)
+}
+
+garbage_size(puzzle_input)
+```
+
+{% endraw %}
