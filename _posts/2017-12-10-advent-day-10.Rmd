@@ -1,0 +1,87 @@
+---
+layout: single
+title: "Advent of Code: Day 10"
+date: 2017-12-10
+type: post
+published: true
+categories: ["Hacking"]
+tags: ["advent of code"]
+excerpt: "Solution for Day 10 of Advent of Code"
+---
+
+* [Problem](http://adventofcode.com/2017/day/10)
+
+# Part 1
+
+
+```{r}
+
+
+hash <- function(input, lgths) {
+    cur_pos <- 1
+    skip <- 0
+    for (i in seq_along(lgths)) {
+        indices <- cur_pos - 1 + seq_len(lgths[i])
+        indices <- ifelse(indices > length(input),
+                          indices - length(input),
+                          indices)
+        if (any(indices == 0) ||  any(indices < 0)) browser()
+        input[indices] <- rev(input[indices])
+        cur_pos <- cur_pos + lgths[i] + skip
+        if (cur_pos  > length(input)) {
+            cur_pos <- cur_pos - length(input)
+        }
+        skip <- skip + 1
+    }
+    prod(input[1:2])
+}
+
+## test
+test_lgths <- c(3, 4, 1, 5)
+hash(0:4, test_lgths)
+
+## puzzle
+puzzle_lengths <- as.numeric(
+    strsplit("88,88,211,106,141,1,78,254,2,111,77,255,90,0,54,205", ",")[[1]]
+)
+hash(0:255, puzzle_lengths)
+
+
+```
+
+# Part 2
+
+```{r}
+puzzle_bytes <- strtoi(charToRaw("88,88,211,106,141,1,78,254,2,111,77,255,90,0,54,205"), 16L)
+to_add <- as.numeric(strsplit("17, 31, 73, 47, 23", ", ")[[1]])
+puzzle_bytes <- c(puzzle_bytes, to_add)
+
+split_by_n <- function(x, n, ...) {
+    split(x, ceiling(seq_along(x)/n), ...) 
+}
+
+hash2 <- function(input, lgths) {
+    skip <- 0
+    cur_pos <- 1
+    for (j in 1:64) {
+        for (i in seq_along(lgths)) {
+            indices <- cur_pos - 1 + seq_len(lgths[i])
+            prev_indices <- indices
+            indices[indices > length(input)] <-
+                indices[indices > length(input)] - length(input)
+            input[indices] <- rev(input[indices])
+            cur_pos <- cur_pos + lgths[i] + skip
+            while (cur_pos  > length(input)) {
+                cur_pos <- cur_pos - length(input)
+            }
+            skip <- skip + 1
+        }
+    }
+    input <- split_by_n(input, 16)
+    res <- lapply(input, function(x) Reduce(bitwXor, x))
+    res <- vapply(res, function(x) sprintf("%.2x", x), character(1))
+    paste(res, collapse = "")    
+}
+
+hash2(0:255, puzzle_bytes)
+```
