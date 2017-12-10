@@ -25,7 +25,6 @@ hash <- function(input, lgths) {
         indices <- ifelse(indices > length(input),
                           indices - length(input),
                           indices)
-        if (any(indices == 0) ||  any(indices < 0)) browser()
         input[indices] <- rev(input[indices])
         cur_pos <- cur_pos + lgths[i] + skip
         if (cur_pos  > length(input)) {
