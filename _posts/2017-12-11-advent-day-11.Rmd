@@ -1,0 +1,88 @@
+---
+layout: single
+title: "Advent of Code: Day 11"
+date: 2017-12-11
+type: post
+published: true
+categories: ["Hacking"]
+tags: ["advent of code"]
+excerpt: "Solution for Day 11 of Advent of Code"
+---
+
+* [Problem](http://adventofcode.com/2017/day/11)
+
+# Part 1
+
+
+```{r}
+get_steps <- function(coords) {
+    coords <- strsplit(coords, ",")[[1]]
+    tibble(coords = coords) %>%
+        mutate(long = case_when(
+                   coords == "n"  ~   0, 
+                   coords == "ne" ~  .5, 
+                   coords == "nw" ~ -.5, 
+                   coords == "s"  ~   0, 
+                   coords == "se" ~  .5, 
+                   coords == "sw" ~ -.5
+               ),
+               lat = case_when(
+                   coords == "n"  ~   1,   
+                   coords == "ne" ~  .5,
+                   coords == "nw" ~  .5,
+                   coords == "s"  ~  -1,
+                   coords == "se" ~ -.5,
+                   coords == "sw" ~ -.5
+               ))
+    
+}
+
+count_steps <- function(steps) {
+    steps %>%
+        summarize(
+            long_steps = sum(long),
+            lat_steps = sum(lat)
+        ) %>%
+        abs() %>%
+        sum()
+}
+
+"ne,ne,ne" %>%
+    get_steps() %>% 
+    count_steps()
+
+"ne,ne,sw,sw" %>%
+    get_steps() %>%
+    count_steps()
+
+"ne,ne,s,s" %>%
+    get_steps() %>%
+    count_steps()
+
+"se,sw,se,sw,sw" %>%
+    get_steps() %>%
+    count_steps()
+
+puzzle_input <- readLines("advent-data/2017-12-11-advent-day11.txt")
+puzzle_input %>%
+    get_steps() %>%
+    count_steps()
+```
+
+## Part 2
+
+```{r}
+max_steps <- function(steps) {
+    steps %>%
+        mutate(dist_long = cumsum(long),
+               dist_lat = cumsum(lat), 
+               dist = abs(dist_long) + abs(dist_lat)) %>%
+        arrange(desc(dist)) %>%
+        slice(1)
+}
+
+
+puzzle_input %>%
+    get_steps() %>%
+    max_steps()
+```
