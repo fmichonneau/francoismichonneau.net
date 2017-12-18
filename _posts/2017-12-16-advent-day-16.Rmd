@@ -1,0 +1,94 @@
+---
+layout: single
+title: "Advent of Code: Day 16"
+date: 2017-12-16
+type: post
+published: true
+categories: ["Hacking"]
+tags: ["advent of code"]
+excerpt: "Solution for Day 16 of Advent of Code"
+---
+
+* [Problem](http://adventofcode.com/2017/day/16)
+
+
+# Part 1
+
+
+```{r, eval=FALSE}
+
+spin <- function(x, i) {
+    i <- as.numeric(i)
+    c(tail(x, i), head(x, -i))
+}
+
+exchange <- function(x, i, j) {
+    i <- as.numeric(i)
+    j <- as.numeric(j)
+    ox <- x
+    x[i+1] <- ox[j+1]
+    x[j+1] <- ox[i+1]
+    x
+}
+
+partner <- function(x, a, b) {
+    i <- match(a, x)
+    j <- match(b, x)
+    exchange(x, i-1, j-1)
+}
+
+puzzle_input <- readLines("advent-data/2017-12-16-advent-day16.txt")
+
+
+parse_input <- function(input) {
+    ii <- strsplit(input, ",")[[1]]
+    data_frame(
+        move = substr(ii, 1, 1),
+        coords = substr(ii, 2, nchar(ii))
+    ) %>%
+        mutate(coords_split = map(coords, ~ strsplit(., "/")[[1]])) %>%
+        mutate(fxn = case_when(
+                   move == "s" ~ "spin", 
+                   move == "x" ~ "exchange",
+                   move == "p" ~ "partner"
+               ))
+
+}
+
+dance <- function(input) {
+    inst <- parse_input(input)
+    init <- letters[1:16]
+
+    for (i in seq_len(nrow(inst))) {
+        init <- invoke_map(inst$fxn[i], inst$coords_split[i], x = init)[[1]]
+    }
+    init
+}
+
+paste(dance(puzzle_input), collapse = "")
+```
+
+
+# Part 2
+
+```{r}
+
+dance2 <- function(input) {
+    inst <- parse_input(input)
+    init <- letters[1:16]
+    pos <- init
+    for (j in 1:40) {
+        for (i in seq_len(nrow(inst))) {
+            pos <- invoke_map(inst$fxn[i], inst$coords_split[i], x = pos)[[1]]
+        }
+        if (all(pos == init)) {
+            message("j = ", j)
+            break
+        }
+    }
+    pos
+}
+
+paste(dance2(puzzle_input), collapse = "")
+
+```

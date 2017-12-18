@@ -1,0 +1,66 @@
+---
+layout: single
+title: "Advent of Code: Day 17"
+date: 2017-12-17
+type: post
+published: true
+categories: ["Hacking"]
+tags: ["advent of code"]
+excerpt: "Solution for Day 17 of Advent of Code"
+---
+
+* [Problem](http://adventofcode.com/2017/day/17)
+
+
+# Part 1
+
+
+```{r, eval=FALSE}
+
+pos_to_idx <- function(x, l) {
+    ifelse(x %% l == 0L, l, x %% l)
+}
+
+insert <- function(x, i, new) {    
+    res <- c(x[1:i], new)
+    if ((i + 1) <=  length(x)) {
+        res <- c(res, x[(i+1):length(x)])
+    }
+    res
+}
+
+spiral <- function(step, rounds) {
+    res <- 0
+    i <- 1
+    for (j in 1:(rounds + 1)) {
+        res <- insert(res, i, j)
+        i <- pos_to_idx(i + 1 + step, length(res))
+    }
+    res
+}
+
+res <- spiral(314, 2017)
+res[which(res == 2017) + 1]
+
+```
+
+# Part 2
+
+```{r}
+spiral2 <- function(step, rounds) {
+    res <- 0
+    i <- l <- 1
+    for (j in 1:(rounds + 1)) {
+        if (i == 1) {
+            res[2] <- j
+        }
+        l <- l + 1
+        i <- pos_to_idx(i + 1 + step, l)
+    }
+    res
+}
+
+
+res2 <- spiral2(314, 50e6)
+res2[2]
+```
