@@ -1,0 +1,108 @@
+---
+layout: single
+title: "Advent of Code: Day 18"
+date: 2017-12-18
+type: post
+published: true
+categories: ["Hacking"]
+tags: ["advent of code"]
+excerpt: "Solution for Day 18 of Advent of Code"
+---
+
+* [Problem](http://adventofcode.com/2017/day/18)
+
+Only 1 star for me today :(
+
+# Part 1
+
+
+```{r}
+library(readr)
+
+.get <- function(x, envir) {
+    if (exists(x, envir = envir))
+        get(x, envir = envir)
+    else 0
+}
+
+snd <- function(note, ..., e) {
+    freq <- .get(note, envir = e)
+    res <- setNames(freq, note)
+    assign("last_played", res, envir = e)
+}
+
+set <- function(note, freq, e) {
+    freq <- guess_num(freq, e)
+    assign(note, freq, envir = e)
+}
+
+guess_num <- function(freq, e) {
+    if (!grepl("[0-9]", freq)) {
+        freq <- .get(freq, envir = e)
+    } else freq <- as.numeric(freq)
+    freq
+}
+
+add <- function(note, freq, e) {
+    res <- .get(note, envir = e)
+    freq <- guess_num(freq, e)
+    set(note, res + freq, e)
+}
+
+mul <- function(note, freq, e) {
+    res <- .get(note, envir = e)
+    freq <- guess_num(freq, e)
+    set(note, res * freq, e)
+}
+
+mod <- function(note, freq, e) {
+    res <- .get(note, envir = e)
+    freq <- guess_num(freq, e)
+    set(note, res %% freq, e)
+}
+
+rcv <- function(note, ..., e) {
+    if (note > 0)
+        .get("last_played", envir = e)
+}
+
+
+play_duet <- function(input) {
+    i <- 1
+    e <- new.env()
+    while (i <= nrow(input)) {
+        if (input$instruction[i] == "jgz") {
+            if (.get(input$note[i], envir = e) > 0) {
+                i <- i + guess_num(input$freq[i])
+                next
+            } else {
+                i <- i + 1
+                next
+            }
+        }
+
+        if (input$instruction[i] == "rcv" &&
+            .get(input$note[i], envir = e) > 0) {
+            return(get("last_played", envir = e))
+        }
+
+        invoke_map(input$instruction[i],
+                   input$note[i], input$freq[i], e = e)
+        i <- i + 1
+    }
+    
+}
+
+input <- read_delim("advent-data/2017-12-18-test-data.txt",
+                    delim = " ", col_names = FALSE) %>%
+    set_names(c("instruction", "note", "freq")) 
+
+puzzle_input <- read_delim("advent-data/2017-12-18-data.txt",
+                           delim = " ", col_names = FALSE) %>%
+    set_names(c("instruction", "note", "freq"))
+
+play_duet(input)
+play_duet(puzzle_input)
+
+```
+
