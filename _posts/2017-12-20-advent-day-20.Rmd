@@ -1,0 +1,104 @@
+---
+layout: single
+title: "Advent of Code: Day 20"
+date: 2017-12-20
+type: post
+published: true
+categories: ["Hacking"]
+tags: ["advent of code"]
+excerpt: "Solution for Day 20 of Advent of Code"
+---
+
+* [Problem](http://adventofcode.com/2017/day/20)
+
+
+# Part 1
+
+
+```{r}
+library(tidyverse)
+
+input <- read_delim("advent-data/2017-12-20-data.txt", delim = ",",
+                    col_names = FALSE) %>%
+    mutate_all(~ gsub("[a-z]=<|>", "", .)) %>%
+    mutate_all(as.numeric) %>%
+    set_names(map(c("p", "v", "a"), ~ paste0(., c("X", "Y", "Z"))) %>%
+              combine()) %>%
+    mutate(p = row_number() - 1) %>%
+    select(p, everything())
+
+new_coords <- function(p, pX, pY, pZ, vX, vY, vZ, aX, aY, aZ) {
+    chg <- c(vX, vY, vZ) + c(aX, aY, aZ)
+    list(
+        p = p, 
+        pX = pX + chg[1],
+        pY = pY + chg[2],
+        pZ = pZ + chg[3],
+        vX = chg[1],
+        vY = chg[2],
+        vZ = chg[3],
+        aX = aX,
+        aY = aY,
+        aZ = aZ
+    )
+}
+
+test <- tribble(
+    ~p, ~pX, ~pY, ~pZ, ~vX, ~vY, ~vZ, ~aX, ~aY, ~aZ,
+    0, 3, 0, 0, 2, 0, 0, -1, 0, 0,
+    1, 4, 0, 0, 0, 0, 0, -2, 0, 0
+)
+
+
+swarm <- function(pmat, n) {
+    for (i in seq_len(n)) {
+        pmat <- pmap_df(pmat, new_coords)
+    }
+    pmat
+}
+
+part1 <- swarm(input, n = 500)
+
+part1 %>%
+    mutate(dist = pmap_dbl(., function(pX, pY, pZ, ...)
+        sum(abs(c(pX, pY, pZ))))) %>%
+    filter(dist == min(dist)) %>%
+    slice(1) %>%
+    pull(p)
+
+
+```
+
+# Part 2
+
+```{r}
+
+swarm_no_collision <- function(pmat) {
+    np <- nrow(pmat)
+    nc <- 0   # number of rounds without collision
+    i <- 1
+    ## we stop when we did 100 rounds without seeing any collisions
+    while(nc < 100 && i < 10000) {
+        pmat <- pmap_df(pmat, new_coords)
+        ## remove any duplicated coordinates
+        dup_part <- count(pmat, pX, pY, pZ)
+        pmat <- anti_join(pmat, filter(dup_part, n > 1),
+                          by = c("pX", "pY", "pZ"))
+        ## if we removed some rows, we update the number of rows
+        ## and we reset the number of rounds without any seen collisions
+        if (nrow(pmat) < np) {
+            np <- nrow(pmat)
+            nc <- 0
+        } else {
+            nc <- nc + 1
+        }
+        i <- i + 1
+    }
+    pmat
+}
+
+part2 <- swarm_no_collision(input)
+
+nrow(part2)
+
+```
