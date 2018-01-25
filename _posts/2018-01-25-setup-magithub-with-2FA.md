@@ -1,6 +1,6 @@
 ---
 layout: single
-title: 'How to setup magithub if you have GitHub 2-factor authentication enabled?'
+title: "How to setup magithub if you have GitHub 2-factor authentication enabled?"
 date: 2017-01-25
 type: post
 published: true
@@ -9,6 +9,7 @@ categories:
 - Hacking
 tags:
 - emacs
+excerpt: "The steps involved to create the authinfo.gpg file used by magithub when you have 2FA enabled on GitHub"
 ---
 
 If you are trying to set up `magithub` when you have 2 factor authentication enabled, here are the steps you need to take:
