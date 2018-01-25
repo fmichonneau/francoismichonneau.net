@@ -1,6 +1,6 @@
 ---
 layout: single
-title: 'How to setup magithub if you have GitHub 2-factor authentication enabled?"
+title: 'How to setup magithub if you have GitHub 2-factor authentication enabled?'
 date: 2017-01-25
 type: post
 published: true
