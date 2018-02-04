@@ -56,7 +56,9 @@ $youtube-color:  $text-color; /*#bb0000 !default;*/
 $xing-color:  $text-color; /*#006567 !default;*/
 
 
-
+a {
+    text-decoration: none;
+}
 
 .page__footer {
     border-top: solid $gray 2px;
