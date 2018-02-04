@@ -9,18 +9,6 @@ categories:
 - Hacking
 tags:
 - phylogenetics
-meta:
-  _edit_last: '9'
-  _syntaxhighlighter_encoded: '1'
-  _wpas_done_all: '1'
-  _wpas_skip_6113480: '1'
-  _wpcom_is_markdown: '1'
-author:
-  login: francois
-  email: francois.michonneau@gmail.com
-  display_name: François
-  first_name: François
-  last_name: Michonneau
 ---
 
 <a href="https://code.google.com/p/beagle-lib" title="BEAGLE website"

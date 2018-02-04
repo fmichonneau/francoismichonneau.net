@@ -8,18 +8,6 @@ status: publish
 categories:
 - Spineless Science
 tags: []
-meta:
-  blogger_blog: spinelessscience.blogspot.com
-  blogger_author: François Michonneau
-  blogger_permalink: "/2009/12/tonna-perdix-eating-stichopus-sp.html"
-  _blogger_self: https://www.blogger.com/feeds/2274824209398755639/posts/default/6130060720822219884
-  _edit_last: '9'
-author:
-  login: francois
-  email: francois.michonneau@gmail.com
-  display_name: François
-  first_name: François
-  last_name: Michonneau
 ---
 Not many animals are known to eat sea cucumbers. There is a good reason. Most of
 them have chemicals in their body, which probably doesn't taste too good but

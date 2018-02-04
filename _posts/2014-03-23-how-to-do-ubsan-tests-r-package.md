@@ -10,20 +10,6 @@ categories:
 - Hacking
 tags:
 - R
-meta:
-  _edit_last: '9'
-  _syntaxhighlighter_encoded: '1'
-  _wpas_done_all: '1'
-  _wp_old_slug: how-to-do-ubsan-tests-on-a-r-package-that-includes-cc-code-before-submitting-to-cran
-  _wpas_skip_6113473: '1'
-  _wpas_skip_6113480: '1'
-  _wpcom_is_markdown: '1'
-author:
-  login: francois
-  email: francois.michonneau@gmail.com
-  display_name: François
-  first_name: François
-  last_name: Michonneau
 ---
 
 After a trying to submit <a

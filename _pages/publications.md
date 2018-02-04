@@ -8,12 +8,6 @@ permalink: /publications/
 status: publish
 categories: []
 tags: []
-author:
-  login: francois
-  email: francois.michonneau@gmail.com
-  display_name: François
-  first_name: François
-  last_name: Michonneau
 scihub: http://sci-hub.cc
 doi: https://doi.org
 github: https://github.com

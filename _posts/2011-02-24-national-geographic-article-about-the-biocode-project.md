@@ -8,18 +8,6 @@ status: publish
 categories:
 - Spineless Science
 tags: []
-meta:
-  blogger_blog: spinelessscience.blogspot.com
-  blogger_author: François Michonneau
-  blogger_permalink: "/2011/02/national-geographic-article-about.html"
-  _blogger_self: https://www.blogger.com/feeds/2274824209398755639/posts/default/8402302855479890372
-  _edit_last: '9'
-author:
-  login: francois
-  email: francois.michonneau@gmail.com
-  display_name: François
-  first_name: François
-  last_name: Michonneau
 ---
 <p>National geographic just published online a series of articles and photos illustrating the Biocode project. This initiative seeks to document all the species living on Moorea, a small island in French Polynesia. Our lab is involved with a big chunk of this diversity as we are processing all the marine invertebrates. The originality of this project is not only its comprehensiveness but also that we are archiving a unique DNA identifier for each species (the barcode).</p>
 <p>This is really useful for instance to figure out what a fish eats. By sequencing the DNA found in its gut, and by matching it against the database of known DNA sequences, it becomes possible to determine what is its favorite food.</p>
