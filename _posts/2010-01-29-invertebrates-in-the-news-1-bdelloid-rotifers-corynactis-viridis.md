@@ -8,17 +8,6 @@ status: publish
 categories:
 - Spineless Science
 tags: []
-meta:
-  blogger_blog: spinelessscience.blogspot.com
-  blogger_author: François Michonneau
-  blogger_permalink: "/2010/01/invertebrates-in-news-1-bdelloid.html"
-  _blogger_self: https://www.blogger.com/feeds/2274824209398755639/posts/default/822168708409884387
-author:
-  login: francois
-  email: francois.michonneau@gmail.com
-  display_name: François
-  first_name: François
-  last_name: Michonneau
 ---
 
 To keep you entertained about invertebrates when we are not in the field, I will
