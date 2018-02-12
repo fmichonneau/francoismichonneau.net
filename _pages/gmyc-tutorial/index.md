@@ -354,12 +354,9 @@ produce a summary tree.
 > If you had trouble generating the trees with treeannotator, you can download
 > the summarized trees below
 >
-> - Yule: [yule_tree.nex]({{ site.baseurl
-> }}/assets/gmyc-tutorial/yule_tree.nex){: .btn .btn--info}
-> - Constant Coalescent: [constant_coalescent_tree.nex]({{ site.baseurl
-> }}/assets/gmyc-tutorial/constant_coalescent_tree.nex){: .btn .btn--info}
-> - Relaxed Clock: [relaxed_coalescent_tree.nex]({{ site.baseurl
-> }}/assets/gmyc-tutorial/relaxed_clock_tree.nex){: .btn .btn--info}
+> - Yule: [yule_tree.nex]({{ site.baseurl }}/assets/gmyc-tutorial/yule_tree.nex){: .btn .btn--info}
+> - Constant Coalescent: [constant_coalescent_tree.nex]({{ site.baseurl  }}/assets/gmyc-tutorial/constant_coalescent_tree.nex){: .btn .btn--info}
+> - Relaxed Clock: [relaxed_coalescent_tree.nex]({{ site.baseurl }}/assets/gmyc-tutorial/relaxed_clock_tree.nex){: .btn .btn--info}
 {: .notice--warning}
 
 

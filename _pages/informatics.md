@@ -8,16 +8,6 @@ status: publish
 permalink: /informatics/
 categories: []
 tags: []
-meta:
-  _wp_page_template: default
-  _edit_last: '9'
-  _wpcom_is_markdown: '1'
-author:
-  login: francois
-  email: francois.michonneau@gmail.com
-  display_name: François
-  first_name: François
-  last_name: Michonneau
 ---
 
 ## Scientific Software

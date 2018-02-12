@@ -5,15 +5,17 @@
 # For technical reasons, this file is *NOT* reloaded automatically when you use
 # `jekyll serve`. If you change this file, please restart the server process.
 
+minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+
 # Site Settings
-locale                   : "en"
+locale                   : "en-US"
 title                    : "François Michonneau"
 title_separator          : "|"
 name                     : "François Michonneau"
 description              :
 url                      : https://francoismichonneau.net # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
-gh_repo                  : https://github.com/fmichonneau/francoismichonneau.net
+repository               : fmichonneau/francoismichonneau.net
 teaser                   : # filename of teaser fallback teaser image placed in /images/, .e.g. "500x300.png"
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
@@ -28,12 +30,35 @@ comments:
     appid                :
     num_posts            : # 5 (default)
     colorscheme          : # "light" (default), "dark"
+staticman:
+  allowedFields          : # ['name', 'email', 'url', 'message']
+  branch                 : # "master"
+  commitMessage          : # "New comment."
+  filename               : # comment-{@timestamp}
+  format                 : # "yml"
+  moderation             : # true
+  path                   : # "/_data/comments/{options.slug}" (default)
+  requiredFields         : # ['name', 'email', 'message']
+  transforms:
+    email                : # "md5"
+  generatedFields:
+    date:
+      type               : # "date"
+      options:
+        format           : # "iso8601" (default), "timestamp-seconds", "timestamp-milliseconds"
+reCaptcha:
+  siteKey                :
+  secret                 :
+atom_feed:
+  path                   : # blank (default) uses feed.xml
+search                   : # true, false (default)
+search_full_content      : # true, false (default)
 
 # SEO Related
 google_site_verification :
 bing_site_verification   :
-alexa_site_verification  :
 yandex_site_verification :
+naver_site_verification  :
 
 # Social Sharing
 twitter:
@@ -70,7 +95,7 @@ google_ad_slot           :
 # Site Author
 author:
   name             : "François Michonneau"
-  avatar           : "michonneau.francois_square.jpg"
+  avatar           : "images/michonneau.francois_square.jpg"
   bio              : "Evolutionary Biologist and Biodiversity Scientist."
   location         : "University of Florida"
   email            : "francois.michonneau@gmail.com"
@@ -86,10 +111,10 @@ author:
   keybase          : "fmic"
   instagram        :
   lastfm           :
-  linkedin         :
+  linkedin         : "françois-michonneau-329bb6151"
   pinterest        :
   soundcloud       :
-  stackoverflow    : # http://stackoverflow.com/users/123456/username
+  stackoverflow    : "1113276/sinqueso" # http://stackoverflow.com/users/123456/username
   steam            :
   tumblr           :
   twitter          : "fmic_"
@@ -108,6 +133,7 @@ include:
 exclude:
   - "*.sublime-project"
   - "*.sublime-workspace"
+  - vendor
   - .asset-cache
   - .bundle
   - .jekyll-assets-cache
@@ -133,6 +159,8 @@ exclude:
   - "*cache/"
   - "*_edit*"
   - _posts/advent-data
+  - /docs # ignore Minimal Mistakes /docs
+  - /test # ignore Minimal Mistakes /test
 keep_files:
   - .git
   - .svn
@@ -160,16 +188,21 @@ kramdown:
   enable_coderay: false
   parse_block_html: true
 
+# Sass/SCSS
+sass:
+  sass_dir: _sass
+  style: compressed # http://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
+
 
 # Outputting
 permalink: /:year/:month/:title/
 paginate: 5 # amount of posts to show
 paginate_path: /page:num/
-timezone: # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
-# Plugins
-gems:
+# Plugins (previously gems:)
+plugins:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-gist
@@ -227,7 +260,8 @@ compress_html:
   ignore:
     envs: development
 
-#### Defaults
+
+# Defaults
 defaults:
   # _posts
   - scope:
@@ -252,4 +286,7 @@ defaults:
     values:
       layout: single
       author_profile: false
+      read_time: true
+      comments: # true
       share: true
+      related: true
