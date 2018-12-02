@@ -1,0 +1,92 @@
+---
+layout: single
+title: "Advent of Code 2018"
+date: 2018-12-01
+type: post
+published: true
+categories: ["Hacking"]
+tags: ["advent of code"]
+excerpt: "Solutions for the 2018 Advent of Code"
+---
+
+I'm going to try to complete the Advent of Code again this year. I'll put all the exercises I complete in this post.
+
+# Day 1
+
+```{r, cache=TRUE}
+library(tidyverse)
+
+
+## part 1
+readr::read_lines("advent-data/2018-12-01-day1.txt") %>%
+  as.numeric() %>%
+  sum()
+
+
+## part 2
+input <- readr::read_lines("advent-data/2018-12-01-day1.txt") %>%
+  as.numeric()
+
+already_seen <- function(input) {
+  all_seen <- numeric()
+  i <- 1
+
+  while (TRUE) {
+    v_sum <- cumsum(rep(input, i))
+    has_dup <- any(duplicated(v_sum))
+    if (has_dup) {
+      return(v_sum[which(duplicated(v_sum))[1]])
+    }
+    i <- i + 1
+  }
+  
+}
+
+already_seen(input)
+```
+
+# Day 2
+
+```{r, cache=TRUE}
+input <- readr::read_lines("advent-data/2018-12-02-day2.txt") 
+
+count_letters <- function(input) {
+
+  n_letters <- strsplit(input, "") %>%
+    purrr::map(table)
+  
+  has_2 <- function(x) {
+    as.integer(any(x == 2))
+  }
+  has_3 <- function(x) {
+    as.integer(any(x == 3))
+  }
+
+  has_2_vec <- purrr::map_int(n_letters, has_2)
+  has_3_vec <- purrr::map_int(n_letters, has_3)
+
+  sum(has_2_vec) * sum(has_3_vec)
+}
+
+
+all_in <- crossing(in1 = input, in2 = input) %>%
+  mutate(
+    split1 = strsplit(in1, ""),
+    split2 = strsplit(in2, ""),     
+    n_diff = map2_int(split1, split2, ~ sum(.x != .y))    
+  )
+
+all_in %>%
+  filter(n_diff != 0) %>%  
+  filter(n_diff == 1) %>%
+  slice(1) %>%
+  mutate(word = map2_chr(
+    split1,
+    split2,
+    function(x, y) {
+      x <- unlist(x)
+      y <- unlist(y)
+      paste(x[x == y], collapse = "")
+    })) %>%
+  pull(word)
+```
