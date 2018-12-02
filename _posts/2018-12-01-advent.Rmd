@@ -11,6 +11,9 @@ excerpt: "Solutions for the 2018 Advent of Code"
 
 I'm going to try to complete the Advent of Code again this year. I'll put all the exercises I complete in this post.
 
+Links to the puzzles are at https://adventofcode.com/2018
+
+
 # Day 1
 
 ```{r, cache=TRUE}
@@ -50,6 +53,7 @@ already_seen(input)
 ```{r, cache=TRUE}
 input <- readr::read_lines("advent-data/2018-12-02-day2.txt") 
 
+## part 1
 count_letters <- function(input) {
 
   n_letters <- strsplit(input, "") %>%
@@ -68,7 +72,9 @@ count_letters <- function(input) {
   sum(has_2_vec) * sum(has_3_vec)
 }
 
+count_letters(input)
 
+## part 2
 all_in <- crossing(in1 = input, in2 = input) %>%
   mutate(
     split1 = strsplit(in1, ""),
