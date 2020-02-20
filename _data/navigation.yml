@@ -12,8 +12,5 @@ main:
   - title: "Informatics"
     url: /informatics/
 
-  - title: "Students"
-    url: /students/
-
   - title: "Photos"
     url: /photos/

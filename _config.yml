@@ -96,8 +96,8 @@ google_ad_slot           :
 author:
   name             : "François Michonneau"
   avatar           : "images/michonneau.francois_square.jpg"
-  bio              : "Evolutionary Biologist and Biodiversity Scientist."
-  location         : "University of Florida"
+  bio              : "Directory of Technology, The Carpentries"
+  location         : #"The Carpentries"
   email            : "francois.michonneau@gmail.com"
   uri              :
   bitbucket        :
