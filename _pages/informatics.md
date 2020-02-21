@@ -12,9 +12,6 @@ tags: []
 
 ## Scientific Software
 
-I devote part of my research to the development of tools for managing and
-analyzing biodiversity data and phylogenetic information.
-
 ### rotl
 
 <p><code><a href="https://github.com/fmichonneau/rotl/">rotl</a></code> provides an interface to the data from <a href="http://tree.opentreeoflife.org/">Open Tree of Life</a> project. <code>rotl</code> makes it easy to have in memory a phylogenetic tree for a given subset of species, or trees from published studies that are stored in Open Tree.</p>
@@ -39,12 +36,14 @@ our [paper](https://doi.org/10.1111/2041-210X.12593)
 
 ## Other Software
 
+### foghorn
+
+[`foghorn`](https://github.com/fmichonneau/foghorn) gives access to the results
+of the CRAN check results directly in your R terminal.
+
+
 ### riceware
 
 [`riceware`](https://github.com/fmichonneau/riceware) provides an implementation
 of the Diceware method for strong password generation.
 
-### foghorn
-
-[`foghorn`](https://github.com/fmichonneau/foghorn) gives access to the results
-of the CRAN check results directly in your R terminal.
