@@ -165,5 +165,15 @@
       </section>
     {% when "custom" %}
       <section id="custom-comments"></section>
+      {% when "utterances" %}
+      <section id="utterances-comments">
+      <script src="https://utteranc.es/client.js"
+        repo="https://github.com/fmichonneau/fm.net-comments"
+        issue-term="pathname"
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
+      </script>
+      </section>
   {% endcase %}
 </div>
