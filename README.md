@@ -1,1 +1,1 @@
-Repository for http://francoismichonneau.net
+Repository for https://francoismichonneau.net
