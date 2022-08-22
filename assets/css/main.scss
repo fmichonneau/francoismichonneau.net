@@ -64,10 +64,6 @@ a {
     border-top: solid $gray 2px;
 }
 
-@charset "utf-8";
-
-@import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
-@import "minimal-mistakes"; // main partials
 
 .language-r {
   border-left: 5px solid $info-color;
@@ -80,3 +76,10 @@ summary > p {
 .btn {
   color: $lighter-gray !important;
 }
+
+/* end of customization */
+
+@charset "utf-8";
+
+@import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
+@import "minimal-mistakes"; // main partials
