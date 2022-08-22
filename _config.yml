@@ -76,10 +76,6 @@ social:
   links: # An array of links to social media profiles
    - "https://github.com/fmichonneau"
    - "https://twitter.com/fmic_"
-   - "https://impactstory.org/fmic_"
-   - "https://plus.google.com/+FrancoisMichonneau/"
-   - "https://keybase.io/fmic"
-   - "http://instagram.com/fmic_/"
 
 # Analytics
 analytics:
@@ -95,9 +91,9 @@ google_ad_slot           :
 # Site Author
 author:
   name             : "François Michonneau"
-  avatar           : "images/michonneau.francois_square.jpg"
-  bio              : "Senior Director of Technology, The Carpentries"
-  location         : #"The Carpentries"
+  avatar           : "images/michonneau_francois.jpg"
+  bio              : "Lead Training Engineer, Voltron Data"
+  location         :
   email            : "francois.michonneau@gmail.com"
   uri              :
   bitbucket        :
@@ -108,13 +104,13 @@ author:
   foursquare       :
   github           : "fmichonneau"
   google_plus      :
-  keybase          : "fmic"
+  keybase          :
   instagram        :
   lastfm           :
-  linkedin         : "françois-michonneau-329bb6151"
+  linkedin         : "francois-michonneau"
   pinterest        :
   soundcloud       :
-  stackoverflow    : "1113276/sinqueso" # http://stackoverflow.com/users/123456/username
+  stackoverflow    :
   steam            :
   tumblr           :
   twitter          : "fmic_"
@@ -122,7 +118,6 @@ author:
   weibo            :
   xing             :
   youtube          :
-  impactstory      : "0000-0002-9092-966X"
   googlescholar    : "6wJ8BtAAAAAJ"
   orcid            : "0000-0002-9092-966X"
 
