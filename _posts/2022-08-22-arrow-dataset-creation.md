@@ -4,10 +4,15 @@ title: "Creating an Arrow dataset"
 date: 2022-08-22
 type: post
 published: true
+header:
+  overlay_image: /images/2022-08-22-lots-of-arrows.jpg
+  overlay_filter: 0.5
+  caption: "Photo by [Possessed Photograph](https://unsplash.com/@possessedphotography?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/arrows?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)"
 categories: ["Arrow Exploration"]
 tags: ["r", "arrow"]
 excerpt: "An exploration of the file formats that Arrow can read and write."
 ---
+
 
 ## Background
 
@@ -373,9 +378,10 @@ space on disk and would be more suitable for long-term storage. This is
 why large datasets like the NYC taxi data is distributed as a series of
 Parquet files.
 
-In the future, I might explore how using different variables for
-partitioning or how the number of files in the partitions affects the
-performance of the queries.
+In the future, I might explore how using different variables for partitioning or
+how the number of files in the partitions affects the performance of the
+queries. If you have other ideas of topics that you would me to explore, do not
+hesitate to leave a comment below.
 
 ## Going further
 
