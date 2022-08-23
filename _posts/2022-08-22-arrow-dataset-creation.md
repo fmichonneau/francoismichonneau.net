@@ -33,8 +33,6 @@ helpful as you are less constrained by the type of data you can start
 your analysis on. However, if you are building a dataset from scratch,
 which one should you choose?
 
-## The dataset
-
 To try to answer this question, we will be using the `{arrow}` R package
 to compare the amount of hard drive space these file formats use and the
 performance of a query in a multi-file dataset using these different
@@ -43,6 +41,8 @@ how best to optimize the partitioning of a dataset, rather it is a brief
 exploration of the tradeoffs that come with using the different datasets
 supported by Arrow. I also don’t explain the differences in the data
 structure of these different formats.
+
+## The dataset
 
 We will be using data from <http://cran-logs.rstudio.com/>. This site
 gives you access to the log files for all hits to the CRAN[^2] mirror
