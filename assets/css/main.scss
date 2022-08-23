@@ -73,8 +73,9 @@ summary > p {
   display: inline;
 }
 
-.btn {
-  color: $lighter-gray !important;
+.notice--primary {
+  color: $light-gray !important;
+  background-color: $darker-gray;
 }
 
 /* end of customization */

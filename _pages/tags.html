@@ -5,8 +5,12 @@ title: "Posts by Tags"
 author_profile: true
 ---
 
-<a href="{{ site.baseurl }}/blog/" class="btn btn--info">Blog posts by Year</a>
-<a href="{{ site.baseurl }}/categories/" class="btn btn--warning">Blog posts by Categories</a>
+
+<h2 class="archive__subtitle">See also:</h2>
+<ul>
+<li><a href="{{ site.baseurl }}/blog/">Posts by Year</a></li>
+<li><a href="{{ site.baseurl }}/categories/">Posts by Category</li>
+</ul>
 
 {% include base_path %}
 {% include group-by-array collection=site.posts field="tags" %}

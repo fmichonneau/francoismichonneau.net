@@ -9,9 +9,12 @@ author_profile: true
 {% include base_path %}
 {% include group-by-array collection=site.posts field="categories" %}
 
-<a href="{{ site.baseurl }}/blog/" class="btn btn--info">Blog posts by Year</a>
-<a href="{{ site.baseurl }}/tags/" class="btn btn--success">Blog posts by Tags</a>
 
+<h2 class="archive__subtitle">See also:</h2>
+<ul>
+<li><a href="{{ site.baseurl }}/blog/">Posts by Year</a></li>
+<li><a href="{{ site.baseurl }}/tags/">Posts by Tag</li>
+</ul>
 
 {% for category in group_names %}
   {% assign posts = group_items[forloop.index0] %}
