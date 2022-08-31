@@ -126,6 +126,7 @@ include:
 exclude:
   - "*.sublime-project"
   - "*.sublime-workspace"
+  - "assets/?*"
   - vendor
   - .asset-cache
   - .bundle
@@ -148,10 +149,14 @@ exclude:
   - README
   - tmp
   - "*.Rmd"
+  - "*/_posts/*.qmd"
+  - "*.qmd"
   - "*packrat*"
-  - "*cache/"
+  - "_posts/*_cache/**"
+  - "_posts/*_files/*"
   - "*_edit*"
   - _posts/advent-data
+  - _drafts/
   - /docs # ignore Minimal Mistakes /docs
   - /test # ignore Minimal Mistakes /test
 keep_files:
