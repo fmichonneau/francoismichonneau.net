@@ -192,8 +192,8 @@ bench::mark(
     # A tibble: 2 × 6
       expression          min   median `itr/sec` mem_alloc `gc/sec`
       <bch:expr>     <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-    1 parquet        150.85ms 161.18ms      6.04    7.91MB     0   
-    2 parquet_by_day   3.67ms   4.06ms    230.      4.28KB     6.52
+    1 parquet        139.43ms 143.66ms      6.62    7.91MB     0   
+    2 parquet_by_day   3.52ms   3.82ms    254.      4.28KB     6.45
 
 Even though there are more files to parse (76 vs. 3), loading the
 dataset with a parquet file per day is a bit faster.
@@ -342,10 +342,13 @@ more files in the dataset with one parquet file per day.
 
 This small example illustrates that it might be worth exploring how best
 to partition your dataset to benefit the most from the speed that Arrow
-brings to your queries. The variables you include in your queries have
-also a role to play when deciding how to partition your dataset, and it
-might be best to partition your dataset according to variables you use
-most often in your queries.
+brings to your queries. In this example, the partitioning that seemed
+the most “natural” based on the format the data is provided (one parquet
+file per day) is not the best to make queries run fast.
+
+The variables you include in your queries have also a role to play when
+deciding how to partition your dataset. It might be best to partition
+your dataset according to variables you use most often in your queries.
 
 The useR!2022 Arrow tutorial has a [convincing
 demonstration](https://arrow-user2022.netlify.app/data-storage.html#multi-file-data-sets)
