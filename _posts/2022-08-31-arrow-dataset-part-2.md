@@ -1,6 +1,6 @@
 ---
 title: "Creating an Arrow dataset (part 2)"
-excerpt: "How does partitioning impacts query performance?"
+excerpt: "How does partitioning impact query performance?"
 layout: "single"
 date: "2022-08-31"
 type: "post"
@@ -21,10 +21,10 @@ format:
 
 ## Background
 
-In this follow up post (see
+In this follow-up post (see
 [part 1]({% post_url 2022-08-22-arrow-dataset-creation %}) if you missed
-it), we will explore what happens to the performance if we read the
-files straight into Arrow instead of downloading them locally first?
+it), we will explore what happens to the query performance if we read
+the files straight into Arrow instead of downloading them locally first.
 
 ## Reading remote CSV files
 
@@ -33,14 +33,16 @@ In the first part, we first downloaded the compressed CSV files locally
 `open_dataset()` function on this set of files to make it available to
 Arrow.
 
-However, it is possible to bypass the local download, and instead import
-the files directly over an Internet connection using the
-`read_csv_arrow()` function and providing the file URL as the first
-argument. Once the file is loaded in memory, we can then write it to
-disk in the parquet format (based on what we learned in part 1).
+However, it is possible to bypass the local download. We can import the
+files directly over an Internet connection using the `read_csv_arrow()`
+function and providing the file URL as the first argument. Once the file
+is loaded in memory, we can then write it to disk in the parquet format
+(based on what we learned in
+[part 1]({% post_url 2022-08-22-arrow-dataset-creation %})).
 
 We can then modify the code from the `download_daily_package_logs_csv()`
-function from part 1 to the following (line changed are highlighted).
+function from part 1 to the following (lines changed have comments
+indicated by `# <---` at the end of the line).
 
 ``` r
 library(tidyverse)
@@ -119,7 +121,7 @@ purrr::walk(dates_to_get, download_daily_package_logs_parquet)
 ```
 
 The result is similar to what we achieved in part 1. We have one file
-for each day, placed in a folder corresponding to their month. Except
+for each day placed in a folder corresponding to their month. Except
 that this time, instead of having compressed CSV files, we have parquet
 files:
 
@@ -145,7 +147,7 @@ files:
             └── 2022-08-15.parquet
 
 Let’s check how large this data is compared to the datasets we created
-in Part 1:
+in part 1:
 
 ``` r
 dataset_size <- function(path) {
@@ -189,8 +191,8 @@ bench::mark(
     # A tibble: 2 × 6
       expression          min   median `itr/sec` mem_alloc `gc/sec`
       <bch:expr>     <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-    1 parquet         148.2ms 181.07ms      5.56    7.91MB     0   
-    2 parquet_by_day    3.8ms   4.35ms    224.      4.28KB     4.23
+    1 parquet        146.35ms 162.55ms      5.93    7.91MB     0   
+    2 parquet_by_day   3.61ms   3.74ms    262.      4.28KB     6.54
 
 Even though there are more files to parse (76 vs. 3), loading the
 dataset with a parquet file per day is a bit faster.
@@ -202,7 +204,8 @@ cran_logs_parquet_by_day <- open_dataset("~/datasets/cran-logs-parquet-by-day", 
 
 Let’s now explore the performance of a few queries on these datasets.
 
-How long does it take to compute the number of rows in these datasets:
+First, how long does it take to compute the number of rows in these
+datasets:
 
 ``` r
 bench::mark(
@@ -214,14 +217,14 @@ bench::mark(
     # A tibble: 2 × 6
       expression          min   median `itr/sec` mem_alloc `gc/sec`
       <bch:expr>     <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-    1 parquet           744µs    782µs     1254.    4.74KB     8.54
-    2 parquet_by_day    748µs    783µs     1251.    1.97KB     8.46
+    1 parquet           743µs    773µs     1267.    4.74KB     8.48
+    2 parquet_by_day    745µs    773µs     1273.    1.97KB    10.7 
 
 Not much of a difference.
 
-Let’s compare the performance of the query we ran in part 1, where we
-computed the 10 most downloaded packages in the time period covered by
-our dataset.
+Let’s now compare the performance of the query we ran in part 1, where
+we computed the 10 most downloaded packages in the period covered by our
+dataset.
 
 ``` r
 top_10_packages <- function(data) {
@@ -239,11 +242,13 @@ bench::mark(
 )
 ```
 
+    Warning: Some expressions had a GC in every iteration; so filtering is disabled.
+
     # A tibble: 2 × 6
       expression                                     min   median `itr/sec` mem_al…¹
       <bch:expr>                                <bch:tm> <bch:tm>     <dbl> <bch:by>
-    1 top_10_packages(cran_logs_parquet)           3.46s    3.46s     0.289   7.19MB
-    2 top_10_packages(cran_logs_parquet_by_day)    4.95s    4.95s     0.202 165.36KB
+    1 top_10_packages(cran_logs_parquet)           3.58s    3.58s     0.279   7.19MB
+    2 top_10_packages(cran_logs_parquet_by_day)    5.76s    5.76s     0.174 165.36KB
     # … with 1 more variable: `gc/sec` <dbl>, and abbreviated variable name
     #   ¹​mem_alloc
     # ℹ Use `colnames()` to see all variable names
@@ -257,12 +262,12 @@ partitioning, some of the files can be skipped. Arrow can directly and
 only read the file(s) with the relevant information for your query. For
 instance, if you are performing a query that only touches the month of
 July, Arrow does not need to look at the files for June or August,
-leading to potential speed ups.
+leading to potential speed-ups.
 
 Would the partitioning by day help us run our query faster if we were to
-compute the 10 most downloaded package for a single day? After all, in
+compute the 10 most downloaded packages for a single day? After all, in
 this case, we would only need to look at one of the files in our folder
-of parquet files, and the file in question would be smaller than the one
+of parquet files, and the file in question would be smaller than one
 that has all the data for the month. Let’s compare the performance of
 this query for August 1st, 2022:
 
@@ -272,8 +277,6 @@ top_10_packages_by_day <- function(data) {
     filter(date == as.Date("2022-08-01")) %>%
     count(package, sort = TRUE) %>%
     head(10) %>%
-    mutate(n_million_downloads = n/1e6) %>%
-    select( - n) %>%
     collect()
 }
 
@@ -286,14 +289,14 @@ bench::mark(
     # A tibble: 2 × 6
       expression                                          min median itr/s…¹ mem_a…²
       <bch:expr>                                       <bch:> <bch:>   <dbl> <bch:b>
-    1 top_10_packages_by_day(cran_logs_parquet)         299ms  299ms    3.34   262KB
-    2 top_10_packages_by_day(cran_logs_parquet_by_day)  380ms  393ms    2.54   219KB
+    1 top_10_packages_by_day(cran_logs_parquet)         304ms  348ms    2.87   222KB
+    2 top_10_packages_by_day(cran_logs_parquet_by_day)  354ms  354ms    2.82   167KB
     # … with 1 more variable: `gc/sec` <dbl>, and abbreviated variable names
     #   ¹​`itr/sec`, ²​mem_alloc
     # ℹ Use `colnames()` to see all variable names
 
 Interestingly, running the query on the monthly parquet file is still
-faster. It takes about 60% longer to run the queries on the one parquet
+faster. It takes about 20% longer to run the queries on the one parquet
 file per day. The overhead associated with having too many small files
 in this situation does not compensate for having to look inside a single
 file to perform this operation. For the benefits of partitioning to be
@@ -325,12 +328,14 @@ bench::mark(
     # A tibble: 2 × 6
       expression                                              min   median `itr/sec`
       <bch:expr>                                         <bch:tm> <bch:tm>     <dbl>
-    1 package_downloads_by_day(cran_logs_parquet)           2.99s    2.99s     0.335
-    2 package_downloads_by_day(cran_logs_parquet_by_day)    4.32s    4.32s     0.231
+    1 package_downloads_by_day(cran_logs_parquet)           3.31s    3.31s     0.302
+    2 package_downloads_by_day(cran_logs_parquet_by_day)    4.46s    4.46s     0.224
     # … with 2 more variables: mem_alloc <bch:byt>, `gc/sec` <dbl>
     # ℹ Use `colnames()` to see all variable names
 
-In this case, it still takes about 60% longer to perform this query.
+In this case, it takes about 60% longer to perform this query. In this
+situation, the performance is affected by having to look inside many
+more files in the dataset with one parquet file per day.
 
 ## Conclusion
 
@@ -379,6 +384,7 @@ sessioninfo::session_info()
      broom           1.0.0   2022-07-01 [1] RSPM
      cellranger      1.1.0   2016-07-27 [1] RSPM
      cli             3.3.0   2022-04-25 [1] RSPM (R 4.2.0)
+     codetools       0.2-18  2020-11-04 [2] CRAN (R 4.2.0)
      colorspace      2.0-3   2022-02-21 [1] RSPM
      crayon          1.5.1   2022-03-26 [1] RSPM
      DBI             1.1.3   2022-06-18 [1] RSPM

@@ -1,6 +1,6 @@
 ---
 title: "Creating an Arrow dataset (part 2)"
-excerpt: "How does partitioning impacts query performance?"
+excerpt: "How does partitioning impact query performance?"
 layout: "single"
 date: "2022-08-31"
 type: "post"
@@ -22,7 +22,7 @@ format:
 
 ## Background
 
-In this follow up post (see
+In this follow-up post (see
 `[part 1]({% post_url 2022-08-22-arrow-dataset-creation %})`{=markdown}
 if you missed it), we will explore
 what happens to the query performance if we read the files straight into
@@ -44,7 +44,7 @@ disk in the parquet format (based on what we learned in
 
 We can then modify the code from the
 `download_daily_package_logs_csv()` function from part 1 to the
-following (line changed have comments indicated by `# <--- ` at the
+following (lines changed have comments indicated by `# <--- ` at the
 end of the line).
 
 
@@ -131,7 +131,7 @@ purrr::walk(dates_to_get, download_daily_package_logs_parquet)
 ```
 
 The result is similar to what we achieved in part 1. We have one file
-for each day, placed in a folder corresponding to their month. Except
+for each day placed in a folder corresponding to their month. Except
 that this time, instead of having compressed CSV files, we have
 parquet files:
 
@@ -217,8 +217,8 @@ bench::mark(
 
 Not much of a difference.
 
-Let's now compare the performance of the query we ran in part 1, where we
-computed the 10 most downloaded packages in the time period covered by
+Let's now compare the performance of the query we ran in part 1, where
+we computed the 10 most downloaded packages in the period covered by
 our dataset.
 
 ```{r}
@@ -247,13 +247,13 @@ the partitioning, some of the files can be skipped. Arrow can directly
 and only read the file(s) with the relevant information for your
 query. For instance, if you are performing a query that only touches
 the month of July, Arrow does not need to look at the files for June
-or August, leading to potential speed ups.
+or August, leading to potential speed-ups.
 
 Would the partitioning by day help us run our query faster if we were
-to compute the 10 most downloaded package for a single day? After all,
-in this case, we would only need to look at one of the files in our
-folder of parquet files, and the file in question would be smaller
-than the one that has all the data for the month. Let's compare the
+to compute the 10 most downloaded packages for a single day? After
+all, in this case, we would only need to look at one of the files in
+our folder of parquet files, and the file in question would be smaller
+than one that has all the data for the month. Let's compare the
 performance of this query for August 1st, 2022:
 
 
