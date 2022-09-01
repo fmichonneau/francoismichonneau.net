@@ -1,0 +1,328 @@
+---
+title: "Creating an Arrow dataset (part 2)"
+excerpt: "How does partitioning impacts query performance?"
+layout: "single"
+date: "2022-08-31"
+type: "post"
+published: true
+categories: ["Arrow exploration"]
+tags: ["r", "arrow"]
+keep-yaml: true
+validate-yaml: false
+header:
+  overlay_image: "/images/2022-08-22-lots-of-arrows.jpg"
+  overlay_filter: 0.5
+  caption: "Photo by [Possessed Photograph](https://unsplash.com/@possessedphotography?utm_source=unsplash&utm_medium=ref
+  erral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/s/photos/arrows?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)"
+format:
+  gfm:
+    reference-location: document
+---
+
+
+## Background
+
+In this follow up post (see
+`[part 1]({% post_url 2022-08-22-arrow-dataset-creation %})`{=markdown}
+if you missed it), we will explore
+what happens to the query performance if we read the files straight into
+Arrow instead of downloading them locally first.
+
+## Reading remote CSV files
+
+In the first part, we first downloaded the compressed CSV files
+locally (using the `download.file()` function) and then we used the
+`open_dataset()` function on this set of files to make it available to
+Arrow.
+
+However, it is possible to bypass the local download. We can
+import the files directly over an Internet connection using the
+`read_csv_arrow()` function and providing the file URL as the first
+argument. Once the file is loaded in memory, we can then write it to
+disk in the parquet format (based on what we learned in
+`[part 1]({% post_url 2022-08-22-arrow-dataset-creation %})`{=markdown}).
+
+We can then modify the code from the
+`download_daily_package_logs_csv()` function from part 1 to the
+following (line changed have comments indicated by `# <--- ` at the
+end of the line).
+
+
+```{r setup}
+#| code-fold: true
+#| code-summary: 'Load packages needed'
+#| results: hide
+#| message: false
+#| warning: false
+library(tidyverse)
+library(arrow)
+```
+
+```{r}
+## Download the data set for a given date from the RStudio CRAN log website.
+## `date` is a single date for which we want the data
+## `path` is where we want the data to live
+download_daily_package_logs_parquet <- function(date,
+                                                path = "~/datasets/cran-logs-parquet-by-day") {
+
+  ## build the URL for the download
+  date <- parse_date(date)
+  url <- paste0(
+    'http://cran-logs.rstudio.com/', date$year, '/', date$date_chr, '.csv.gz'
+  )
+
+  ## build the path for the destination of the download
+  file <- file.path(
+    path,
+    paste0("year=", date$year),
+    paste0("month=", date$month),
+    paste0(date$date_chr, ".parquet")   # <--- change extension to .parquet
+  )
+
+  ## create the folder if it doesn't exist
+  if (!dir.exists(dirname(file))) {
+    dir.create(dirname(file), recursive = TRUE)
+  }
+
+  ## download the file
+  message("Downloading data for ", date$date_chr, " ... ", appendLF = FALSE)
+    arrow::read_csv_arrow(url) %>%      # <--- read directly from URL
+      arrow::write_parquet(sink = file) # <--- convert to parquet on disk
+  message("done.")
+
+  ## quick check to make sure that the file was created
+  if (!file.exists(file)) {
+    stop("Download failed for ", date$date_chr, call. = FALSE)
+  }
+
+  ## return the path
+  file
+}
+
+## This function is unchanged from part 1
+## Check that the date is really a date,
+## and extract the year and month from it
+parse_date <- function(date) {
+  stopifnot(
+    "`date` must be a date" = inherits(date, "Date"),
+    "provide only one date" = identical(length(date), 1L),
+    "date must be in the past" = date < Sys.Date()
+  )
+  list(
+    date_chr = as.character(date),
+    year = as.POSIXlt(date)$year + 1900L, 
+    month = as.POSIXlt(date)$mon + 1L
+  )
+}
+```
+
+Now that we are set up, we can create the file system the same way we
+did, in part 1.
+
+```{r}
+#| eval: false
+dates_to_get <- seq(
+  as.Date("2022-06-01"),
+  as.Date("2022-08-15"),
+  by = "day"
+)
+
+purrr::walk(dates_to_get, download_daily_package_logs_parquet)
+```
+
+The result is similar to what we achieved in part 1. We have one file
+for each day, placed in a folder corresponding to their month. Except
+that this time, instead of having compressed CSV files, we have
+parquet files:
+
+```
+~/datasets/cran-logs-parquet-by-day/
+└── year=2022
+    ├── month=6
+    │   ├── 2022-06-01.parquet
+    │   ├── 2022-06-02.parquet
+    │   ├── 2022-06-03.parquet
+    │   ├── ...
+    │   └── 2022-06-30.parquet
+    ├── month=7
+    │   ├── 2022-07-01.parquet
+    │   ├── 2022-07-02.parquet
+    │   ├── 2022-07-03.parquet
+    │   ├── ...
+    │   └── 2022-07-31.parquet
+    └── month=8
+        ├── 2022-08-01.parquet
+        ├── 2022-08-02.parquet
+        ├── 2022-08-03.parquet
+        ├── ...
+        └── 2022-08-15.parquet
+```
+
+Let's check how large this data is compared to the datasets we created
+in part 1:
+
+```{r dataset-size}
+#| cache: true
+dataset_size <- function(path) {
+  fs::dir_info(path, recurse = TRUE) %>%
+    filter(type == "file") %>%
+    pull(size) %>%
+    sum()
+}
+
+tribble(
+  ~ Format, ~ size,
+  "Compressed CSV", dataset_size("~/datasets/cran-logs-csv/"),
+  "Arrow", dataset_size("~/datasets/cran-logs-arrow/"),
+  "Parquet", dataset_size("~/datasets/cran-logs-parquet/"),
+  "Parquet by day",  dataset_size("~/datasets/cran-logs-parquet-by-day/")
+) 
+```
+
+The dataset with one parquet file per day, is slightly smaller than
+when we let `write_dataset()` do its own partitioning which led to one
+file per month.
+
+We can now compare how quickly Arrow can read these datasets.
+
+```{r}
+bench::mark(
+  parquet = open_dataset("~/datasets/cran-logs-parquet", format = "parquet"),
+  parquet_by_day = open_dataset("~/datasets/cran-logs-parquet-by-day", format = "parquet"),
+  check = FALSE
+)
+```
+
+Even though there are more files to parse (76 vs. 3), loading the
+dataset with a parquet file per day is a bit faster.
+
+```{r}
+#| cache: true
+cran_logs_parquet <- open_dataset("~/datasets/cran-logs-parquet",  format = "parquet")
+cran_logs_parquet_by_day <- open_dataset("~/datasets/cran-logs-parquet-by-day",  format = "parquet")
+```
+
+Let's now explore the performance of a few queries on these datasets.
+
+First, how long does it take to compute the number of rows in these
+datasets:
+
+```{r}
+#| cache: true
+bench::mark(
+  parquet = nrow(cran_logs_parquet),
+  parquet_by_day = nrow(cran_logs_parquet)
+)
+```
+
+Not much of a difference.
+
+Let's now compare the performance of the query we ran in part 1, where we
+computed the 10 most downloaded packages in the time period covered by
+our dataset.
+
+```{r}
+#| cache: true
+top_10_packages <- function(data) {
+  data %>%
+    count(package, sort = TRUE) %>%
+    head(10) %>%
+    mutate(n_million_downloads = n/1e6) %>%
+    select( - n) %>% 
+    collect()
+}
+
+bench::mark(
+  top_10_packages(cran_logs_parquet),
+  top_10_packages(cran_logs_parquet_by_day)
+)
+```
+
+This query runs 2 seconds faster on the dataset with one parquet
+file per month compared to the dataset with one parquet file per day.
+
+The way a dataset is partitioned has an impact on the performance of
+queries. If you are filtering your dataset along a variable used in
+the partitioning, some of the files can be skipped. Arrow can directly
+and only read the file(s) with the relevant information for your
+query. For instance, if you are performing a query that only touches
+the month of July, Arrow does not need to look at the files for June
+or August, leading to potential speed ups.
+
+Would the partitioning by day help us run our query faster if we were
+to compute the 10 most downloaded package for a single day? After all,
+in this case, we would only need to look at one of the files in our
+folder of parquet files, and the file in question would be smaller
+than the one that has all the data for the month. Let's compare the
+performance of this query for August 1st, 2022:
+
+
+```{r}
+#| cache: true
+top_10_packages_by_day <- function(data) {
+  data %>%
+    filter(date == as.Date("2022-08-01")) %>%
+    count(package, sort = TRUE) %>%
+    head(10) %>%
+    collect()
+}
+
+bench::mark(
+  top_10_packages_by_day(cran_logs_parquet),
+  top_10_packages_by_day(cran_logs_parquet_by_day)
+)
+```
+
+Interestingly, running the query on the monthly parquet file is still
+faster. It takes about 20% longer to run the queries on the one
+parquet file per day. The overhead associated with having too many
+small files in this situation does not compensate for having to look
+inside a single file to perform this operation. For the benefits of
+partitioning to be visible, we would need to have more data in each
+parquet file.
+
+We don't see a performance benefit of having many small files even
+when we try to get the result on a single day. But how does this
+partitioning impact the performance of a query that needs to access
+multiple random rows?  Let's compare how a query that looks at the
+number of downloads per day for a given package. 
+
+```{r}
+#| cache: true
+package_downloads_by_day <- function(data, pkg = "arrow") {
+  data %>%
+    filter(package == pkg) %>%
+    count(date) %>%
+    arrange(date) %>%
+    collect()
+}
+
+bench::mark(
+  package_downloads_by_day(cran_logs_parquet),
+  package_downloads_by_day(cran_logs_parquet_by_day)
+)
+```
+
+In this case, it takes about 60% longer to perform this query. In this
+situation, the performance is affected by having to look inside many
+more files in the dataset with one parquet file per day.
+
+## Conclusion
+
+This small example illustrates that it might be worth exploring how
+best to partition your dataset to benefit the most from the speed that
+Arrow brings to your queries. The variables you include in your
+queries have also a role to play when deciding how to partition your
+dataset, and it might be best to partition your dataset according to
+variables you use most often in your queries.
+
+The useR!2022 Arrow tutorial has a [convincing
+demonstration](https://arrow-user2022.netlify.app/data-storage.html#multi-file-data-sets)
+that taking advantage of partitioning for your queries makes them run
+much faster.
+
+<details><summary>Expand for Session Info</summary>
+```{r session-info}
+sessioninfo::session_info()
+```
+</details>
