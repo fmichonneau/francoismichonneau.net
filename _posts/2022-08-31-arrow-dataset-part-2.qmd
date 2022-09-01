@@ -35,12 +35,15 @@ locally (using the `download.file()` function) and then we used the
 `open_dataset()` function on this set of files to make it available to
 Arrow.
 
-However, it is possible to bypass the local download. We can
-import the files directly over an Internet connection using the
+However, it is possible to bypass the local download. We can import
+the files directly over an Internet connection using the
 `read_csv_arrow()` function and providing the file URL as the first
 argument. Once the file is loaded in memory, we can then write it to
-disk in the parquet format (based on what we learned in
-`[part 1]({% post_url 2022-08-22-arrow-dataset-creation %})`{=markdown}).
+disk in the parquet format (given that we learned in
+`[part 1]({% post_url 2022-08-22-arrow-dataset-creation %})`{=markdown}
+that this
+format provided the best compromise of disk space usage and query
+performance).
 
 We can then modify the code from the
 `download_daily_package_logs_csv()` function from part 1 to the
@@ -100,7 +103,6 @@ download_daily_package_logs_parquet <- function(date,
 }
 
 ## This function is unchanged from part 1
-## Check that the date is really a date,
 ## and extract the year and month from it
 parse_date <- function(date) {
   stopifnot(
@@ -238,7 +240,7 @@ bench::mark(
 )
 ```
 
-This query runs 2 seconds faster on the dataset with one parquet
+This query runs 1.5 seconds faster on the dataset with one parquet
 file per month compared to the dataset with one parquet file per day.
 
 The way a dataset is partitioned has an impact on the performance of
@@ -274,7 +276,7 @@ bench::mark(
 ```
 
 Interestingly, running the query on the monthly parquet file is still
-faster. It takes about 20% longer to run the queries on the one
+faster. It takes about 30% longer to run the queries on the one
 parquet file per day. The overhead associated with having too many
 small files in this situation does not compensate for having to look
 inside a single file to perform this operation. For the benefits of
@@ -303,7 +305,7 @@ bench::mark(
 )
 ```
 
-In this case, it takes about 60% longer to perform this query. In this
+In this case, it takes about 45% longer to perform this query. In this
 situation, the performance is affected by having to look inside many
 more files in the dataset with one parquet file per day.
 

@@ -37,8 +37,10 @@ However, it is possible to bypass the local download. We can import the
 files directly over an Internet connection using the `read_csv_arrow()`
 function and providing the file URL as the first argument. Once the file
 is loaded in memory, we can then write it to disk in the parquet format
-(based on what we learned in
-[part 1]({% post_url 2022-08-22-arrow-dataset-creation %})).
+(given that we learned in
+[part 1]({% post_url 2022-08-22-arrow-dataset-creation %}) that this
+format provided the best compromise of disk space usage and query
+performance).
 
 We can then modify the code from the `download_daily_package_logs_csv()`
 function from part 1 to the following (lines changed have comments
@@ -91,7 +93,6 @@ download_daily_package_logs_parquet <- function(date,
 }
 
 ## This function is unchanged from part 1
-## Check that the date is really a date,
 ## and extract the year and month from it
 parse_date <- function(date) {
   stopifnot(
@@ -191,8 +192,8 @@ bench::mark(
     # A tibble: 2 × 6
       expression          min   median `itr/sec` mem_alloc `gc/sec`
       <bch:expr>     <bch:tm> <bch:tm>     <dbl> <bch:byt>    <dbl>
-    1 parquet        146.35ms 162.55ms      5.93    7.91MB     0   
-    2 parquet_by_day   3.61ms   3.74ms    262.      4.28KB     6.54
+    1 parquet        150.85ms 161.18ms      6.04    7.91MB     0   
+    2 parquet_by_day   3.67ms   4.06ms    230.      4.28KB     6.52
 
 Even though there are more files to parse (76 vs. 3), loading the
 dataset with a parquet file per day is a bit faster.
@@ -253,7 +254,7 @@ bench::mark(
     #   ¹​mem_alloc
     # ℹ Use `colnames()` to see all variable names
 
-This query runs 2 seconds faster on the dataset with one parquet file
+This query runs 1.5 seconds faster on the dataset with one parquet file
 per month compared to the dataset with one parquet file per day.
 
 The way a dataset is partitioned has an impact on the performance of
@@ -296,7 +297,7 @@ bench::mark(
     # ℹ Use `colnames()` to see all variable names
 
 Interestingly, running the query on the monthly parquet file is still
-faster. It takes about 20% longer to run the queries on the one parquet
+faster. It takes about 30% longer to run the queries on the one parquet
 file per day. The overhead associated with having too many small files
 in this situation does not compensate for having to look inside a single
 file to perform this operation. For the benefits of partitioning to be
@@ -333,7 +334,7 @@ bench::mark(
     # … with 2 more variables: mem_alloc <bch:byt>, `gc/sec` <dbl>
     # ℹ Use `colnames()` to see all variable names
 
-In this case, it takes about 60% longer to perform this query. In this
+In this case, it takes about 45% longer to perform this query. In this
 situation, the performance is affected by having to look inside many
 more files in the dataset with one parquet file per day.
 
@@ -384,7 +385,6 @@ sessioninfo::session_info()
      broom           1.0.0   2022-07-01 [1] RSPM
      cellranger      1.1.0   2016-07-27 [1] RSPM
      cli             3.3.0   2022-04-25 [1] RSPM (R 4.2.0)
-     codetools       0.2-18  2020-11-04 [2] CRAN (R 4.2.0)
      colorspace      2.0-3   2022-02-21 [1] RSPM
      crayon          1.5.1   2022-03-26 [1] RSPM
      DBI             1.1.3   2022-06-18 [1] RSPM
