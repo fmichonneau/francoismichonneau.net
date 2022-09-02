@@ -78,9 +78,27 @@ summary > p {
   background-color: $darker-gray;
 }
 
+.archive a, .archive a:visited {
+    color: inherit;
+}
+
+.archive a:visited {
+    opacity: .5;
+}
+
+.archive a:hover {
+    color: inherit;
+    text-decoration: underline;
+}
+
 /* end of customization */
 
 @charset "utf-8";
 
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
+
+
+.page {
+    padding-right: 0;
+}

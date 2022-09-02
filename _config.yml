@@ -200,6 +200,7 @@ timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 # Plugins (previously gems:)
 plugins:
+  - jekyll-include-cache
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-gist
@@ -287,3 +288,5 @@ defaults:
       comments: # true
       share: true
       related: true
+      
+remote_theme: "mmistakes/minimal-mistakes@4.24.0"

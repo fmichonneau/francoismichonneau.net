@@ -8,7 +8,6 @@ permalink: /publications/
 status: publish
 categories: []
 tags: []
-scihub: http://sci-hub.cc
 doi: https://doi.org
 github: https://github.com
 ---
@@ -18,24 +17,31 @@ journal: [<i class="fa fa-book" aria-hidden="true"></i> Journal]({{ page.doi }}/
 preprint: [<i class="fa fa-file-text-o" aria-hidden="true"></i> Preprint]({{ page.doi }}/ ){: .btn .btn--small}
 github repo: [<i class="fa fa-github" aria-hidden="true"></i> GitHub Repository](){: .btn .btn--small .btn--info}
 pdf: [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF file]({{ site.baseurl}}/){: .btn .btn--small .btn--warning}
-sci-hub [<i class="fa fa-unlock-alt" aria-hidden="true"></i> sci-hub]({{ page.scihub }}/){: .btn .btn--small .btn--success}
 
 free-access: <i class="fa fa-unlock-alt" aria-hidden="true" style="color: #62c462"></i>
 open-access: <i class="fa fa-unlock" aria-hidden="true" style="color: #f89406"></i>
 --->
 
-I strive to make all the outputs from my research accessible. Below, in addition to links to the journals in which the article was published, I also provide links to local copies of the PDF files, and links to [sci-hub](https://en.wikipedia.org/wiki/Sci-Hub) in case you don't have access to these publications through a journal subscription. Open-access publications (released under a Creative Commons license) have <i class="fa fa-unlock" aria-hidden="true" style="color: #f89406"></i> near their title, while free-access (no journal subscription required to read the article) publications have <i class="fa fa-unlock-alt" aria-hidden="true" style="color: #62c462"></i>.
+I strive to make all the outputs from my research accessible. Below,
+in addition to links to the journals in which the article was
+published, I also provide links to local copies of the PDF
+files. Open-access publications (released under a Creative Commons
+license) have <i class="fa fa-unlock" aria-hidden="true" style="color:
+#f89406"></i> near their title, while free-access (no journal
+subscription required to read the article) publications have <i
+class="fa fa-unlock-alt" aria-hidden="true" style="color:
+#62c462"></i>.
 
 ## Pre-prints
 
 
 * **Cryptic and not-so-cryptic species in the complex <em>Holothuria (Thymiosycia) impatiens</em> (Forsskal, 1775) (Echinodermata: Holothuroidea)** <i class="fa fa-unlock" aria-hidden="true" style="color: #f89406"></i><br>
    Michonneau F.<br>
-   [<i class="fa fa-file-text-o" aria-hidden="true"></i> Preprint](https://doi.org/10.1101/014225){: .btn .btn--small}
+   [<i class="fa fa-file-text-o" aria-hidden="true"></i> Preprint](https://doi.org/10.1101/014225){: .btn .btn--inverse .btn--small}
 
 * **More than meets the eye: diversity and geographic patterns in sea cucumbers** <i class="fa fa-unlock" aria-hidden="true" style="color: #f89406"></i><br>
   Michonneau F., McPherson S., O'Loughlin P.M., Paulay G. <br>
-  [<i class="fa fa-file-text-o" aria-hidden="true"></i> Preprint](https://doi.org/10.1101/014282){: .btn .btn--small}
+  [<i class="fa fa-file-text-o" aria-hidden="true"></i> Preprint](https://doi.org/10.1101/014282){: .btn .btn--inverse  .btn--small}
 
 
 ## 2017
@@ -45,7 +51,6 @@ I strive to make all the outputs from my research accessible. Below, in addition
    *Zoological Journal of the Linnean Society*<br>
   [<i class="fa fa-book" aria-hidden="true"></i> Journal]({{ page.doi }}/10.1093/zoolinnean/zlw002){: .btn .btn--small .btn--danger}
   [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF file]({{ site.baseurl}}/articles/daSilva+2017.pdf){: .btn .btn--small .btn--warning}
-  [<i class="fa fa-unlock-alt" aria-hidden="true"></i> sci-hub]({{ page.scihub }}/10.1093/zoolinnean/zlw002){: .btn .btn--small .btn--success}
 
 ## 2016
 
@@ -53,7 +58,7 @@ I strive to make all the outputs from my research accessible. Below, in addition
   Hart T., Barmby P., LeBauer D.,  Michonneau F.,  Mount S., Mulrooney P., Poisot T., Woo K.H., Zimmerman N. B., Hollister J.<br>
   *PLOS Computational Biology*<br>
   [<i class="fa fa-book" aria-hidden="true"></i> Journal](https://doi.org/10.1371/journal.pcbi.1005097){: .btn .btn--small .btn--danger}
-  [<i class="fa fa-file-text-o" aria-hidden="true"></i> Preprint](https://doi.org/10.7287/peerj.preprints.1448v2){: .btn .btn--small}
+  [<i class="fa fa-file-text-o" aria-hidden="true"></i> Preprint](https://doi.org/10.7287/peerj.preprints.1448v2){: .btn .btn--small  .btn--inverse }
   [<i class="fa fa-github" aria-hidden="true"></i> GitHub Repository](https://github.com/emhart/10-simple-rules-data-storage){: .btn .btn--small .btn--info}
     [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF file]({{ site.baseurl}}/articles/Hart+2016.pdf){: .btn .btn--small .btn--warning}
 
@@ -66,7 +71,7 @@ I strive to make all the outputs from my research accessible. Below, in addition
   Michonneau F., Brown J.W., Winter D.<br>
   *Methods in Ecology and Evolution*<br>
   [<i class="fa fa-book" aria-hidden="true"></i> Journal](https://doi.org/10.1111/2041-210X.12593){: .btn .btn--small .btn--danger}
-  [<i class="fa fa-file-text-o" araia-hidden="true"></i> Pre-print](https://doi.org/10.7287/peerj.preprints.1471v3){: .btn .btn--small}
+  [<i class="fa fa-file-text-o" araia-hidden="true"></i> Pre-print](https://doi.org/10.7287/peerj.preprints.1471v3){: .btn .btn--small .btn--inverse }
   [<i class="fa fa-github" aria-hidden="true"></i> GitHub Repository](https://github.com/fmichonneau/rotl-ms/){: .btn .btn--small .btn--info}
   [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF file]({{ site.baseurl}}/articles/Michonneau+2016-rotl.pdf){: .btn .btn--small .btn--warning}
 
@@ -76,7 +81,7 @@ I strive to make all the outputs from my research accessible. Below, in addition
 * **Using iNaturalist to learn more about Echinoderms** <i class="fa fa-unlock" aria-hidden="true" style="color: #f89406"></i><br>
   Michonneau F., Paulay G. <br>
   *Reef Encounter* <br>
-  [<i class="fa fa-file-text-o" aria-hidden="true"></i> Preprint]({{ page.doi }}/10.6084/m9.figshare.1309937){: .btn .btn--small}
+  [<i class="fa fa-file-text-o" aria-hidden="true"></i> Preprint]({{ page.doi }}/10.6084/m9.figshare.1309937){: .btn .btn--small .btn--inverse }
   [<i class="fa fa-github" aria-hidden="true"></i> GitHub Repository]({{ page.github }}/fmichonneau/inat-paper){: .btn .btn--small .btn--info}
   [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF file]({{ site.baseurl}}/articles/Michonneau+Paulay2015-iNaturalist.pdf){: .btn .btn--small .btn--warning}
 
@@ -88,7 +93,6 @@ I strive to make all the outputs from my research accessible. Below, in addition
   <em>Biological Journal of the Linnean Society</em> <br>
   [<i class="fa fa-book" aria-hidden="true"></i> Journal]({{ page.doi }}/10.1111/bij.12315){: .btn .btn--small .btn--danger}
   [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF file]({{ site.baseurl}}/articles/Malay+Michonneau2014.pdf){: .btn .btn--small .btn--warning}
-  [<i class="fa fa-unlock-alt" aria-hidden="true"></i> sci-hub]({{ page.scihub }}/10.1111/bij.12315){: .btn .btn--small .btn--success}
 
 * **Revision of the genus <em>Phyrella</em> (Holothuroidea: Dendrochirotida) with the description of a new species from Guam** <i class="fa fa-unlock" aria-hidden="true" style="color: #f89406"></i> <br>
   Michonneau F., Paulay G.  <br>
@@ -121,7 +125,6 @@ I strive to make all the outputs from my research accessible. Below, in addition
   <em>Evolution</em><br>
   [<i class="fa fa-book" aria-hidden="true"></i> Journal]({{ page.doi }}/10.1111/evo.12084){: .btn .btn--small .btn--danger}
   [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF file]({{ site.baseurl}}/articles/Bacon+2013.pdf){: .btn .btn--small .btn--warning}
-  [<i class="fa fa-unlock-alt" aria-hidden="true"></i> sci-hub]({{ page.scihub }}/10.1111/evo.12084){: .btn .btn--small .btn--success}
 
 
 ## 2012
@@ -150,7 +153,6 @@ I strive to make all the outputs from my research accessible. Below, in addition
   <em>Hydrobiology</em><br>
   [<i class="fa fa-book" aria-hidden="true"></i> Journal]({{ page.doi }}/10.1007/s10750-010-0569-0){: .btn .btn--small .btn--danger}
   [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF file]({{ site.baseurl}}/articles/Penin+2011.pdf){: .btn .btn--small .btn--warning}
-  [<i class="fa fa-unlock-alt" aria-hidden="true"></i> sci-hub]({{ page.scihub }}/10.1007/s10750-010-0569-0){: .btn .btn--small .btn--success}
 
 
 ## 2010
@@ -165,14 +167,12 @@ I strive to make all the outputs from my research accessible. Below, in addition
   <em>Deep Sea Research Part II: Topical Studies in Oceanography</em><br>
   [<i class="fa fa-book" aria-hidden="true"></i> Journal]({{ page.doi }}/10.1016/j.dsr2.2010.10.011){: .btn .btn--small .btn--danger}
   [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF file]({{ site.baseurl}}/articles/O'Loughlin+2010.pdf){: .btn .btn--small .btn--warning}
-  [<i class="fa fa-unlock-alt" aria-hidden="true"></i> sci-hub]({{ page.scihub }}/10.1016/j.dsr2.2010.10.011){: .btn .btn--small .btn--success}
 
 * **Early post-settlement mortality and the structure of coral assemblages**<br>
   Penin L., Michonneau F., Baird A.H., Connolly S.R., Pratchett M.S., Kayal M., Adjeroud M.<br>
   <em>Marine Ecology Progress Series</em><br>
   [<i class="fa fa-book" aria-hidden="true"></i> Journal]({{ page.doi }}/10.3354/meps08554){: .btn .btn--small .btn--danger}
   [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF file]({{ site.baseurl}}/articles/Penin+2010.pdf){: .btn .btn--small .btn--warning}
-  [<i class="fa fa-unlock-alt" aria-hidden="true"></i> sci-hub]({{ page.scihub }}/10.3354/meps08554){: .btn .btn--small .btn--success}
 
 ## 2009
 
@@ -181,7 +181,6 @@ I strive to make all the outputs from my research accessible. Below, in addition
   <em>Coral Reefs</em><br>
   [<i class="fa fa-book" aria-hidden="true"></i> Journal]({{ page.doi }}/10.1007/s00338-009-0515-7){: .btn .btn--small .btn--danger}
   [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF file]({{ site.baseurl}}/articles/Adjeroud+2009.pdf){: .btn .btn--small .btn--warning}
-  [<i class="fa fa-unlock-alt" aria-hidden="true"></i> sci-hub]({{ page.scihub }}/10.1007/s00338-009-0515-7){: .btn .btn--small .btn--success}
 
 ## 2007
 
@@ -190,11 +189,9 @@ I strive to make all the outputs from my research accessible. Below, in addition
   <em>Global Ecology and Biogeography</em><br>
   [<i class="fa fa-book" aria-hidden="true"></i> Journal]({{ page.doi }}/10.1111/j.1466-8238.2006.00290.x){: .btn .btn--small .btn--danger}
   [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF file]({{ site.baseurl}}/articles/Irz+2007.pdf){: .btn .btn--small .btn--warning}
-  [<i class="fa fa-unlock-alt" aria-hidden="true"></i> sci-hub]({{ page.scihub }}/10.1111/j.1466-8238.2006.00290.x){: .btn .btn--small .btn--success}
 
 * **Controlling for natural variability in assessing the response of fish metrics to human pressures for lakes in north-east USA**<br>
   Irz P., De Bortoli J., Michonneau F., Whittier T.R., Oberdorff T., Argillier C.<br>
   <em>Aquatic Conservation</em><br>
   [<i class="fa fa-book" aria-hidden="true"></i> Journal]({{ page.doi }}/10.1002/aqc.859){: .btn .btn--small .btn--danger}
   [<i class="fa fa-file-pdf-o" aria-hidden="true"></i> PDF file]({{ site.baseurl}}/articles/Irz+2007b.pdf){: .btn .btn--small .btn--warning}
-  [<i class="fa fa-unlock-alt" aria-hidden="true"></i> sci-hub]({{ page.scihub }}/10.1002/aqc.859){: .btn .btn--small .btn--success}
