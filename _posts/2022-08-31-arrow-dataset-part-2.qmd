@@ -2,7 +2,7 @@
 title: "Creating an Arrow dataset (part 2)"
 excerpt: "How does partitioning impact query performance?"
 layout: "single"
-date: "2022-08-31"
+date: "2022-09-06"
 type: "post"
 published: true
 categories: ["Arrow exploration"]

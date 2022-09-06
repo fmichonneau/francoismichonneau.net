@@ -378,10 +378,12 @@ space on disk and would be more suitable for long-term storage. This is
 why large datasets like the NYC taxi data is distributed as a series of
 Parquet files.
 
-In the future, I might explore how using different variables for partitioning or
-how the number of files in the partitions affects the performance of the
-queries. If you have other ideas of topics that you would me to explore, do not
-hesitate to leave a comment below.
+In the future, I might explore how using different variables for
+partitioning or how the number of files in the partitions affects the
+performance of the queries (EDIT: this [post is now available]({%
+post_url 2022-08-31-arrow-dataset-part-2 %}). If you have other ideas
+of topics that you would me to explore, do not hesitate to leave a
+comment below.
 
 ## Going further
 
@@ -396,6 +398,12 @@ useR!2022.
 
 Thank you to [Kae Suarez](https://twitter.com/kae_suarez/) and [Danielle
 Navarro](https://https://djnavarro.net) for reviewing this post.
+
+## Post Scriptum
+
+I wrote a [follow-up post]({% post_url 2022-08-31-arrow-dataset-part-2
+%}) that explores the impact of partitioning the dataset on
+performance.
 
 <details>
 <summary>
