@@ -23,7 +23,6 @@ comments:
   provider               : "utterances"
   utterances:
     theme                : "github-dark"
-    comments_repository  : "fm.net-comments"
     issue_term           : "pathname"
     label                : "💬 comment" 
 staticman:
