@@ -39,7 +39,7 @@ Second, you need to compile and install the library:
 Download the latest version of BEAGLE using subversion:
 
 ```bash
-svn checkout http://beagle-lib.googlecode.com/svn/trunk/ \
+svn checkout https://beagle-lib.googlecode.com/svn/trunk/ \
    beagle-lib
 ```
 
@@ -105,7 +105,7 @@ which should show something like this:
 
 ````
 Using BEAGLE library v2.1.2 for accelerated, parallel likelihood evaluation
-2009-2013, BEAGLE Working Group - http://beagle-lib.googlecode.com/
+2009-2013, BEAGLE Working Group - https://beagle-lib.googlecode.com/
 Citation: Ayres et al (2012) Systematic Biology 61: 170-173 | doi:10.1093/sysbio/syr100
 BEAGLE resources available:
 0 : CPU

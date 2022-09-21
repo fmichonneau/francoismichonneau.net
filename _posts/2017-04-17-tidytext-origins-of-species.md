@@ -16,7 +16,7 @@ excerpt: "A short demonstration of the R package tidytext using the 1st edition 
 > [Gainesville R User Group](https://www.meetup.com/R-Users-Group-Gainesville-FL/) meetup
 > of April 4th, 2017. The Rmd file for this post is on [GitHub](https://github.com/fmichonneau/francoismichonneau.net/blob/gh-pages/_posts/2017-04-17-tidytext-origins-of-species.Rmd)
 
-We are going to use the "Origin of Species" (1st edition, published in 1859) to explore some of the functionalities of the `tidytext` package. Most of the code used here is coming from the book written by the authors of the package, Julia Silge & David Robinson: "[Text Mining with R](http://tidytextmining.com/)". I encourage you to read the book if you want to learn more about this topic. It's really clear and entertaining to read!
+We are going to use the "Origin of Species" (1st edition, published in 1859) to explore some of the functionalities of the `tidytext` package. Most of the code used here is coming from the book written by the authors of the package, Julia Silge & David Robinson: "[Text Mining with R](https://tidytextmining.com/)". I encourage you to read the book if you want to learn more about this topic. It's really clear and entertaining to read!
 
 
 ## First things first

@@ -9,7 +9,7 @@ tags: ["advent of code"]
 excerpt: "Solution for Day 19 of Advent of Code"
 ---
 
-* [Problem](http://adventofcode.com/2017/day/19)
+* [Problem](https://adventofcode.com/2017/day/19)
 
 
 # Parts 1 and 2

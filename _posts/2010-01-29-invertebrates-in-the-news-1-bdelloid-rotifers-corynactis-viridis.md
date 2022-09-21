@@ -43,9 +43,9 @@ and reduce the selective pressure that these pathogens impose to these asexual
 rotifers.
 
 More info on the
-ScienceNOW <a href="http://sciencenow.sciencemag.org/cgi/content/full/2010/128/4">website</a>
+ScienceNOW <a href="https://sciencenow.sciencemag.org/cgi/content/full/2010/128/4">website</a>
 and in the
-original <a href="http://dx.doi.org/10.1126/science.1179252">paper</a>.
+original <a href="https://dx.doi.org/10.1126/science.1179252">paper</a>.
 
 # Video of <i>Corynactis viridis</i>
 
@@ -53,6 +53,6 @@ Have a look at this video of this small sea anemone feeding on plankton. Note
 how it can change the shape of its tentacles and its mouth (in the center). This
 video has been filmed under fluorescent light and is played 1200 times faster.
 
-<p><a href="http://vimeo.com/8960366">'Corynactis viridis'</a>
-from <a href="http://vimeo.com/morphologic">MORPHOLOGIC</a>
-on <a href="http://vimeo.com/">Vimeo</a>.</p>
+<p><a href="https://vimeo.com/8960366">'Corynactis viridis'</a>
+from <a href="https://vimeo.com/morphologic">MORPHOLOGIC</a>
+on <a href="https://vimeo.com/">Vimeo</a>.</p>

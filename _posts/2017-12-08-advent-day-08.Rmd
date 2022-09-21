@@ -9,7 +9,7 @@ tags: ["advent of code"]
 excerpt: "Solution for Day 8 of Advent of Code"
 ---
 
-* [Problem](http://adventofcode.com/2017/day/8)
+* [Problem](https://adventofcode.com/2017/day/8)
 
 
 When I first read the puzzle, I thought it would be a good way to deepen my knowledge of **`rlang`** and tidy evaluation. The variables kand the operations are going to be storred as strings and need to be evaluated. Because of the nature of the problem, I couldn't see a good way to vectorize the computation and resorted to using `purrrlyr::by_row`. Because the computations that happen for each row are contained in their own environment, I used the `<<-` operator.

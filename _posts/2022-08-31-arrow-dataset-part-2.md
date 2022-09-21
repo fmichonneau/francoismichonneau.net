@@ -61,7 +61,7 @@ download_daily_package_logs_parquet <- function(date,
   ## build the URL for the download
   date <- parse_date(date)
   url <- paste0(
-    'http://cran-logs.rstudio.com/', date$year, '/', date$date_chr, '.csv.gz'
+    'https://cran-logs.rstudio.com/', date$year, '/', date$date_chr, '.csv.gz'
   )
 
   ## build the path for the destination of the download

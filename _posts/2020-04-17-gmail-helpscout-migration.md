@@ -85,7 +85,7 @@ The instructions in the `gmailr` package's
 
 The HelpScout API uses the OAuth 2.0 protocol. The `httr` package handles this well.
 
-Create a new app within HelpScout, and use `http://localhost:1410/` for the redict URL. Take note of the key and secret. Use this information to create a new app object in R with `httr`:
+Create a new app within HelpScout, and use `https://localhost:1410/` for the redict URL. Take note of the key and secret. Use this information to create a new app object in R with `httr`:
 
 ```r
 hs_app <- httr::oauth_app(
@@ -226,7 +226,7 @@ It was one of the first times I used R6[^3] for a real task and I could see its 
 
 My previous experience working with web APIs have taught me that things can go wrong, and it is always a good idea to keep track (on disk and not only on memory) of the requests that have been tried and the ones that have not, and the requests that succeeded and the ones that failed. Especially, when your scripts do thousands of API calls, you don't want to have to run everything again once your script fails because your internet connection goes down for a short while, or the data is not formatted properly because you are dealing with an edge case.
 
-For this, I use the [`storr` package](http://richfitz.github.io/storr/) and its functionality to rely on hooks to retrieve external data. `storr` is a key-value store. It is not that different than using variable names to store objects in memory as you normally do in your R terminal:
+For this, I use the [`storr` package](https://richfitz.github.io/storr/) and its functionality to rely on hooks to retrieve external data. `storr` is a key-value store. It is not that different than using variable names to store objects in memory as you normally do in your R terminal:
 
 ```r
 ## setting a variable
@@ -403,4 +403,4 @@ I am interested in hearing your perspective and thoughts on how the problem coul
 [^1]: You may notice that the Git history for the repo includes the key and secret for the HelpScout OAuth authentication. By themselves, these are not enough to access any data, as you also need to authenticate with a valid HelpScout account within our organization. These credentials have also been revoked.
 [^2]: I'll be submitting a pull request to `gmailr` soon.
 [^3]: If you are interested in learning more about the object-oriented programming R6 system, the [chapter about it](https://adv-r.hadley.nz/r6.html) in the "Advanced R" book by Hadley Wickham is a great place to start.
-[^4]: If you are interested in learning more about `storr`, read the [documentation for the package](http://richfitz.github.io/storr/articles/storr.html) and the [vignette on external data](http://richfitz.github.io/storr/articles/external.html) that initially helped me get started with this amazingly useful package.
+[^4]: If you are interested in learning more about `storr`, read the [documentation for the package](https://richfitz.github.io/storr/articles/storr.html) and the [vignette on external data](https://richfitz.github.io/storr/articles/external.html) that initially helped me get started with this amazingly useful package.

@@ -44,7 +44,7 @@ structure of these different formats.
 
 ## The dataset
 
-We will be using data from <http://cran-logs.rstudio.com/>. This site
+We will be using data from <https://cran-logs.rstudio.com/>. This site
 gives you access to the log files for all hits to the CRAN[^2] mirror
 hosted by RStudio. For each day since October 1st, 2012, there is a
 compressed CSV file (file with the extension `.csv.gz`) that records the
@@ -127,7 +127,7 @@ download_daily_package_logs_csv <- function(date,
   ## build the URL for the download
   date <- parse_date(date)
   url <- paste0(
-    'http://cran-logs.rstudio.com/', date$year, '/', date$date_chr, '.csv.gz'
+    'https://cran-logs.rstudio.com/', date$year, '/', date$date_chr, '.csv.gz'
   )
 
   ## build the path for the destination of the download

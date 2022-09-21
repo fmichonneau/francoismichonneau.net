@@ -64,7 +64,7 @@ Optional but makes life easier:
 * White board/easel and markers
 * Trash cans
 * Paper towels
-* LED lights (we love [this one](http://www.ikea.com/us/en/catalog/products/20169658/))
+* LED lights (we love [this one](https://www.ikea.com/us/en/catalog/products/20169658/))
 
 #### Small equipment
 

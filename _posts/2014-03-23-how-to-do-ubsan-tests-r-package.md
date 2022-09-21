@@ -13,13 +13,13 @@ tags:
 ---
 
 After a trying to submit <a
-href="http://cran.r-project.org/web/packages/phylobase/index.html">phylobase</a>
+href="https://cran.r-project.org/web/packages/phylobase/index.html">phylobase</a>
 to CRAN, I learned a lot about the quality checks that go into a package before
 being available to the public. Beyond the typical checks you should perform
 routinely during the development of your package, CRAN maintainers also check
 for "Memory access" in your C/C++ code. There are some indications on how to do
 this in the "Writing R Extensions" <a
-href="http://cran.r-project.org/doc/manuals/r-devel/R-exts.html#Checking-memory-access">manual</a>,
+href="https://cran.r-project.org/doc/manuals/r-devel/R-exts.html#Checking-memory-access">manual</a>,
 but if you haven't done this before it can be a little overwhelming. I thought
 it would be useful to have a guide of the things you might want to check for
 yourself before submitting your package to CRAN, and be able to reproduce the
@@ -36,8 +36,8 @@ c++11 which raised some warnings I didn't know about before submitting to
 CRAN.
 
 The complete list of flavors used by CRAN to check packages is listed here:
-<a href="http://cran.r-project.org/web/checks/check_flavors.html" title="CRAN
-check flavors">http://cran.r-project.org/web/checks/check_flavors.html</a>. As
+<a href="https://cran.r-project.org/web/checks/check_flavors.html" title="CRAN
+check flavors">https://cran.r-project.org/web/checks/check_flavors.html</a>. As
 initially some issues were raised on Debian Testing with my package, (and given
 that I'm most familiar with Debian as I use Ubuntu), I did my testing using this
 flavor, but you could choose something else used by CRAN.
@@ -173,7 +173,7 @@ R -d valgrind --vanilla > tests/myTest1.R
 ```
 
 More details can be found in the <a
-href="http://cran.r-project.org/doc/manuals/r-devel/R-exts.html#Using-valgrind">R
+href="https://cran.r-project.org/doc/manuals/r-devel/R-exts.html#Using-valgrind">R
 manual</a>.
 
 Feedback on this document is welcome.

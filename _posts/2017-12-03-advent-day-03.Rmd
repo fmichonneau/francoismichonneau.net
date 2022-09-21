@@ -9,7 +9,7 @@ tags: ["advent of code"]
 excerpt: "Solution for Day 3 of Advent of Code"
 ---
 
-* [Problem](http://adventofcode.com/2017/day/3)
+* [Problem](https://adventofcode.com/2017/day/3)
 
 Today was way more difficult (at least for me) compared to [day 1]({{ page.root }}/2017/12/advent-day-1) and [day 2]({{ page.root }}/2017/12/advent-day-2). I spent way too much time trying to figure it out...
 

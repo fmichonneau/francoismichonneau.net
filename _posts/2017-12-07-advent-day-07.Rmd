@@ -9,7 +9,7 @@ tags: ["advent of code"]
 excerpt: "Solution for Day 7 of Advent of Code"
 ---
 
-* [Problem](http://adventofcode.com/2017/day/7)
+* [Problem](https://adventofcode.com/2017/day/7)
 
 To solve today's problem, I used igraph as I wanted to learn a little more about this package. A little hackish at times, but again it worked.
 

@@ -9,7 +9,7 @@ tags: ["advent of code"]
 excerpt: "Solution for Day 13 of Advent of Code"
 ---
 
-* [Problem](http://adventofcode.com/2017/day/13)
+* [Problem](https://adventofcode.com/2017/day/13)
 
 
 I started to have cold and my foggy brain had a difficult time with today's problem. I'm pretty sure the code of part 2 would eventually produce the right answer, but it's very slow and the answer is a high numnber. Maybe I'll revisit if I find the time at a later point. One one star for me today... 
