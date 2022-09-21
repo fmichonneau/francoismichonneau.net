@@ -65,7 +65,7 @@ Choice of packages and approach:
 * When working with web APIs a lot can go wrong: there is a weird data
   format that your code didn't know how to handle, your internet connection goes
   down, you reach the rate limit, etc. Therefore, I used the
-  [`storr`](richfitz.github.io/storr/) package to cache (1) the R6 objects that
+  [`storr`](https://richfitz.github.io/storr/) package to cache (1) the R6 objects that
   act as the bridge between the 2 APIs; (2) the responses from the HelpScout API
   to make sure all the threads were converted correctly.
 * I organized all the code as a barebone package. It makes code management
