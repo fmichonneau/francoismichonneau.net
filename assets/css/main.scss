@@ -69,6 +69,10 @@ a {
   border-left: 5px solid $info-color;
 }
 
+.language-python {
+    border-left: 5px solid $success-color;
+}
+
 summary > p {
   display: inline;
 }
