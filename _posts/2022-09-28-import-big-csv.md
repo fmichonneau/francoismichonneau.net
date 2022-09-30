@@ -1,12 +1,17 @@
 ---
-title: "Working with large CSV files"
-excerpt: "A short practical guide to use the {arrow}/PyArrow to load a 15 GB dataset."
+title: "Working with large CSV files with Arrow"
+excerpt: "A short practical guide to load a 15 GB dataset in R and Python."
 layout: "single"
 date: "2022-09-28"
 type: "post"
 published: true
 categories: ["Arrow exploration"]
 tags: ["r", "arrow"]
+header:
+  overlay_image: /images/2022-09-light-arrows.jpg
+  overlay_filter: 0.5
+  caption: "Photo by [Andryck Lopez](https://unsplash.com/@lopez1010?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/)"
+toc: true
 ---
 
 
@@ -276,8 +281,26 @@ missing data.
 
 Unless you are working with a relatively small dataset stored as a
 single file, using the Dataset API provides you with flexibility to
-read and write datasets quickly and in a variety of formats. What we
-describe here with a 15 GB dataset would work just as well with
-something much larger.
+read and write datasets quickly and in a variety of formats. The
+approach described here would work just as well with a much larger
+dataset.
 
-![](/images/decision-map.svg)
+To summarize what we learned in this post, I put together this brief
+decision guide to help you choose the correct API to import your
+data. This should help you get started. However, you might need to
+change which API you use depending on the specificities of your
+dataset, your system, and the type of analyses you will perform on the
+dataset.
+
+{% include figure image_path="/images/2022-09-decision-map.webp" alt="Decision
+tree to help you **choose** the most suitable API for your data. If
+your dataset is large (more than a third of your available RAM) or if
+it is split into multiple files use the Dataset API. Reserve the use
+of the Single file API when the dataset is small." caption="Decision
+tree to help you choose the appropriate Apache Arrow API for your
+dataset." %}
+
+## Acknowledgments
+
+Thank you to [Danielle Navarro](https://djnavarro.net) for
+reviewing this post.
