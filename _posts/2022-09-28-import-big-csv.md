@@ -136,9 +136,9 @@ fast because the data does not get loaded in memory. `open_dataset()`
 scans the content of the file, figures out the name of the columns and
 their data types.
 
-However, running the same query as above, where we counted the number
-of unique values in a column, takes 18 seconds. It is slower because
-to perform this query, the query engine needs to actually read the
+However, running the same query as above, which counts the number of
+unique values in a column, takes 18 seconds. It is slower because to
+perform this query, the query engine needs to actually read the
 data. It is the same result that we had found in a [previous post]({%
 post_url 2022-08-22-arrow-dataset-creation %}).  Running queries
 directly on a CSV file is slow. In that post, we had also found that
@@ -186,19 +186,24 @@ data <- open_dataset(
 ```
 
 It takes about the same amount of time as scanning the CSV files. It
-seems instantaneous taking only 0.02 seconds. Again, this is fast
-because the data is not loaded in memory. So what's the performance of
-a query on this dataset split into multiple parquet files?
+is almost instantaneous taking only 0.02 seconds. Again, this is fast
+because the data is not loaded in memory. We saw that this approach
+led it took almost 20 seconds to run this query on our CSV file. So
+what is the performance of a query on this dataset split into multiple
+parquet files?
 
-Counting the unique values in a column takes just 1 second. One second
-to summarize 140 million rows. It is a little slower than performing
-this query when the entire dataset is loaded in memory but loading the
-files is much faster. And because the dataset is not loaded, you are
-limited by the amount of memory you have available.
+Counting the unique values in a column takes just **1 second**. You
+read that correctly. One second to summarize 140 million rows. It is a
+little slower than doing it when the entire dataset is loaded in
+memory but scanning the files is faster. And because the dataset is
+not loaded in memory, you are not limited by the amount of memory you
+have available. With the Single File API, a file of 15 GB is really
+the upper limit of what my laptop with 32 GB of RAM can handle.
 
-One of the advantages of the Arrow ecosystem is that the approach that
-works with R also works with Python. And because both language use the
-same C++ backend, the code looks very similar.
+One of the advantages of the Arrow ecosystem is that its
+multi-lingual. The approach we described with R also works with
+Python. And because both language use the same C++ backend, the code
+looks very similar.
 
 
 ## Single file API in Python
@@ -226,15 +231,17 @@ data =  pa.csv.read_csv(in_path)
 pq.write_table(data, out_path)
 ```
 
-In our case, the file is too large to fit in memory. So instead of
+In our case, the file is too large to fit in memory[^1]. So instead of
 using `read_csv()`, we need to use `open_csv()`. Because, the CSV file
-is read in chunks, the code is a little more complex. We loop through
-each chunk, read it, and write it to the Parquet file. This uses
-little memory but can be a little slow as a single thread is used to
-read the file. When using `open_csv()`, the data types need to be
-consistent in your columns. The inferrence is made on the first chunk,
-and if the type changes halfway through your dataset, you will run
-into errors. You can avoid this by specifying the data types manually.
+is read in chunks, the code is a little more complex. We need to loop
+through each chunk, read it, and write it to the Parquet file. This
+uses little memory but is not as fast as using `read_csv()` given that
+a single thread is used to read the file. When using `open_csv()`, the
+data types need to be consistent in your columns. The inferrence about
+data types is made on the first chunk of data read, and if the type
+changes halfway through your dataset in one of your columns, you will
+run into errors. You can avoid this by specifying the data types
+manually.
 
 ```python
 # from https://stackoverflow.com/a/68563617/1113276
@@ -257,21 +264,23 @@ with pyarrow.csv.open_csv(in_path) as reader:
 writer.close()
 ```
 
-On my system, the conversion from the CSV to Parquet takes about 190
-seconds. Reading the parquet file can be done with:
+On my system, the conversion from the CSV file to Parquet takes about
+190 seconds. Reading the Parquet file can be done with:
 
 ```python
 data = pq.ParquetDataset(out_path).read()
 ```
 
-With this approach the dataset is in memory, and for this large
-dataset, on my system, I need to be careful with what is running on my
+With this approach the dataset is in memory, just like we were using
+R. Again on my system, I need to be careful with what is running on my
 system (I can't have my web browser open for instance) to be able to
-load this without running out of memory.
+load this without running out of memory and crashing my Python
+session.
 
 ## The Dataset API in Python
 
-To load the CSV file with the Dataset API:
+To load the CSV file with the Dataset API, we use the `dataset()`
+function:
 
 ```python
 import pyarrow.dataset as ds
@@ -284,7 +293,10 @@ data = ds.dataset(in_path)
 
 Just like with R, reading this file takes about 0.02 seconds.
 
-To convert it to parquet, you use the `write_dataset()` function:
+To convert it to a collection of Parquet files, you use the
+`write_dataset()` function. This function takes the same
+`max_rows_per_file` to control the size of the Parquet files in each
+partition.
 
 ```python
 ds.write_dataset(data, out_path,
@@ -292,15 +304,45 @@ ds.write_dataset(data, out_path,
                  max_rows_per_file = 1e7)
 ```
 
-And reading the collection of parquet files can also be done with the
+Reading this collection of parquet files can also be done with the
 `dataset()` function, just like when we used the function to read the
-CSV file. The `format` argument is optional as the function detects
-automatically the file type.
+single CSV file above. The `dataset()` function is very flexible and
+can be used to import data in a variety of formats, structures, and
+even combines files from local and remote locations. The `format`
+argument is optional as the function detects automatically the file
+type.
 
 
 ```python
 data = ds.dataset(out_path, format = "parquet")
 ```
+
+Given the current functionalities implemented PyArrow, querying
+datasets of this size is possible but it is neither blazing fast nor
+convenient. A good alternative is to use Ibis with DuckDB as a
+backend. Explaining these tools is beyond the scope of this
+post. A one sentence summary are:
+- Ibis provides a single interface to work with data stored in memory
+  or in databases;
+- DuckDB is a self-contained database designed for data analytics.
+
+To count the number of unique values, you could use the following
+approach:
+
+```python
+import ibis
+
+ibis.options.interactive = True
+
+con = ibis.duckdb.connect()
+data = con.register("parquet:///home/datasets/my-data/*.parquet", table_name = "table")
+
+con.table("table").variable.value_counts()
+```
+
+This takes again just under a second to summarize our 140 million
+rows.
+
 
 ## What I didn't talk about
 
@@ -338,3 +380,6 @@ Apache Arrow API for your dataset." %}
 
 Thank you to [Danielle Navarro](https://djnavarro.net) for
 reviewing this post.
+
+[^1]: I am not sure why it fit in memory when I was loading it in R but
+      not with Python.
