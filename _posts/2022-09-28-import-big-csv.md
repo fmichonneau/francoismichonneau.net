@@ -26,14 +26,14 @@ families:
 
 The Dataset API is very flexible.  It can read multiple file formats,
 you can point to a folder with multiple files and create a dataset
-from them, it can read datasets from multiple sources (even combining
-remote and local sources). This API can also be used to read single
-files that are too large to fit in memory. This works because the
-files are not actually loaded in memory. The functions scan the
+from them, and it can read datasets from multiple sources (even
+combining remote and local sources). This API can also be used to read
+single files that are too large to fit in memory. This works because
+the files are not actually loaded in memory. The functions scan the
 content so they know where to look for the data and what the schema is
 (the data types and names of each column). When you query the data,
-there is a little overhead because the query engine needs to first
-read the data before it can operate on it. (If you want to see some
+there is some overhead because the query engine needs to first read
+the data before it can operate on it. (If you want to see some
 examples of what the Dataset API can do, check out the two previous
 posts on datasets with Arrow: [Part 1]({% post_url
 2022-08-22-arrow-dataset-creation %}), and [Part 2]({% post_url
@@ -45,7 +45,7 @@ time, and they load the data in memory. So depending on the size of
 your file and the amount of memory you have available on your system,
 it might not be possible to load the dataset this way.  If you _can_
 load the dataset in memory queries will run faster because the data
-will readily accessible to the query engine.
+will be readily accessible to the query engine.
 
 In this post, we will explore how to convert a large CSV file to the
 Apache Parquet format using the Single file and the Dataset APIs with
@@ -85,7 +85,7 @@ the arrow R package is the only way to load a file of this size in
 memory. Both readr/vroom and data.table ran out of memory after
 several minutes and before being able to finish reading the file.
 
-At this point, you have an Arrow formatted data loaded in memory and
+At this point, you have an Arrow formatted table loaded in memory and
 ready to work with.
 
 To convert this file into the Apache Parquet format using the Single
@@ -121,11 +121,10 @@ summarize the content of 140 million rows: this is fast! Very fast!
 Whether you use `read_csv_arrow()` or `read_parquet()`, the dataset is
 loaded in memory using the same representation: an Arrow table. The
 performance of queries would therefore be the same regardless of the
-format used to store the data. In this case, the decision of storing
+format used to store the data. In this case, the decision to storing
 the data as a CSV or a Parquet file will be based on the amount of
-disk space it takes, and how fast reading from CSV or Parquet compared
-to the overhead associated with the conversion from one format to the
-other.
+storage, how fast reading from CSV or Parquet compares to the overhead
+associated with the conversion from one format to the other.
 
 Let's now use the Dataset API.
 
@@ -147,17 +146,17 @@ their data types.
 Running the same query as above, which counts the number of unique
 values in a column, takes 18 seconds compared to the 0.5 seconds when
 the data is loaded in memory. It is slower because to perform this
-query, the query engine needs to actually read the data. It is the
-same result that we had found in a [previous post]({% post_url
+query, the query engine needs to read the data. It is the same result
+that we had found in a [previous post]({% post_url
 2022-08-22-arrow-dataset-creation %}): running queries directly on a
-CSV file is slow. In that post, we had also found that storing the
-data in the Parquet format sped things up. Let's now convert this
-dataset to Parquet using the Dataset API.
+CSV file is slow. In that post, we also found that storing the data in
+the Parquet format sped things up. Let's now convert this dataset to
+Parquet using the Dataset API.
 
 Instead of using a single Parquet file as we did above when we looked
 at the Single file API, we will also partition the Parquet dataset to
 see how it could help with query performance. The particular dataset I
-have on hands does not have any obvious variable we can use to
+have on hand does not have any obvious variable we can use to
 partition the data. If you are dealing with a dataset that has
 timestamps for data collected at regular intervals, partitioning on a
 temporal dimension could make sense (that's what the NYC taxi dataset
@@ -168,10 +167,10 @@ found that limiting the number of rows to 10 million per file seemed
 like a good compromise. Each file is about 720 MB which is close to
 the file sizes in the NYC taxi dataset. The [PyArrow
 documentation](https://arrow.apache.org/docs/python/dataset.html#partitioning-performance-considerations)
-has a good overview on strategies for partitioning a dataset. The
+has a good overview of strategies for partitioning a dataset. The
 general recommendation is to avoid individual Parquet files smaller
-than 20 MB and larger than 2 GB, while avoiding a partition layout
-that would create more than 10,000 partitions.
+than 20 MB and larger than 2 GB while avoiding a partition layout that
+would create more than 10,000 partitions.
 
 ```r
 write_dataset(
@@ -183,7 +182,7 @@ write_dataset(
 ```
 
 Writing these files on my system takes about 50 seconds. We end up
-with 14 Parquet files totalling 9.9 GB.
+with 14 Parquet files totaling 9.9 GB.
 
 Next time we want to work with this data, we can load these files
 with:
@@ -196,22 +195,22 @@ data <- open_dataset(
 
 It takes about the same amount of time as scanning the CSV files. It
 is almost instantaneous taking only 0.02 seconds. Again, this is fast
-because the data is not loaded in memory. We saw that this approach
-led it took almost 20 seconds to run this query on our CSV file. So
-what is the performance of a query on this dataset split into multiple
-Parquet files?
+because the data is not loaded in memory. We saw that with this approach it
+took almost 20 seconds to run this query on our CSV file. So what is
+the performance of a query on this dataset split into multiple Parquet
+files?
 
 Counting the unique values in a column takes just **1 second**. You
 read that correctly. One second to summarize 140 million rows. It is a
 little slower than doing it when the entire dataset is loaded in
 memory but scanning the files is faster. And because the dataset is
 not loaded in memory, you are not limited by the amount of memory you
-have available. With the Single File API, a file of 15 GB is really
-the upper limit of what my laptop with 32 GB of RAM can handle.
+have available. With the Single File API, a file of 15 GB is the upper
+limit of what my laptop with 32 GB of RAM can handle.
 
-One of the advantages of the Arrow ecosystem is that its
+One of the advantages of the Arrow ecosystem is that it is
 multi-lingual. The approach we described with R also works with
-Python. And because both language use the same C++ backend, the code
+Python. And because both languages use the same C++ backend, the code
 looks very similar.
 
 
@@ -219,9 +218,9 @@ looks very similar.
 
 There are two functions in the PyArrow Single API to read CSV files:
 `read_csv()` and `open_csv()`. While `read_csv()` loads all the data
-in memory, and does it fast by using multiple threads to read
-different part of the files, `open_csv()` reads the data in batches
-and uses a single thread.
+in memory and does it fast by using multiple threads to read different
+parts of the files, `open_csv()` reads the data in batches and uses a
+single thread.
 
 If the CSV file is small enough, you should use `read_csv()`. The code
 to read the CSV file and write it to a Parquet file would then look
@@ -280,7 +279,7 @@ seconds. Reading the Parquet file can be done with:
 data = pq.ParquetDataset(out_path).read()
 ```
 
-With this approach the dataset is in memory, just like when we were
+With this approach, the dataset is in memory, just like when we were
 using R. Again with 32 GB, I need to be careful with what is running
 on my system to be able to load this without running out of memory and
 crashing my Python session.
@@ -314,8 +313,8 @@ ds.write_dataset(data, out_path, format = "parquet",
 Reading this collection of Parquet files can also be done with the
 `dataset()` function, just like when we used the function to read the
 single CSV file above. The `dataset()` function is very flexible and
-can be used to import data in a variety of formats, structures, and
-even combines files from local and remote locations. The `format`
+can be used to import data in a variety of formats, and structures,
+and even combines files from local and remote locations. The `format`
 argument is optional as the function detects automatically the file
 type.
 
@@ -342,7 +341,7 @@ import ibis
 ibis.options.interactive = True
 
 con = ibis.duckdb.connect()
-data = con.register("parquet:///home/datasets/my-data/*.parquet", table_name = "table")
+data = con.register("parquet:///home/user/datasets/my-data/*.parquet", table_name = "table")
 
 con.table("table").variable.value_counts()
 ```
@@ -363,18 +362,21 @@ missing data.
 
 ## Conclusion
 
-Unless you are working with a relatively small dataset stored as a
-single file, using the Dataset API provides you with flexibility to
-read and write datasets quickly and in a variety of formats. The
-approach described here would work just as well with a much larger
-dataset.
+For a 15 GB data file, the dataset API is better suited to read,
+convert, and query the data. There is an overhead associated with not
+having the data in memory but it is greatly reduced if the data is
+stored as Parquet files. Another advantage is that the approach
+developed here would scale to much larger datasets where the Single
+file API would not be able to serialize the data in memory.
 
-To summarize what we learned in this post, I put together this brief
-decision guide to help you choose the correct API to import your
-data. This should help you get started. However, you might need to
-change which API you use depending on the specificities of your
-dataset, your system, and the type of analyses you will perform on the
-dataset.
+With the dataset in this example, the Single file API did not have an
+opportunity to shine given the hardware constraints of a modern
+laptop. However, if you are dealing with datasets that fit easily in
+memory, working with data directly in memory will lead to better query
+performance.
+
+To summarize what we learned in this post, this brief decision guide
+to help you choose the correct API to import your data.
 
 {% include figure image_path="/images/2022-09-decision-map.webp"
 alt="Decision tree to help you choose the most suitable API for your
@@ -386,8 +388,9 @@ Apache Arrow API for your dataset." %}
 
 ## Acknowledgments
 
-Thank you to [Danielle Navarro](https://djnavarro.net) for
-reviewing this post.
+Thank you to [Kae Suarez](https://twitter.com/kae_suarez/) and
+[Danielle Navarro](https://djnavarro.net) for reviewing this post and
+providing feedback that improved its content.
 
 ## Footnotes
 
