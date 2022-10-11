@@ -163,15 +163,15 @@ timestamps for data collected at regular intervals, partitioning on a
 temporal dimension could make sense (that's what the NYC taxi dataset
 does by partitioning by year and month). Instead, here, we can use the
 `max_rows_per_file` argument of the `write_dataset()` function to
-limit how large each parquet file is. At least for this dataset, I
+limit how large each Parquet file is. At least for this dataset, I
 found that limiting the number of rows to 10 million per file seemed
 like a good compromise. Each file is about 720 MB which is close to
-the file sizes in the NYC taxi dataset. The [Python
+the file sizes in the NYC taxi dataset. The [PyArrow
 documentation](https://arrow.apache.org/docs/python/dataset.html#partitioning-performance-considerations)
-has a good explanation about partitioning a dataset. The general
-recommendation is to avoid individual parquet files smaller than 20 MB
-and larger than 2 GB, while avoiding a partition layout that would
-create more than 10,000 partitions.
+has a good overview on strategies for partitioning a dataset. The
+general recommendation is to avoid individual Parquet files smaller
+than 20 MB and larger than 2 GB, while avoiding a partition layout
+that would create more than 10,000 partitions.
 
 ```r
 write_dataset(
@@ -183,7 +183,7 @@ write_dataset(
 ```
 
 Writing these files on my system takes about 50 seconds. We end up
-with 14 parquet files totalling 9.9 GB.
+with 14 Parquet files totalling 9.9 GB.
 
 Next time we want to work with this data, we can load these files
 with:
@@ -199,7 +199,7 @@ is almost instantaneous taking only 0.02 seconds. Again, this is fast
 because the data is not loaded in memory. We saw that this approach
 led it took almost 20 seconds to run this query on our CSV file. So
 what is the performance of a query on this dataset split into multiple
-parquet files?
+Parquet files?
 
 Counting the unique values in a column takes just **1 second**. You
 read that correctly. One second to summarize 140 million rows. It is a
@@ -217,13 +217,13 @@ looks very similar.
 
 ## Single file API in Python
 
-There are two functions in the Python Single API to read CSV files:
+There are two functions in the PyArrow Single API to read CSV files:
 `read_csv()` and `open_csv()`. While `read_csv()` loads all the data
 in memory, and does it fast by using multiple threads to read
-different part of the files, `open_csv` reads the data in batches and
-uses a single thread.
+different part of the files, `open_csv()` reads the data in batches
+and uses a single thread.
 
-If the CSV file is small enough, you should use `read_csv`. The code
+If the CSV file is small enough, you should use `read_csv()`. The code
 to read the CSV file and write it to a Parquet file would then look
 like this:
 
@@ -244,16 +244,16 @@ In our case, the file is too large to fit in memory[^2]. So instead of
 using `read_csv()`, we need to use `open_csv()`. Because, the CSV file
 is read in chunks, the code is a little more complex. We need to loop
 through each chunk, read it, and write it to the Parquet file. This
-uses little memory but is not as fast as using `read_csv()` given that
-a single thread is used to read the file. When using `open_csv()`, the
-data types need to be consistent in your columns. The inferrence about
-data types is made on the first chunk of data read, and if the type
-changes halfway through your dataset in one of your columns, you will
-run into errors. You can avoid this by specifying the data types
-manually.
+uses little memory but is not as fast as using `read_csv()`. While
+`read_csv()` is multi-threaded, `open_csv()` uses a single
+thread. When using `open_csv()`, the data types need to be consistent
+in your columns. The function infers the data types on the first chunk
+of data read, and if the type changes halfway through your dataset in
+one of your columns, you will run into errors. You can avoid this by
+specifying the data types manually.
 
 ```python
-# from https://stackoverflow.com/a/68563617/1113276
+# from <https://stackoverflow.com/a/68563617/1113276>
 import pyarrow as pa
 import pyarrow.parquet as pq
 import pyarrow.csv
@@ -273,18 +273,17 @@ with pyarrow.csv.open_csv(in_path) as reader:
 writer.close()
 ```
 
-On my system, the conversion from the CSV file to Parquet takes about
-190 seconds. Reading the Parquet file can be done with:
+On my system, the conversion from file to Parquet takes about 190
+seconds. Reading the Parquet file can be done with:
 
 ```python
 data = pq.ParquetDataset(out_path).read()
 ```
 
-With this approach the dataset is in memory, just like we were using
-R. Again on my system, I need to be careful with what is running on my
-system (I can't have my web browser open for instance) to be able to
-load this without running out of memory and crashing my Python
-session.
+With this approach the dataset is in memory, just like when we were
+using R. Again with 32 GB, I need to be careful with what is running
+on my system to be able to load this without running out of memory and
+crashing my Python session.
 
 ## The Dataset API in Python
 
@@ -308,12 +307,11 @@ To convert it to a collection of Parquet files, you use the
 partition.
 
 ```python
-ds.write_dataset(data, out_path,
-                 format = "parquet",
+ds.write_dataset(data, out_path, format = "parquet",
                  max_rows_per_file = 1e7)
 ```
 
-Reading this collection of parquet files can also be done with the
+Reading this collection of Parquet files can also be done with the
 `dataset()` function, just like when we used the function to read the
 single CSV file above. The `dataset()` function is very flexible and
 can be used to import data in a variety of formats, structures, and
@@ -328,12 +326,12 @@ data = ds.dataset(out_path, format = "parquet")
 
 Given the current functionalities implemented PyArrow, querying
 datasets of this size is possible but it is neither blazing fast nor
-convenient. A good alternative is to use Ibis with DuckDB as a
-backend. Explaining these tools is beyond the scope of this
-post. A one sentence summary are:
-- Ibis provides a single interface to work with data stored in memory
-  or in databases;
-- DuckDB is a self-contained database designed for data analytics.
+convenient. A good alternative is to use
+[Ibis](https://ibis-project.org) with [DuckDB](https://duckdb.org) as
+a backend. Ibis provides a single interface to work with data stored
+in memory or in databases. DuckDB is a self-contained database
+designed for data analytics. These tools deserve a lot more than a
+one-sentence summary but this is beyond the scope of this post.
 
 To count the number of unique values, you could use the following
 approach:
@@ -349,11 +347,11 @@ data = con.register("parquet:///home/datasets/my-data/*.parquet", table_name = "
 con.table("table").variable.value_counts()
 ```
 
-Just like with using R, this takes about a second to summarize our 140
-million rows.
+Just like with using R, this takes about a second to count the unique
+values in one column of our 140 million row dataset.
 
 
-## What I didn't talk about
+## What this post didn't mention
 
 I focused on the reading of a CSV file and its conversion to
 Parquet. I didn't talk about all the options that both the Single file
@@ -362,7 +360,6 @@ are being imported. For instance, both APIs can be used to specify a
 different column-separator, and cell content that should be treated as
 missing data.
 
-Additionally, the Parquet reader 
 
 ## Conclusion
 
