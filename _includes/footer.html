@@ -36,3 +36,28 @@
   <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/"
      rel="nofollow">Minimal Mistakes</a>.
   Hosted by <a href="https://github.com/" rel="nofollow">GitHub</a>. <br>
+</div>
+
+<script defer>
+  document
+    .querySelector('.page__content')
+    .querySelectorAll('pre.highlight')
+    .forEach(function (pre) {
+      var button = document.createElement('button');
+      var copyText = '<i class="fa fa-clipboard"></i>';
+      button.className = 'copy';
+      button.type = 'button';
+      button.ariaLabel = 'Copy code to clipboard';
+      button.innerHTML = copyText;
+      button.addEventListener('click', function () {
+        var code = pre.querySelector('code').innerText.trim();
+        navigator.clipboard.writeText(code);
+        button.innerHTML = '<i class="fa fa-clipboard-check"></i>';
+        setTimeout(function () {
+            button.innerHTML = copyText;
+            button.blur();
+        }, 1500);
+      });
+      pre.appendChild(button);
+    });
+</script>
