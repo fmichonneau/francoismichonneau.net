@@ -2,7 +2,7 @@
 title: "Working with large CSV files with Arrow"
 excerpt: "A short practical guide to load a 15 GB dataset in R and Python."
 layout: "single"
-date: "2022-09-28"
+date: "2022-10-13"
 type: "post"
 published: true
 categories: ["Arrow exploration"]
