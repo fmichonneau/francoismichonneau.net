@@ -12,7 +12,7 @@ $doc-font-size              : 16;
 $gray                       : #7a8288;
 $dark-gray                  : mix(#000, $gray, 40%);
 $darker-gray                : mix(#000, $gray, 60%);
-$light-gray                 : mix(#fff, $gray, 50%);
+$light-gray                 : mix(#fff, $gray, 65%);
 $lighter-gray               : mix(#fff, $gray, 90%);
 
 $body-color                 : #000; //#fff;
@@ -64,9 +64,29 @@ a {
     border-top: solid $gray 2px;
 }
 
+.language-r::before {
+  content: "R";
+  padding: .1rem .5rem 0 0.5rem;
+  background: mix($info-color, #000, 40%);
+  border-radius: 0 5px 0 0;
+  display: flex;
+}
 
 .language-r {
-  border-left: 5px solid $info-color;
+  border-left: 5px solid mix($info-color, #000, 40%);
+}
+
+.language-python::before {
+  content: "Python";
+  padding: .1rem .5rem 0 0.5rem;
+  background: mix($success-color, #000, 40%);
+  border-radius: 0 5px 0 0;
+  display: flex;
+}
+
+
+.language-python {
+    border-left: 5px solid mix($success-color, #000, 40%);
 }
 
 summary > p {
@@ -91,6 +111,27 @@ summary > p {
     text-decoration: underline;
 }
 
+
+
+// copy code to clipboard
+.copy {
+    color: $light-gray;
+    background: transparent;
+    border-radius: 5px;
+    border: 0;
+    padding: 10px;
+    position: absolute;
+    right: .5rem;
+    top: 1.7rem;
+    
+    &:active,
+    &:focus,
+    &:hover {
+        background: $background-color;
+        color: $lighter-gray;
+        opacity: 1;
+    }
+}
 /* end of customization */
 
 @charset "utf-8";
@@ -101,4 +142,17 @@ summary > p {
 
 .page {
     padding-right: 0;
+}
+
+article figure {
+    background: $dark-gray;
+    border-radius: 5px;
+}
+
+article figcaption {
+    font-family: $sans-serif;
+    font-style: italic;
+    color: $light-gray;
+    margin-bottom: .75rem;
+    padding-left: .5rem;
 }
