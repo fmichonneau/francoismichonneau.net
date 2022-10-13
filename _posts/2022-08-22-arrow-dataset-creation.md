@@ -396,8 +396,8 @@ useR!2022.
 
 ## Acknowledgments
 
-Thank you to [Kae Suarez](https://twitter.com/kae_suarez/) and [Danielle
-Navarro](https://https://djnavarro.net) for reviewing this post.
+Thank you to [Kae Suarez](https://twitter.com/kae_suarez/) and
+[Danielle Navarro](https://djnavarro.net) for reviewing this post.
 
 ## Post Scriptum
 
