@@ -41,7 +41,7 @@
 <script defer>
   document
     .querySelector('.page__content')
-    .querySelectorAll('pre.highlight')
+    .querySelectorAll('.highlighter-rouge:not(.language-plaintext) > div.highlight > pre.highlight')
     .forEach(function (pre) {
       var button = document.createElement('button');
       var copyText = '<i class="fa fa-clipboard"></i>';
