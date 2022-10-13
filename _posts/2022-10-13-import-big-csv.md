@@ -1,6 +1,6 @@
 ---
-title: "Working with large CSV files with Arrow"
-excerpt: "A short practical guide to load a 15 GB dataset in R and Python."
+title: "How to use Arrow to work with large CSV files?"
+excerpt: "A short practical guide to load a 15 GB dataset with Apache Arrow using R and Python."
 layout: "single"
 date: "2022-10-13"
 type: "post"
@@ -12,7 +12,10 @@ header:
   overlay_filter: 0.5
   caption: "Photo by [Andryck Lopez](https://unsplash.com/@lopez1010?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText) on [Unsplash](https://unsplash.com/)"
 toc: true
+toc_sticky: true
 ---
+
+## Some background
 
 Lucky you! You just got hold of a largish CSV file (let's say 15 GB,
 about 140 million rows). How do you handle this file to be able to
@@ -23,6 +26,15 @@ several ways are mentioned to import data. They fall into two
 families:
 - one that I will refer to as the **Single file API**[^1];
 - the other is the **Dataset API**.
+
+
+The Single file API contains functions for each supported file format
+(CSV, JSON, Parquet, Feather/Arrow, ORC). They work on one file at a
+time, and they load the data in memory. So depending on the size of
+your file and the amount of memory you have available on your system,
+it might not be possible to load the dataset this way.  If you _can_
+load the dataset in memory queries will run faster because the data
+will be readily accessible to the query engine.
 
 The Dataset API is very flexible.  It can read multiple file formats,
 you can point to a folder with multiple files and create a dataset
@@ -39,14 +51,6 @@ posts on datasets with Arrow: [Part 1]({% post_url
 2022-08-22-arrow-dataset-creation %}), and [Part 2]({% post_url
 2022-08-31-arrow-dataset-part-2 %}))
 
-The Single file API contains functions for each supported file format
-(CSV, JSON, Parquet, Feather/Arrow, ORC). They work on one file at a
-time, and they load the data in memory. So depending on the size of
-your file and the amount of memory you have available on your system,
-it might not be possible to load the dataset this way.  If you _can_
-load the dataset in memory queries will run faster because the data
-will be readily accessible to the query engine.
-
 In this post, we will explore how to convert a large CSV file to the
 Apache Parquet format using the Single file and the Dataset APIs with
 code examples in R and Python. We do the conversion from CSV to
@@ -54,8 +58,7 @@ Parquet, because in a [previous post]({% post_url
 2022-08-22-arrow-dataset-creation %}) we found that the Parquet format
 provided the best compromise between disk space usage and query
 performance. Having the content of this file in the Apache Parquet
-format will ensure that we should be able to read and operate on this
-data quickly.
+format will ensure that we can read and operate on this data quickly.
 
 ## The Single file API in R
 
@@ -78,15 +81,15 @@ data <- read_csv_arrow(
 Using `as_data_frame = FALSE` keeps the result as an Arrow table which
 is a better representation for a file of this size. Attempting to
 convert it into a data frame will take longer to load, and you will
-most likely cause you to run out of memory.
+most likely run out of memory.
 
 This step takes about 15 seconds on my system. As far as I can tell,
 the arrow R package is the only way to load a file of this size in
 memory. Both readr/vroom and data.table ran out of memory after
 several minutes and before being able to finish reading the file.
 
-At this point, you have an Arrow formatted table loaded in memory and
-ready to work with.
+At this point, you have an Arrow formatted table loaded in memory that
+is ready for you to work with.
 
 To convert this file into the Apache Parquet format using the Single
 file API, you would use:
@@ -97,7 +100,7 @@ write_parquet(data, "~/dataset/data.parquet")
 
 Creating this file takes about 85 seconds on my system. The resulting
 file is about 9.5 GB, reducing the amount of hard drive space needed
-to store this data by about 60%.
+to store the data by about 60%.
 
 The `read_parquet()` function will load this dataset the next time you
 need to work with it:
@@ -138,20 +141,19 @@ to read a single file.
 data <- open_dataset("~/dataset/path_to_file.csv")
 ```
 
-With our 15GB file, it takes 0.05 seconds to "read" the file. It is
+With our 15 GB file, it takes 0.05 seconds to "read" the file. It is
 fast because the data does not get loaded in memory. `open_dataset()`
 scans the content of the file to identify the name of the columns and
 their data types.
 
 Running the same query as above, which counts the number of unique
 values in a column, takes 18 seconds compared to the 0.5 seconds when
-the data is loaded in memory. It is slower because to perform this
-query, the query engine needs to read the data. It is the same result
-that we had found in a [previous post]({% post_url
-2022-08-22-arrow-dataset-creation %}): running queries directly on a
-CSV file is slow. In that post, we also found that storing the data in
-the Parquet format sped things up. Let's now convert this dataset to
-Parquet using the Dataset API.
+the data is loaded in memory. It is slower because the query engine
+needs to read the data. It is the same result that we had found in a
+[previous post]({% post_url 2022-08-22-arrow-dataset-creation %}):
+running queries directly on a CSV file is slow. In that post, we also
+found that storing the data in the Parquet format sped things
+up. Let's now convert this dataset to Parquet using the Dataset API.
 
 Instead of using a single Parquet file as we did above when we looked
 at the Single file API, we will also partition the Parquet dataset to
@@ -209,9 +211,9 @@ have available. With the Single File API, a file of 15 GB is the upper
 limit of what my laptop with 32 GB of RAM can handle.
 
 One of the advantages of the Arrow ecosystem is that it is
-multi-lingual. The approach we described with R also works with
-Python. And because both languages use the same C++ backend, the code
-looks very similar.
+polyglot. The approach we described with R also works with Python. And
+because both languages use the same C++ backend, the code looks very
+similar.
 
 
 ## Single file API in Python
@@ -280,9 +282,9 @@ data = pq.ParquetDataset(out_path).read()
 ```
 
 With this approach, the dataset is in memory, just like when we were
-using R. Again with 32 GB, I need to be careful with what is running
-on my system to be able to load this without running out of memory and
-crashing my Python session.
+using R. Again with 32 GB of RAM in my laptop, I need to be careful
+with what is running on my system to be able to load this dataset
+without running out of memory and crashing my Python session.
 
 ## The Dataset API in Python
 
@@ -298,12 +300,12 @@ out_path = "~/datasets/my-data/"
 data = ds.dataset(in_path)
 ```
 
-Just like with R, reading this file takes about 0.02 seconds.
+Just like with R, importing this file takes about 0.02 seconds.
 
 To convert it to a collection of Parquet files, you use the
 `write_dataset()` function. This function takes the same
-`max_rows_per_file` to control the size of the Parquet files in each
-partition.
+`max_rows_per_file` argument to control the size of the Parquet file
+in each partition.
 
 ```python
 ds.write_dataset(data, out_path, format = "parquet",
