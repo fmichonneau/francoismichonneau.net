@@ -2,7 +2,9 @@
   <ul class="social-icons">
     {% if site.data.ui-text[site.locale].follow_label %}
       <li><strong>{{ site.data.ui-text[site.locale].follow_label }}</strong></li>
-    {% endif %}
+      {% endif %}
+    <li><a rel="me" href="https://mastodon.social/@fmic_"><i class="fa-brands fa-mastodon" aria-hidden="true"></i> Mastodon</a></li>
+    
     {% if site.twitter.username %}
       <li><a href="https://twitter.com/{{ site.twitter.username }}"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a></li>
     {% endif %}
