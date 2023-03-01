@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="François Michonneau">
+<meta name="dcterms.date" content="2023-03-01">
+
+<title>Hanukkah of Data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="2022_hanukkah_data_files/libs/clipboard/clipboard.min.js"></script>
+<script src="2022_hanukkah_data_files/libs/quarto-html/quarto.js"></script>
+<script src="2022_hanukkah_data_files/libs/quarto-html/popper.min.js"></script>
+<script src="2022_hanukkah_data_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="2022_hanukkah_data_files/libs/quarto-html/anchor.min.js"></script>
+<link href="2022_hanukkah_data_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="2022_hanukkah_data_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="2022_hanukkah_data_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="2022_hanukkah_data_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="2022_hanukkah_data_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Hanukkah of Data</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>François Michonneau </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 1, 2023</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+</header>
+
+<section id="intro" class="level2">
+<h2 class="anchored" data-anchor-id="intro">Intro</h2>
+<p>Let’s get familiar with the data.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ibis</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ibis <span class="im">import</span> _</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Using ibis version: "</span>, ibis.__version__)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>ibis.options.interactive <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>con <span class="op">=</span> ibis.sqlite.<span class="ex">connect</span>(<span class="st">"noahs.sqlite"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>customers <span class="op">=</span> con.table(<span class="st">'customers'</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>products <span class="op">=</span> con.table(<span class="st">'products'</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>orders <span class="op">=</span> con.table(<span class="st">'orders'</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>orders_items <span class="op">=</span> con.table(<span class="st">'orders_items'</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>customers.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Using ibis version:  4.1.0</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> customerid </span>┃<span style="font-weight: bold"> name             </span>┃<span style="font-weight: bold"> address         </span>┃<span style="font-weight: bold"> citystatezip            </span>┃<span style="font-weight: bold"> birthdate  </span>┃<span style="font-weight: bold"> phone        </span>┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━┩
+│ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int32</span>      │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>           │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>          │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>                  │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>     │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>       │
+├────────────┼──────────────────┼─────────────────┼─────────────────────────┼────────────┼──────────────┤
+│       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1001</span> │ Jack Quinn       │ 201 E Park St   │ Los Angeles, CA 91343   │ 1960-05-14 │ 805-287-8515 │
+│       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1002</span> │ David Powell     │ 224C Tysens Ln  │ Staten Island, NY 10306 │ 1978-04-04 │ 516-768-1652 │
+│       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1003</span> │ Carrie Green     │ 1608 W 53rd Way │ Tampa, FL 33614         │ 1969-01-21 │ 727-209-0470 │
+│       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1004</span> │ Steven Miller    │ 178½ E 7th St   │ Manhattan, NY 10009     │ 1953-08-17 │ 607-941-9563 │
+│       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1005</span> │ Christine Powers │ 270 W 242nd St  │ Bronx, NY 10463         │ 1983-06-06 │ 212-759-9043 │
+└────────────┴──────────────────┴─────────────────┴─────────────────────────┴────────────┴──────────────┘
+</pre>
+</div>
+</div>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>products.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/home/francois/.local/lib/python3.10/site-packages/ibis/backends/base/sql/alchemy/__init__.py:125: SAWarning: Dialect sqlite+pysqlite does *not* support Decimal objects natively, and SQLAlchemy must convert from floating point - rounding errors and other issues may occur. Please consider storing Decimal numbers as strings or integers on this platform for lossless storage.
+  yield con.execute(*args, **kwargs)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="27">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> sku     </span>┃<span style="font-weight: bold"> desc                                    </span>┃<span style="font-weight: bold"> wholesale_cost </span>┃
+┡━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━┩
+│ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>  │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>                                  │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">decimal(10, 2)</span> │
+├─────────┼─────────────────────────────────────────┼────────────────┤
+│ DLI0002 │ Smoked Whitefish Sandwich               │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">9.33</span> │
+│ PET0005 │ Vegan Cat Food, Turkey &amp; Chicken        │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">4.35</span> │
+│ HOM0018 │ Power Radio (red)                       │          <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">21.81</span> │
+│ KIT0034 │ Azure Ladle                             │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2.81</span> │
+│ PET0041 │ Gluten-free Cat Food, Pumpkin &amp; Pumpkin │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">4.60</span> │
+└─────────┴─────────────────────────────────────────┴────────────────┘
+</pre>
+</div>
+</div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>orders.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/home/francois/.local/lib/python3.10/site-packages/ibis/backends/base/sql/alchemy/__init__.py:125: SAWarning: Dialect sqlite+pysqlite does *not* support Decimal objects natively, and SQLAlchemy must convert from floating point - rounding errors and other issues may occur. Please consider storing Decimal numbers as strings or integers on this platform for lossless storage.
+  yield con.execute(*args, **kwargs)</code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>TypeError: must be real number, not str</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>TypeError: must be real number, not str</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>orders_items.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/home/francois/.local/lib/python3.10/site-packages/ibis/backends/base/sql/alchemy/__init__.py:125: SAWarning: Dialect sqlite+pysqlite does *not* support Decimal objects natively, and SQLAlchemy must convert from floating point - rounding errors and other issues may occur. Please consider storing Decimal numbers as strings or integers on this platform for lossless storage.
+  yield con.execute(*args, **kwargs)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="29">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━┳━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> orderid </span>┃<span style="font-weight: bold"> sku     </span>┃<span style="font-weight: bold"> qty   </span>┃<span style="font-weight: bold"> unit_price     </span>┃
+┡━━━━━━━━━╇━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━━━━━┩
+│ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int32</span>   │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>  │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int32</span> │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">decimal(10, 2)</span> │
+├─────────┼─────────┼───────┼────────────────┤
+│    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1001</span> │ COL0820 │     <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span> │          <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">25.52</span> │
+│    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1002</span> │ TOY8907 │     <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span> │          <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">12.92</span> │
+│    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1002</span> │ KIT5813 │     <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span> │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">7.99</span> │
+│    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1002</span> │ KIT3981 │     <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span> │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">7.21</span> │
+│    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1003</span> │ KIT7098 │     <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span> │          <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">12.53</span> │
+└─────────┴─────────┴───────┴────────────────┘
+</pre>
+</div>
+</div>
+<p>There is definitely something weird with the data types provided in the SQLite database, so let’s use pyarrow to create parquet files from the CSV and check that the data types are what is expected.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pyarrow <span class="im">import</span> csv</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyarrow.parquet <span class="im">as</span> pq</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>customers <span class="op">=</span> csv.read_csv(<span class="st">"noahs-customers.csv"</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>pq.write_table(customers, <span class="st">"noahs-customers.parquet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>orders <span class="op">=</span> csv.read_csv(<span class="st">"noahs-orders.csv"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>pq.write_table(orders, <span class="st">"noahs-orders.parquet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>products <span class="op">=</span> csv.read_csv(<span class="st">"noahs-products.csv"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>pq.write_table(products, <span class="st">"noahs-products.parquet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>items_orders <span class="op">=</span> csv.read_csv(<span class="st">"noahs-orders_items.csv"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>pq.write_table(items_orders, <span class="st">"noahs-orders_items.parquet"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>con <span class="op">=</span>  ibis.<span class="ex">connect</span>(<span class="st">"duckdb://"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>customers <span class="op">=</span> con.read_parquet(<span class="st">'noahs-customers.parquet'</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>products <span class="op">=</span> con.read_parquet(<span class="st">'noahs-products.parquet'</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>orders_items <span class="op">=</span> con.read_parquet(<span class="st">'noahs-orders_items.parquet'</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>orders <span class="op">=</span> con.read_parquet(<span class="st">'noahs-orders.parquet'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="day-1" class="level2">
+<h2 class="anchored" data-anchor-id="day-1">Day 1</h2>
+<p>We need to convert the last names of the customers and find one that matches their phone number.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    customers</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    .mutate(last_name <span class="op">=</span> _.name.re_extract(<span class="vs">r"(.+)\s(.+)"</span>, <span class="dv">2</span>).lower())</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(_.last_name.length() <span class="op">==</span> <span class="dv">10</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    .mutate(converted <span class="op">=</span> _.last_name.re_replace(<span class="st">"[abc]"</span>, <span class="st">"2"</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>                        .re_replace(<span class="st">"[def]"</span>, <span class="st">"3"</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>                        .re_replace(<span class="st">"[ghi]"</span>, <span class="st">"4"</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                        .re_replace(<span class="st">"[jkl]"</span>, <span class="st">"5"</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>                        .re_replace(<span class="st">"[mno]"</span>, <span class="st">"6"</span>)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>                        .re_replace(<span class="st">"[pqrs]"</span>,<span class="st">"7"</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>                        .re_replace(<span class="st">"[tuv]"</span>, <span class="st">"8"</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>                        .re_replace(<span class="st">"[wxyz]"</span>,<span class="st">"9"</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>           )</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    .mutate(edit_phone <span class="op">=</span> _.phone.re_replace(<span class="st">"-"</span>, <span class="st">""</span>))</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(_.edit_phone <span class="op">==</span> _.converted)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    .select(_.name, _.phone, _.converted, _.edit_phone)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="35">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> name           </span>┃<span style="font-weight: bold"> phone        </span>┃<span style="font-weight: bold"> converted  </span>┃<span style="font-weight: bold"> edit_phone </span>┃
+┡━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━┩
+│ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>         │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>       │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>     │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>     │
+├────────────────┼──────────────┼────────────┼────────────┤
+│ Sam Guttenberg │ 488-836-2374 │ 4888362374 │ 4888362374 │
+└────────────────┴──────────────┴────────────┴────────────┘
+</pre>
+</div>
+</div>
+</section>
+<section id="day-2" class="level2">
+<h2 class="anchored" data-anchor-id="day-2">Day 2</h2>
+<p>We are looking for customers who have bought coffee/bagels, in 2017, that have the initals JD.</p>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    products.<span class="bu">filter</span>(_.desc.lower().contains(<span class="st">"coffee, drip"</span>))</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="36">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> sku     </span>┃<span style="font-weight: bold"> desc         </span>┃<span style="font-weight: bold"> wholesale_cost </span>┃
+┡━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━┩
+│ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>  │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>       │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">float64</span>        │
+├─────────┼──────────────┼────────────────┤
+│ DLI1464 │ Coffee, Drip │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">6.21</span> │
+└─────────┴──────────────┴────────────────┘
+</pre>
+</div>
+</div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    products.<span class="bu">filter</span>(_.desc.lower().contains(<span class="st">"bagel"</span>))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="37">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> sku     </span>┃<span style="font-weight: bold"> desc          </span>┃<span style="font-weight: bold"> wholesale_cost </span>┃
+┡━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━┩
+│ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>  │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>        │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">float64</span>        │
+├─────────┼───────────────┼────────────────┤
+│ BKY4234 │ Caraway Bagel │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">6.23</span> │
+│ BKY5887 │ Sesame Bagel  │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">6.38</span> │
+└─────────┴───────────────┴────────────────┘
+</pre>
+</div>
+</div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>orders_items.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━┳━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> orderid </span>┃<span style="font-weight: bold"> sku     </span>┃<span style="font-weight: bold"> qty   </span>┃<span style="font-weight: bold"> unit_price </span>┃
+┡━━━━━━━━━╇━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━┩
+│ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int64</span>   │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>  │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int64</span> │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">float64</span>    │
+├─────────┼─────────┼───────┼────────────┤
+│    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1001</span> │ COL0820 │     <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span> │      <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">25.52</span> │
+│    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1002</span> │ TOY8907 │     <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span> │      <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">12.92</span> │
+│    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1002</span> │ KIT5813 │     <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span> │       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">7.99</span> │
+│    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1002</span> │ KIT3981 │     <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span> │       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">7.21</span> │
+│    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1003</span> │ KIT7098 │     <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span> │      <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">12.53</span> │
+└─────────┴─────────┴───────┴────────────┘
+</pre>
+</div>
+</div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    orders_items.<span class="bu">filter</span>(_.sku.isin([<span class="st">'DLI1464'</span>, <span class="st">'BKY4234'</span>, <span class="st">'BKY5887'</span>]))</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    .select(_.orderid)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    .distinct()</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    .left_join(orders, _.orderid <span class="op">==</span> orders.orderid)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    .select(_.orderid_x, _.customerid, _.ordered, _.total)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    .mutate(year <span class="op">=</span> _.ordered.strftime(<span class="st">'%Y'</span>))</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(_.year <span class="op">==</span> <span class="st">'2017'</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    .left_join(customers, _.customerid <span class="op">==</span> customers.customerid)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    .select(_.orderid_x, _.total, _.customerid_y, _.name, _.phone, _.address, _.citystatezip)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(_.name.re_search(<span class="st">'J(.+)\sD(.+)'</span>))</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="39">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> orderid_x </span>┃<span style="font-weight: bold"> total   </span>┃<span style="font-weight: bold"> customerid_y </span>┃<span style="font-weight: bold"> name         </span>┃<span style="font-weight: bold"> phone        </span>┃<span style="font-weight: bold"> address          </span>┃<span style="font-weight: bold"> citystatezip              </span>┃
+┡━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int64</span>     │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">float64</span> │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int64</span>        │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>       │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>       │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>           │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>                    │
+├───────────┼─────────┼──────────────┼──────────────┼──────────────┼──────────────────┼───────────────────────────┤
+│      <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">7409</span> │   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">33.22</span> │         <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">4164</span> │ Jeremy Davis │ 212-771-8924 │ 134-10 Foch Blvd │ South Ozone Park, NY 114… │
+└───────────┴─────────┴──────────────┴──────────────┴──────────────┴──────────────────┴───────────────────────────┘
+</pre>
+</div>
+</div>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>orders_items.<span class="bu">filter</span>(_.orderid <span class="op">==</span> <span class="dv">7409</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="40">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━┳━━━━━━━━━┳━━━━━━━┳━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> orderid </span>┃<span style="font-weight: bold"> sku     </span>┃<span style="font-weight: bold"> qty   </span>┃<span style="font-weight: bold"> unit_price </span>┃
+┡━━━━━━━━━╇━━━━━━━━━╇━━━━━━━╇━━━━━━━━━━━━┩
+│ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int64</span>   │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>  │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int64</span> │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">float64</span>    │
+├─────────┼─────────┼───────┼────────────┤
+│    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">7409</span> │ DLI1464 │     <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span> │       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">7.73</span> │
+│    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">7409</span> │ KIT5861 │     <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span> │      <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">12.53</span> │
+│    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">7409</span> │ HOM8601 │     <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span> │       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">4.48</span> │
+│    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">7409</span> │ BKY5887 │     <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span> │       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">8.48</span> │
+└─────────┴─────────┴───────┴────────────┘
+</pre>
+</div>
+</div>
+</section>
+<section id="day-3" class="level2">
+<h2 class="anchored" data-anchor-id="day-3">Day 3</h2>
+<p>We are looking for someone born in the year of the dog (comes back every 12 years: 2030, 2018, 2006, 1994, 1982, 1970, 1958), is an Aries (born between March 21 and April 19), and lives in South Ozone Park (see previous answer).</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aries born in the year of the Dog</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># year of the dog comes back every 12 years: 2030, 2018, 2006, 1994, 1982, 1970, 1958</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Aries: March 21 to Apr 19</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co"># range for the birth days</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>customers.<span class="bu">filter</span>((_.birthdate <span class="op">==</span> _.birthdate.<span class="bu">min</span>()) <span class="op">|</span> (_.birthdate <span class="op">==</span> _.birthdate.<span class="bu">max</span>()))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="41">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> customerid </span>┃<span style="font-weight: bold"> name          </span>┃<span style="font-weight: bold"> address          </span>┃<span style="font-weight: bold"> citystatezip       </span>┃<span style="font-weight: bold"> birthdate  </span>┃<span style="font-weight: bold"> phone        </span>┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━┩
+│ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int64</span>      │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>        │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>           │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>             │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">date</span>       │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>       │
+├────────────┼───────────────┼──────────────────┼────────────────────┼────────────┼──────────────┤
+│       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2658</span> │ Timothy Evans │ 335½ 20th St     │ Brooklyn, NY 11215 │ <span style="color: #800080; text-decoration-color: #800080">1935-02-14</span> │ 838-950-3946 │
+│       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">7499</span> │ Barry Barnes  │ 2758 Mermaid Ave │ Brooklyn, NY 11224 │ <span style="color: #800080; text-decoration-color: #800080">2000-12-30</span> │ 516-305-8067 │
+└────────────┴───────────────┴──────────────────┴────────────────────┴────────────┴──────────────┘
+</pre>
+</div>
+</div>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>dog_years <span class="op">=</span> [<span class="st">"1994"</span>, <span class="st">"1982"</span>, <span class="st">"1970"</span>, <span class="st">"1958"</span>, <span class="st">"1936"</span>]</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    customers</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    .mutate(year <span class="op">=</span> _.birthdate.year())</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(_.year.isin(dog_years))</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>        ((_.birthdate.month() <span class="op">==</span> <span class="dv">3</span>) <span class="op">&amp;</span> (_.birthdate.day() <span class="op">&gt;=</span> <span class="dv">21</span>)) <span class="op">|</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>        ((_.birthdate.month() <span class="op">==</span> <span class="dv">4</span>) <span class="op">&amp;</span> (_.birthdate.day() <span class="op">&lt;=</span> <span class="dv">19</span>))</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(_.citystatezip.ilike(<span class="st">"south ozone park%"</span>))</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="42">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━┓
+┃<span style="font-weight: bold"> customerid </span>┃<span style="font-weight: bold"> name         </span>┃<span style="font-weight: bold"> address         </span>┃<span style="font-weight: bold"> citystatezip               </span>┃<span style="font-weight: bold"> birthdate  </span>┃<span style="font-weight: bold"> phone        </span>┃<span style="font-weight: bold"> year  </span>┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━┩
+│ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int64</span>      │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>       │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>          │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>                     │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">date</span>       │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>       │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int32</span> │
+├────────────┼──────────────┼─────────────────┼────────────────────────────┼────────────┼──────────────┼───────┤
+│       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2274</span> │ Brent Nguyen │ 109-19 110th St │ South Ozone Park, NY 11420 │ <span style="color: #800080; text-decoration-color: #800080">1958-03-25</span> │ 516-636-7397 │  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1958</span> │
+└────────────┴──────────────┴─────────────────┴────────────────────────────┴────────────┴──────────────┴───────┘
+</pre>
+</div>
+</div>
+</section>
+<section id="day-4" class="level2">
+<h2 class="anchored" data-anchor-id="day-4">Day 4</h2>
+<p>We are looking for someone who buys regularly baked good between 4 and 5am.</p>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    products.<span class="bu">filter</span>(_.sku.startswith(<span class="st">"BKY"</span>))</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    .left_join(orders_items, orders_items.sku <span class="op">==</span> _.sku)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    .select(_.orderid)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    .left_join(orders, orders.orderid <span class="op">==</span> _.orderid)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>((_.ordered.hour() <span class="op">&gt;=</span> <span class="dv">4</span>) <span class="op">&amp;</span> (_.ordered.hour() <span class="op">&lt;</span> <span class="dv">5</span>))</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>    .group_by(_.customerid)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    .aggregate(n_visits <span class="op">=</span> _.count())</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(_.n_visits <span class="op">==</span> _.n_visits.<span class="bu">max</span>())</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    .join(customers, customers.customerid <span class="op">==</span> _.customerid)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="43">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> customerid </span>┃<span style="font-weight: bold"> n_visits </span>┃<span style="font-weight: bold"> name             </span>┃<span style="font-weight: bold"> address          </span>┃<span style="font-weight: bold"> citystatezip    </span>┃<span style="font-weight: bold"> birthdate  </span>┃<span style="font-weight: bold"> phone        </span>┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━┩
+│ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int64</span>      │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int64</span>    │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>           │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>           │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>          │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">date</span>       │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>       │
+├────────────┼──────────┼──────────────────┼──────────────────┼─────────────────┼────────────┼──────────────┤
+│       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">5375</span> │       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">10</span> │ Christina Booker │ 1127 Grinnell Pl │ Bronx, NY 10474 │ <span style="color: #800080; text-decoration-color: #800080">1981-01-08</span> │ 718-649-9036 │
+└────────────┴──────────┴──────────────────┴──────────────────┴─────────────────┴────────────┴──────────────┘
+</pre>
+</div>
+</div>
+</section>
+<section id="day-5" class="level2">
+<h2 class="anchored" data-anchor-id="day-5">Day 5</h2>
+<p>We are looking for someone who buys a lot of cat food for their old cats and lives in Queens Village.</p>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    products.<span class="bu">filter</span>(_.desc.lower().contains(<span class="st">"senior cat"</span>))</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="44">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> sku     </span>┃<span style="font-weight: bold"> desc                                          </span>┃<span style="font-weight: bold"> wholesale_cost </span>┃
+┡━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━┩
+│ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>  │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>                                        │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">float64</span>        │
+├─────────┼───────────────────────────────────────────────┼────────────────┤
+│ PET0096 │ Wet Senior Cat Food, Turkey &amp; Shrimp          │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3.11</span> │
+│ PET0304 │ Gluten-free Senior Cat Food, Chicken &amp; Turkey │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">4.24</span> │
+│ PET0925 │ Senior Cat Food                               │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3.84</span> │
+│ PET0977 │ Vegan Senior Cat Food, Chicken &amp; Beef         │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">4.36</span> │
+│ PET1090 │ Vegan Senior Cat Food, Tuna &amp; Duck            │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">4.39</span> │
+│ PET1220 │ Dry Senior Cat Food, Salmon &amp; Shrimp          │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3.51</span> │
+│ PET1536 │ Dry Senior Cat Food, Chicken &amp; Chicken        │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2.26</span> │
+│ PET1849 │ Vegan Senior Cat Food, Duck &amp; Pumpkin         │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">4.65</span> │
+│ PET1909 │ Vegan Senior Cat Food, Chicken &amp; Salmon       │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">4.60</span> │
+│ PET1919 │ Gluten-free Senior Cat Food, Shrimp &amp; Tuna    │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">4.23</span> │
+│ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">…</span>       │ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">…</span>                                             │              <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">…</span> │
+└─────────┴───────────────────────────────────────────────┴────────────────┘
+</pre>
+</div>
+</div>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">## let's find out who buys senior cat food</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    products.<span class="bu">filter</span>(_.desc.lower().contains(<span class="st">"senior cat"</span>))</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>    .left_join(orders_items, orders_items.sku <span class="op">==</span> _.sku)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    .select(_.orderid)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    .left_join(orders, orders.orderid <span class="op">==</span> _.orderid)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    .select(_.customerid)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>    .distinct()</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    .left_join(customers, customers.customerid <span class="op">==</span> _.customerid)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(_.citystatezip.contains(<span class="st">"Queens Village"</span>))</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="45">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> customerid_x </span>┃<span style="font-weight: bold"> customerid_y </span>┃<span style="font-weight: bold"> name       </span>┃<span style="font-weight: bold"> address         </span>┃<span style="font-weight: bold"> citystatezip           </span>┃<span style="font-weight: bold"> birthdate  </span>┃<span style="font-weight: bold"> phone        </span>┃
+┡━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━┩
+│ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int64</span>        │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int64</span>        │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>     │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>          │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>                 │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">date</span>       │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>       │
+├──────────────┼──────────────┼────────────┼─────────────────┼────────────────────────┼────────────┼──────────────┤
+│         <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">5486</span> │         <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">5486</span> │ Sam House  │ 220-8 111th Ave │ Queens Village, NY 11… │ <span style="color: #800080; text-decoration-color: #800080">1955-11-10</span> │ 607-836-2966 │
+│         <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">7675</span> │         <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">7675</span> │ Anita Koch │ 106-51 214th St │ Queens Village, NY 11… │ <span style="color: #800080; text-decoration-color: #800080">1955-11-14</span> │ 315-492-7411 │
+└──────────────┴──────────────┴────────────┴─────────────────┴────────────────────────┴────────────┴──────────────┘
+</pre>
+</div>
+</div>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">## it's not quite enough, let's compare how much they buy</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    products.<span class="bu">filter</span>(_.desc.lower().contains(<span class="st">"senior cat"</span>))</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    .left_join(orders_items, orders_items.sku <span class="op">==</span> _.sku)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    .select(_.orderid)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    .left_join(orders, orders.orderid <span class="op">==</span> _.orderid)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    .group_by(_.customerid)</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    .aggregate(_.total.<span class="bu">sum</span>().name(<span class="st">"total_catfood"</span>))</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    .left_join(customers, customers.customerid <span class="op">==</span> _.customerid)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(_.citystatezip.contains(<span class="st">"Queens Village"</span>))</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    .select(_.customerid_x, _.name, _.total_catfood, _.phone)    </span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="46">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> customerid_x </span>┃<span style="font-weight: bold"> name       </span>┃<span style="font-weight: bold"> total_catfood </span>┃<span style="font-weight: bold"> phone        </span>┃
+┡━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━┩
+│ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int64</span>        │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>     │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">float64</span>       │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>       │
+├──────────────┼────────────┼───────────────┼──────────────┤
+│         <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">5486</span> │ Sam House  │        <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">231.88</span> │ 607-836-2966 │
+│         <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">7675</span> │ Anita Koch │        <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">699.98</span> │ 315-492-7411 │
+└──────────────┴────────────┴───────────────┴──────────────┘
+</pre>
+</div>
+</div>
+</section>
+<section id="day-6" class="level2">
+<h2 class="anchored" data-anchor-id="day-6">Day 6</h2>
+<p>We are looking for someone who minimizes the profit on their purchases at Noah’s Market.</p>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    orders_items</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    .left_join(products, products.sku <span class="op">==</span> _.sku)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    .mutate(profit <span class="op">=</span> _.unit_price <span class="op">-</span> _.wholesale_cost)</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    .group_by(_.orderid)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>    .aggregate(_.profit.<span class="bu">sum</span>().name(<span class="st">"total_profit_per_order"</span>))</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    .left_join(orders, orders.orderid <span class="op">==</span> _.orderid)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    .group_by(_.customerid)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    .aggregate(_.total_profit_per_order.<span class="bu">sum</span>().name(<span class="st">"total_profit_per_customer"</span>))</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(_.total_profit_per_customer <span class="op">==</span> _.total_profit_per_customer.<span class="bu">min</span>())</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    .join(customers, customers.customerid <span class="op">==</span> _.customerid)</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>    .select(_.customerid, _.name, _.phone, _.total_profit_per_customer)</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="47">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> customerid </span>┃<span style="font-weight: bold"> name           </span>┃<span style="font-weight: bold"> phone        </span>┃<span style="font-weight: bold"> total_profit_per_customer </span>┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+│ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int64</span>      │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>         │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>       │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">float64</span>                   │
+├────────────┼────────────────┼──────────────┼───────────────────────────┤
+│       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">8342</span> │ Emily Randolph │ 914-868-0316 │                   <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-313.16</span> │
+└────────────┴────────────────┴──────────────┴───────────────────────────┘
+</pre>
+</div>
+</div>
+</section>
+<section id="day-7" class="level2">
+<h2 class="anchored" data-anchor-id="day-7">Day 7</h2>
+<p>We are looking for people who are buying the same product but in different colors (colors are indicated in parentheses in the descriptions), and that have made purchases one after the other (they were following each other in line).</p>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    products</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(_.desc.re_search(<span class="st">'.+\s\(.+\)$'</span>)) <span class="co">## colors are noted in parenthesis</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    .left_join(orders_items, orders_items.sku <span class="op">==</span> _.sku)</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    .select(_.orderid, _.desc)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    .left_join(orders, orders.orderid <span class="op">==</span> _.orderid)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    .order_by(_.ordered)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    .mutate(</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>        lag_customerid <span class="op">=</span> _.customerid.lag(),</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>        lag_ordered <span class="op">=</span> _.ordered.lag()</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(_.lag_customerid <span class="op">==</span> <span class="dv">8342</span>)</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    .select(_.orderid_x, _.desc, _.customerid, _.ordered, _.lag_customerid, _.lag_ordered)</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="48">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> orderid_x </span>┃<span style="font-weight: bold"> desc                      </span>┃<span style="font-weight: bold"> customerid </span>┃<span style="font-weight: bold"> ordered             </span>┃<span style="font-weight: bold"> lag_customerid </span>┃<span style="font-weight: bold"> lag_ordered         </span>┃
+┡━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━┩
+│ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int64</span>     │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>                    │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int64</span>      │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">timestamp</span>           │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int64</span>          │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">timestamp</span>           │
+├───────────┼───────────────────────────┼────────────┼─────────────────────┼────────────────┼─────────────────────┤
+│     <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">12625</span> │ Automatic Mixer (white)   │       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1865</span> │ <span style="color: #800080; text-decoration-color: #800080">2017-05-28 09:15:47</span> │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">8342</span> │ <span style="color: #800080; text-decoration-color: #800080">2017-05-28 09:15:06</span> │
+│     <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">86372</span> │ Electric Machine (purple) │       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">8835</span> │ <span style="color: #800080; text-decoration-color: #800080">2019-06-01 12:50:25</span> │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">8342</span> │ <span style="color: #800080; text-decoration-color: #800080">2019-06-01 12:50:16</span> │
+│     <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">94040</span> │ Electric Toaster (blue)   │       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">8342</span> │ <span style="color: #800080; text-decoration-color: #800080">2019-08-18 14:20:28</span> │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">8342</span> │ <span style="color: #800080; text-decoration-color: #800080">2019-08-18 14:20:28</span> │
+│     <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">94044</span> │ Noah's Gift Box (green)   │      <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">10880</span> │ <span style="color: #800080; text-decoration-color: #800080">2019-08-18 14:57:19</span> │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">8342</span> │ <span style="color: #800080; text-decoration-color: #800080">2019-08-18 14:20:28</span> │
+│     <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">96223</span> │ Super Widget (white)      │      <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">11942</span> │ <span style="color: #800080; text-decoration-color: #800080">2019-09-09 16:53:22</span> │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">8342</span> │ <span style="color: #800080; text-decoration-color: #800080">2019-09-09 16:30:05</span> │
+│    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">154876</span> │ Electric Crockpot (purpl… │       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">8342</span> │ <span style="color: #800080; text-decoration-color: #800080">2021-04-17 19:52:28</span> │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">8342</span> │ <span style="color: #800080; text-decoration-color: #800080">2021-04-17 19:52:28</span> │
+│    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">154879</span> │ Jigsaw Puzzle (Moses and… │       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2476</span> │ <span style="color: #800080; text-decoration-color: #800080">2021-04-17 20:22:32</span> │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">8342</span> │ <span style="color: #800080; text-decoration-color: #800080">2021-04-17 19:52:28</span> │
+│    <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">200952</span> │ Noah's Jersey (puce)      │       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">7880</span> │ <span style="color: #800080; text-decoration-color: #800080">2022-07-26 09:48:32</span> │           <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">8342</span> │ <span style="color: #800080; text-decoration-color: #800080">2022-07-26 08:18:05</span> │
+└───────────┴───────────────────────────┴────────────┴─────────────────────┴────────────────┴─────────────────────┘
+</pre>
+</div>
+</div>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># I need to figure out how to do the time difference because here I'm doing it by eye</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and ideally we need to compare the content of their orders and remove lines from the same order</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># It's probably not in 2017 because that was the beginning of the story</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>customers.<span class="bu">filter</span>(_.customerid <span class="op">==</span> <span class="dv">8835</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="49">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> customerid </span>┃<span style="font-weight: bold"> name           </span>┃<span style="font-weight: bold"> address       </span>┃<span style="font-weight: bold"> citystatezip            </span>┃<span style="font-weight: bold"> birthdate  </span>┃<span style="font-weight: bold"> phone        </span>┃
+┡━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━╇━━━━━━━━━━━━━━┩
+│ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int64</span>      │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>         │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>        │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>                  │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">date</span>       │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>       │
+├────────────┼────────────────┼───────────────┼─────────────────────────┼────────────┼──────────────┤
+│       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">8835</span> │ Jonathan Adams │ 644 Targee St │ Staten Island, NY 10304 │ <span style="color: #800080; text-decoration-color: #800080">1975-08-26</span> │ 315-618-5263 │
+└────────────┴────────────────┴───────────────┴─────────────────────────┴────────────┴──────────────┘
+</pre>
+</div>
+</div>
+</section>
+<section id="day-8" class="level2">
+<h2 class="anchored" data-anchor-id="day-8">Day 8</h2>
+<p>We are looking for someone who has purchased lots of collectible (prefix with <code>COL</code> in the products table).</p>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>(</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    products.<span class="bu">filter</span>(_.sku.lower().contains(<span class="st">"col"</span>))</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    .left_join(orders_items, orders_items.sku <span class="op">==</span> _.sku)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    .select(_.orderid, _.sku_x)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    .left_join(orders, orders.orderid <span class="op">==</span> _.orderid)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    .group_by(_.customerid)</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    .aggregate(n_collect <span class="op">=</span> _.count())</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    .order_by(ibis.desc(_.n_collect))</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    .left_join(customers, customers.customerid <span class="op">==</span> _.customerid)</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    .select(_.name, _.phone, _.n_collect)</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="50">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">┏━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┳━━━━━━━━━━━┓
+┃<span style="font-weight: bold"> name              </span>┃<span style="font-weight: bold"> phone        </span>┃<span style="font-weight: bold"> n_collect </span>┃
+┡━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━╇━━━━━━━━━━━┩
+│ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>            │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">string</span>       │ <span style="color: #000080; text-decoration-color: #000080; font-weight: bold">int64</span>     │
+├───────────────────┼──────────────┼───────────┤
+│ Travis Bartlett   │ 929-906-5980 │       <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">111</span> │
+│ Justin Jimenez    │ 516-722-4758 │        <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">31</span> │
+│ Joshua Smith      │ 914-243-3254 │        <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">30</span> │
+│ Tyler Hickman     │ 585-307-8945 │        <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">27</span> │
+│ Rachel Richardson │ 212-778-9867 │        <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">26</span> │
+│ Jennifer Daniels  │ 516-994-3023 │        <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">26</span> │
+│ Crystal Clark     │ 315-296-8034 │        <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">26</span> │
+│ Amber Porter      │ 838-307-4383 │        <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">26</span> │
+│ Chelsea Marsh     │ 315-565-2714 │        <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">26</span> │
+│ Kim Yang          │ 516-399-6228 │        <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">26</span> │
+│ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">…</span>                 │ <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">…</span>            │         <span style="color: #7f7f7f; text-decoration-color: #7f7f7f">…</span> │
+└───────────────────┴──────────────┴───────────┘
+</pre>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
