@@ -24,7 +24,7 @@ comments:
   utterances:
     theme                : "github-dark"
     issue_term           : "pathname"
-    label                : "💬 comment" 
+    label                : "💬 comment"
 staticman:
   allowedFields          : # ['name', 'email', 'url', 'message']
   branch                 : # "master"
@@ -57,7 +57,7 @@ naver_site_verification  :
 
 # Social Sharing
 twitter:
-  username               : 'fmic_'
+  username               :
 facebook:
   username               :
   app_id                 :
@@ -283,8 +283,5 @@ defaults:
       comments: # true
       share: true
       related: true
-      
+
 remote_theme: "mmistakes/minimal-mistakes@4.24.0"
-
-
-
