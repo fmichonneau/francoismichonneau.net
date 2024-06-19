@@ -3,8 +3,10 @@ layout: single
 title: Hire me
 date: 2024-06-04
 type: page
-published: false
+published: true
 status: publish
+toc: true
+toc_sticky: true
 permalink: /hire-me/
 categories: []
 tags: []
@@ -23,16 +25,53 @@ Download my Resume
 
 ## About me
 
-* Empathetic leader: I like to see others succeed.
+Humble leader with 7+ years of non-profit and startup experience. Curious,
+empathetic and thriving in collaborative environments to help customers succeed.
+With 20+ years of experience with R, a quantitative background (Ph.D. in marine
+biology), I love working with data and understand its value for making informed
+decisions.
 
-## My Skills
+* Humble and Empathetic leader: I succeed when I enable customers and team mates
+  to succeed.
+* Growth mindset: I am driven by curiosity and opportunities to keep learning.
+* Quantitative Expertise: PhD in Marine Biology (biodiversity), background in
+  Education, and 20 years of experience with R and data analysis.
 
-### Customer Success, Product Education, Education 
+## What I'm looking for
 
-* **Customer Success** 
+* Remote opportunities from France (I have 10 years of remote work experience,
+  and 5+ of working from France for US-based entities)
+* Roles in 
+
+## Leadership Skills
+
+### Customer Success, Product Education, Curriculum Development
+
+* **Customer Success:** At Voltron Data, I was part of the Customer Success team
+  and participated in pre- and post-sales calls. I liaised with the product and
+  engineering teams to escalate issues and feedback from the customers. I also
+  led the creation and delivery of webinars and workshops for customers and AEs
+  about Voltron Data's products and the open source solutions they support.
+* **Product Education:** I collaborated with the Marketing and Engineering teams
+  to an [online book](https://voltrondata.com/codex) that describes the
+  principles of modular data systems. This 5-chapter online book and its
+  associated marketing campaign drove trafic to the main website by 50%. I also
+  contributed many blog posts (some examples [^1] [^2] [^3]) and
+  [tutorials](https://ibis-project.org/tutorials/ibis-for-dplyr-users).
+* **Curriculum Development:** At The Carpentries, lessons are developed
+  following evidence-based principles to ensure that they are effective with
+  learners. I co-wrote a lesson on curriculum design, and taught The Carpentries
+  Instructor to a total of 200+ learners. I was also the author and Maintainer
+  for the Data Carpentry R Ecology lesson between 2014 and 2022, one of the most
+  taught lessons at The Carpentries (30k+ unique visitors a month).
+
+[^1]: <https://voltrondata.com/blog/pass-data-between-python-and-r-using-parquet-and-arrow-for-scalable-reporting>
+[^2]: <https://voltrondata.com/blog/dataframe-interoperability-python-pyarrow-enables-modular-workflows>
+[^3]: <https://voltrondata.com/blog/data-warehouse-lower-costs-using-ibis-to-benchmark-queries>
 
 
-### Company culture & People Management
+
+### Company Culture & People Management
 
 * **Hiring, Performance Evaluation, Management:** As a leader of the
   Infrastructure Team at The Carpentries, I had the opportunity to hire
@@ -91,18 +130,21 @@ Download my Resume
   2014-01-31-phyrella-revision %}) which was featured on [Boing
   Boing](https://boingboing.net/2014/02/11/sea-cucumber-named-for-dog.html).
 
+## Technical Skills
+
 ### Programming and Data Analysis
 
 * **R**: I am the most familiar with the R programming language. I started using
-  it 2004, and never stopped.
+  it in 2004, and never stopped.
   - For data analysis and visualization, I have extensive experience with all
     the packages of the `{tidyverse}` (`{dplyr}`, `{ggplot2}`, `{purrr}`,
     `{tidyr}`, etc.). I have the Tidyverse Trainer certification from RStudio
-    (now Posit) and was an Examiner for this certification. On the statistical
-    side, I have experience with linear models (including GLMs) and Bayesian statistics.
-  - On the programming side, I am maintaining 6 packages on CRAN. I enjoy
-    developing solutions that interact with Web APIs or scrape web pages. For
-    instance, my most popular packages are:
+    (now Posit) and was an Examiner for this certification for a couple of
+    years. On the statistical side, I have experience with linear models
+    (including GLMs) and Bayesian statistics.
+  - On the programming side, I maintain 6 packages on CRAN. I enjoy developing
+    solutions that interact with Web APIs or scrape web pages. For instance, my
+    most popular packages are:
     + [`{foghorn}`](https://fmichonneau.github.io/foghorn/) which brings CRAN
       check results directly to your terminal (58K downloads/month).
     + [`{rotl}`](https://docs.ropensci.org/rotl/) which uses the OpenTree of
@@ -118,16 +160,16 @@ Download my Resume
 * **Databases:** I have used PostgreSQL (with the PostGIS extension) to manage
   data for research projects and in enterprise settings. More recently, I have
   started to use DuckDB to analyze large and complex datasets. At Voltron Data,
-  I had the opportunity to learn and use Apache Arrow, including the Python and
-  the R bindings.
+  I had the opportunity to learn about and use Apache Arrow (using both the
+  Python and the R bindings).
 
 
 ### DevOps and DataOps
 
 * **Linux/Ubuntu**: I have been using Ubuntu as my daily operating system since
   2006, and on any cloud instance I have ever created. My sysadmin knowledge is
-  all self-taught but I know enough to know where to look when something goes
-  wrong to diagnose an issue and find a solution.
+  all self-taught and I know where to look when something goes wrong to diagnose
+  an issue and find a solution.
 * **Cloud Providers (AWS, Digital Ocean)**: I have most experience with AWS and
   Digital Ocean but I have also used Google Cloud. With AWS, I set up the
   technical infrastructure of The Carpentries to run on EC2 and S3 (static site
@@ -292,3 +334,5 @@ Nice to have:
 
 
 ## What others have said about working with me
+
+## Footnotes
