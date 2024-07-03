@@ -13,35 +13,46 @@ tags: []
 ---
 
 
-I'm looking for my next role, and if you don't already know me, my background
-doesn't fit in an exact box, so I am writing a long form version of the type of
-company I want to work for and the type of role I would like to have.
+I'm looking for my next role, if you are recruiting, or know someone who is
+recruiting, you will find below my resume, my contact information, and a longer
+version of my skills and accomplishments. 
 
-Send me an email
+<div style="display: flex; width: 100%">
+<div style = "flex: 1; padding: 20px; display: flex; justify-content: center; align-items: center;">
+[Send me an email](mailto:francois.michonneau@gmail.com){: .btn .btn--primary}
+</div>
+<div style="flex: 2; padding: 20px; display: flex; justify-content: center; align-items: center;">
+[Download my Resume](https://francoismichonneau.net/Michonneau_resume.pdf){: .btn .btn--success}
+</div>
+</div>
 
-Book a video call with me
-
-Download my Resume
 
 ## About me
 
-Humble leader with 7+ years of non-profit and startup experience. Curious,
-empathetic and thriving in collaborative environments to help customers succeed.
-With 20+ years of experience with R, a quantitative background (Ph.D. in marine
-biology), I love working with data and understand its value for making informed
-decisions.
+With 7+ years of professional experience in non-profit and startup environments,
+I bring a unique blend of technical expertise and soft skills to **solution
+engineering**, **team lead**, **technical product manager**, **researcher**, or
+**educator** roles in the data space:
 
-* Humble and Empathetic leader: I succeed when I enable customers and team mates
-  to succeed.
-* Growth mindset: I am driven by curiosity and opportunities to keep learning.
-* Quantitative Expertise: PhD in Marine Biology (biodiversity), background in
-  Education, and 20 years of experience with R and data analysis.
+* **Technical Expertise:** 20+ years of experience in data analysis,
+  visualization, and pipeline development using R, with proficiency in AWS,
+  Docker, databases (MySQL, PostgreSQL, DuckDB), and Apache Arrow ecosystem
+  tools.
+* **Problem Solver:** Leveraging my PhD in Life Sciences, I apply the scientific
+  method to identify root causes, test hypotheses, and iterate towards optimal
+  solutions.
+* **Humble and Empathetic Leader:** I prioritize enabling the success of
+  customers and team members, fostering a collaborative work environment.
+* **Growth Mindset:** Driven by curiosity and continuous learning, I actively
+  seek opportunities to expand my skills and knowledge.
+* **Educator:** I love to share knowledge and empowering others, with a
+  particular focus on developing data skills.
+* **Shiny Application Developer:** Experienced in creating interactive data
+  applications using R Shiny, bridging the gap between complex data and
+  user-friendly interfaces.
 
-## What I'm looking for
-
-* Remote opportunities from France (I have 10 years of remote work experience,
-  and 5+ of working from France for US-based entities)
-* Roles in 
+I'm looking for remote opportunities from France (I have 10 years of remote work
+experience, including 5+ of working from France for US-based entities).
 
 ## Leadership Skills
 
@@ -146,13 +157,13 @@ decisions.
     solutions that interact with Web APIs or scrape web pages. For instance, my
     most popular packages are:
     + [`{foghorn}`](https://fmichonneau.github.io/foghorn/) which brings CRAN
-      check results directly to your terminal (58K downloads/month).
+      check results directly to your terminal (50K downloads/month).
     + [`{rotl}`](https://docs.ropensci.org/rotl/) which uses the OpenTree of
       Life web API to R (used in 370+ peer-reviewed publications).
     + [`naturalist_bot`](https://botsin.space/naturalist_bot) is a Mastodon bot
       that posts iNaturalist observations every 6 hours.
   - I have extensive experience putting R scripts and Shiny applications in
-    production using Docker, and deploying them on AWS.
+    production using Docker (and Docker compose), and deploying them on AWS.
 * **Git, GitHub, GitHub Actions:** I use Git and GitHub to version control my
   code (and many other documents). I use GitHub Actions for continuous
   integration, running cron jobs, checking website links, and posting for my
@@ -162,7 +173,6 @@ decisions.
   started to use DuckDB to analyze large and complex datasets. At Voltron Data,
   I had the opportunity to learn about and use Apache Arrow (using both the
   Python and the R bindings).
-
 
 ### DevOps and DataOps
 
@@ -191,148 +201,28 @@ decisions.
   database connectivity protocols such as ODBC, JDBC, and ADBC.
 
 
-
-
-
-
-
-
-
-## About me
-
-* Growth mindset
-* Continuous learning
-
-
-
-
-As far as back as I can remember I wanted to be a marine biologist. In 2006, I
-had the opportunity to do a PhD at the university of Florida that made this
-dream come true. Over the following 8 years, I organized field expeditions
-across many places (some more remote than others) to look for sea cucumbers.
-
-When I was not travelling, I was organizing and analyzing the data I collected
-during these field expeditions. I had started to use Linux and program in R
-during my Master, so it is what I used to do it. I cared about reproducibility
-(I still do), so I was using R and Bash to automate my data analysis pipelines.
-When new data would come in, I was able to get them integrated into my existing
-results. I would use this to detect if I had collected a new species of sea
-cucumbers for instance. In the meantime, I started to get involved in the
-development of a couple of open source R packages for dealing with phylogenetic
-data, and contributed to, before becoming the maintainer of, `phylobase`.
-
-Towards the end of my PhD, I saw many of colleagues graduate student struggle
-with their data analyses. Many of them dealt with lots of genomics data but only
-had Excel skills to work with it. Because I wanted to share my programming
-knowledge, I approach the chair of the department who agreed to let me teach an
-R programming class for biologists. As I was developing the content for this
-course, I wanted to understand what others were doing. That's how I came across
-Software Carpentry. At the time, the organization was teaching 2-day workshops
-to researchers who wanted to learn best practices in scientific computing,
-including an introduction to R. I started the process to become a certified
-Instructor so I could teach these workshops. A few months later, a new spin-off
-organization was founded: Data Carpentry. I used the last bit of grant money I
-had available to attend their inaugural workshops. I met the team who had
-already planned to do their next workshop at the University of Florida. When
-they asked if I'd be interested in teaching the R section at that workshop, I
-gladly accepted.
-
-[ add paragraph about biodiversity data postdoc ]
-
-I contributed major changes to the lesson before and after the workshop at UF.
-As Data Carpentry was new there was lots of demand to teach the curriculum.
-Teaching these workshops showed me that I really enjoyed sharing my programming
-knowledge and gave me an appreciation for the impact that these 2 short days had
-on the participants, their research, and their careers.
-
-In the meantime, my academic research turned into developing a reproducible and
-automated data pipeline to understand how much information was available in
-public database about marine biodiversity of the continental USA. I
-reconcialiated millions of database records fetched from web APIs, scrapped from
-websites and the litterature. I combined all this information into a PostgreSQL
-database with the PostGIS extension to be able to do some geospatial queries.
-
-
-
-So, when a position was available to join the organization as an employee, I did
-not hesitate.
-
-As I joined, Software Carpentry and Data Carpentry merged under a single
-umbrella, The Carpentries. I started by leading the curriculum development
-efforts. It meant that I managed the community of lesson maintainers,
-contributed to adding new features to the lesson template, and wrote new
-lessons. I was also in charge of managing the lesson release process, which
-meant reconciliating data from multiple sources to acknowledge all the people
-who had contributed to improving the lessons. I also acted as a liaison with
-researchers who were interested in collaborating with us to develop new lessons
-and coming up with funding mechanisms to support the development of these
-lessons.
-
-About 6 months into my tenure at The Carpentries, I became in charge of all the
-technological infrastructure. I migrated and centralized all our services to run
-on AWS (using EC2, S3, Route53, Cloudfront, RDS). I also used a combination of R
-(including Shiny and RMarkdown), Docker, and some Bash, to develope an alert
-system to detect infrastructure issues early, put in place automated pipelines
-to make data publicly available, and automated report generation.
-
-On March 16th, 2022, I became Senior Director of Technology which meant that I
-became part of the Executive Team at The Carpentries. The next day COVID
-lockdown were in effect, and the way The Carpentries operated had to be
-reinvented as our in-person workshops had now have to be taught online. For the
-following 2.5 years, I contributed to the daily management of the operations for
-the organization. Leading the infrastructure team meant that I was in charge of
-three main projects:
-
-- I led the hiring and managed the team in charge of re-implementing from
-  scratch the lesson template for the Carpentries (software developer and
-  UX/UI designers)
-- I managed the
-
-I worked on the technical side with The covid,
-online workshops. Managing team. Hiring contractors, GDPR. Product management.
-Writing grants
-
-
-Arrow, DuckDB (including geospatial), Database connectivity protocols
-
-
-
-
-
-I will strongly consider the following:
-
-1. Customer Success
-
-2. Developer Advocate
-
-3. Data Science/ML/MLOps/Data Engineer 
-
-
-Working on smaller teams where I can do many different things. I like to be able to work on multiple projects at once. 
-
-Nice to have:
-* Domains: 
-
-
-
-
-
-## Remote Work
-
-* I'm looking for a remote position. I live in France.
-* For many, remote work started with the COVID-19 pandemic, but I have been
-  working in some kind of remote capacity since 2015. I have experienced
-  different ways of doing remote work and I prefer working for organizations
-  that have put a lot of thoughts into what it means to have a distributed
-  workforce. Specifically, organizations that have processes in place to be able
-  to share progress and come to a concensus asynchronously. For instance, that
-  means that meetings are used to take full advantage of having everyone
-  together (weekly updates can be shared with the rest of the team in writing).
-  It also means that there are processes in place to keep notes that can be used
-  to understand how a decision has been made so if people are missing the
-  meeting they can go back to the notes and know what happened.
-
-
 ## What others have said about working with me
+
+> "François' greatest strength is his adaptivity. He often has to adapt to
+  changing ideas, circumstances, contexts- and he takes it all in stride. He
+  seems unshakeable sometimes!"
+
+> "His work is always comprehensive and he takes time to ensure people can
+  understand the subject matter."
+
+> "François is a fantastic collaborator; he can explain complex technical
+  concepts to novices and oversee projects and programs while providing team
+  members with the flexibility to fulfill their roles."
+
+> "When François is leading, his guidance is so very clear and he has an
+  attention to detail that does not leave room for misunderstanding. This can be
+  very helpful in brainstorming sessions to create a safe and engaging space for
+  contributing. For example, several team members expressed excitement and
+  gratefulness for the incident retrospective workflow François developed this
+  year. Through this workflow François has shown initiative with developing new
+  ways of thinking that will undoubtedly strengthen our team. He is also a great
+  facilitator and has repeatedly demonstrated an ability to gather all the
+  necessary facts and information before finding a solution to a problem."
+
 
 ## Footnotes
