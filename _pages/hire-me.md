@@ -31,9 +31,9 @@ previous colleagues.
 ## About me
 
 With 7+ years of professional experience in non-profit and startup environments,
-I bring a unique blend of technical expertise and leadership skills to **solution
-engineering**, **team lead**, **technical product manager**, **researcher**, or
-**educator** roles in the data space:
+I bring a unique blend of technical expertise and leadership skills to **Solution
+Engineering**, **Team Lead**, **Technical Product Manager**, **Researcher**, or
+**Educator** roles in the data space:
 
 * **Technical Expertise:** 20+ years of experience in data analysis,
   visualization, and pipeline development using R (and some Python experience),
@@ -41,9 +41,9 @@ engineering**, **team lead**, **technical product manager**, **researcher**, or
   Apache Arrow ecosystem tools. Experienced in creating interactive data
   applications using R Shiny, briding the gap between complex data and
   user-friendly interfaces.
-* **Problem Solver:** Leveraging my PhD in Life Sciences, I apply the scientific
-  method to identify root causes, test hypotheses, and iterate towards optimal
-  solutions.
+* **Problem Solver:** Leveraging my PhD in the Life Sciences, I apply the
+  scientific method to identify root causes, test hypotheses, and iterate
+  towards optimal solutions.
 * **Humble and Empathetic Leader:** I prioritize enabling the success of
   customers and team members, fostering a collaborative work environment.
 * **Growth Mindset:** Driven by curiosity and continuous learning, I actively
@@ -118,7 +118,7 @@ experience, including 5+ years of working from France for US-based entities).
 
 ### Additional Skills
 
-* **Scientific Background:** Ph.D. in Life Sciences with [20+ peer-reviewed
+* **Scientific Background:** Ph.D. in Biology with [20+ peer-reviewed
   publications](https://scholar.google.com/citations?view_op=list_works&hl=en&hl=en&user=6wJ8BtAAAAAJ).
 
 

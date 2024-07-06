@@ -9,7 +9,7 @@ minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt"
 
 # Site Settings
 locale                   : "en-US"
-title                    : "François Michonneau"
+title                    : "François Michonneau, PhD"
 title_separator          : "|"
 name                     : "François Michonneau"
 description              :
@@ -83,9 +83,9 @@ google_ad_slot           :
 
 # Site Author
 author:
-  name             : "François Michonneau"
+  name             : "François Michonneau, PhD"
   avatar           : "images/michonneau_francois.jpg"
-  bio              : "Data Science Educator turned Solution Engineer / Leadership, Data Management and Governance"
+  bio              : "Data Science Educator turned Solution Engineer"
   location         :
   email            : "francois.michonneau@gmail.com"
   uri              :
