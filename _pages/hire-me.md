@@ -5,6 +5,7 @@ date: 2024-07-04
 type: page
 published: true
 status: publish
+classes: normal
 toc: true
 toc_sticky: true
 permalink: /hire-me/

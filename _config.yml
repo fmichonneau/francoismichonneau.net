@@ -271,6 +271,7 @@ defaults:
     values:
       layout: single
       author_profile: true
+      classes: wide
       defaults:
   # _portfolio
   - scope:
@@ -284,4 +285,4 @@ defaults:
       share: true
       related: true
 
-remote_theme: "mmistakes/minimal-mistakes@4.24.0"
+remote_theme: "mmistakes/minimal-mistakes"
