@@ -21,3 +21,4 @@ _pages/gmyc-tutorial/cache/*
 *.Rhistory
 _drafts/
 _posts/advent-data*
+*.duckdb
