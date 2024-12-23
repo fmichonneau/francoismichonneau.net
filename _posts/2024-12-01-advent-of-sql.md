@@ -551,7 +551,8 @@ The data could be imported directly from DuckDB.
 I first wrote the solution to this challenge using the `{slider}` package to get
 the moving average. But the data has to be pulled in R's memory to make this
 work. I then tried to solve it using just DuckDB to practice window functions,
-but I get second result. I have not investigated why this is the case yet.
+but the query returns a second result. I have not investigated why this is the
+case yet.
 
 ```r
 con_day11 <- dbConnect(duckdb(), "2024-advent-of-sql-data/advent_day_11.duckdb")
@@ -581,4 +582,414 @@ dbGetQuery(con_day11,
   SELECT * FROM results WHERE avg_yield = (SELECT max(avg_yield) FROM results)
   "
 )
+
+dbDisconnect(con_day11, shutdown = TRUE)
+```
+
+## Day 12
+
+The data dump needed again to use `SEQUENCE` to replace `SERIAL`, so I edited
+the beginning of the file to look like:
+
+```sql
+CREATE OR REPLACE SEQUENCE g_id START 1;
+CREATE OR REPLACE SEQUENCE r_id START 1;
+
+CREATE OR REPLACE TABLE gifts (
+    gift_id INTEGER PRIMARY KEY DEFAULT nextval('g_id'),
+    gift_name VARCHAR(100) NOT NULL,
+    price DECIMAL(10,2)
+);
+
+CREATE OR REPLACE TABLE gift_requests (
+    request_id INTEGER PRIMARY KEY DEFAULT nextval('r_id'),
+    gift_id INT,
+    request_date DATE,
+    FOREIGN KEY (gift_id) REFERENCES gifts(gift_id)
+);
+```
+
+This challenge could be solve using only {dplyr} functions. There were 10 gifts
+that tied for first place, so I relied on the `n` argument from the `print`
+function to display more data to be able to see the second most popular item.
+
+```r
+con_day12 <- dbConnect(duckdb(), "2024-advent-of-sql-data/advent_day_12.duckdb")
+
+tbl(con_day12, "gift_requests") |>
+  count(gift_id) |>
+  mutate(overall_rank = percent_rank(n)) |>
+  left_join(tbl(con_day12, "gifts"), by = join_by(gift_id)) |>
+  arrange(desc(overall_rank), gift_name) |>
+  print(n = 20)
+
+dbDisconnect(con_day12, shutdown = TRUE)
+```
+
+## Day 13
+
+To be able to import the data into DuckDB, I once again edited the beginning of
+the dump file to use `SEQUENCE` to replace `SERIAL`:
+
+```sql
+CREATE OR REPLACE SEQUENCE cl_id START 1;
+
+DROP TABLE IF EXISTS contact_list;
+CREATE TABLE contact_list (
+    id INTEGER PRIMARY KEY DEFAULT nextval('cl_id'),
+    name VARCHAR(100) NOT NULL,
+    email_addresses TEXT[] NOT NULL
+);
+```
+
+```r
+con_day13 <- dbConnect(duckdb(), "2024-advent-of-sql-data/advent_day_13.duckdb")
+
+dbGetQuery(
+  con_day13,
+  "
+  WITH all_domains AS
+  (SELECT
+   id, name, unnest(email_addresses) AS addresses,
+   regexp_extract(addresses, '@(.+)$', 1) AS domains
+  FROM contact_list
+  )
+  SELECT domains, COUNT(domains) AS n_users FROM all_domains
+  GROUP BY domains
+  ORDER BY n_users DESC
+  "
+)
+
+dbDisconnect(con_day13, shutdown = TRUE)
+```
+
+## Day 14
+
+I replaced `SERIAL` with `SEQUENCE` once again:
+
+```sql
+DROP TABLE IF EXISTS SantaRecords CASCADE;
+
+CREATE OR REPLACE SEQUENCE rid START 1;
+
+CREATE TABLE SantaRecords (
+    record_id INTEGER PRIMARY KEY DEFAULT nextval('rid'),
+    record_date DATE NOT NULL,
+    cleaning_receipts JSON NOT NULL
+);
+```
+
+```r
+con_day14 <- dbConnect(duckdb(), "2024-advent-of-sql-data/advent_day_14.duckdb")
+
+dbExecute(con, "LOAD json;")
+
+dbGetQuery(
+  con_day14,
+  "WITH extracted AS (
+   SELECT
+     record_date,
+     cleaning_receipts->>'$..garment' AS garment,
+     cleaning_receipts->>'$..color' AS color,
+     cleaning_receipts->>'$..drop_off' AS drop_off,
+     cleaning_receipts->>'$..receipt_id' AS receipt_id
+   FROM SantaRecords
+  ),
+  tidy AS (
+    SELECT
+      record_date,
+      unnest(garment) AS tidy_garment,
+      unnest(color) AS tidy_color,
+      unnest(drop_off) AS dropoff,
+      unnest(receipt_id) AS tidy_receipt_id
+    FROM extracted
+  )
+  SELECT * FROM tidy
+  WHERE tidy_garment = 'suit' AND tidy_color = 'green'
+  ORDER BY dropoff DESC;"
+)
+
+dbDisconnect(con_day14, shutdown = TRUE)
+```
+
+## Day 15
+
+This was the first challenge of the series that dealt with spatial data. The
+data required a little more preparation. I updated the dump file to:
+
+- use `SEQUENCE` instead of `SERIAL`
+- replace `GEOGRAPHY(POINT)` and `GEOGRAPHY(POLYGON)` with `GEOMETRY`
+- for each spatial feature, I removed `ST_setSRID(..., 4326)` given that it's
+  the default in DuckDB.
+  
+The beginning of the file looked like:
+
+```sql
+CREATE OR REPLACE SEQUENCE sid START 1;
+CREATE TABLE sleigh_locations (
+id INTEGER PRIMARY KEY DEFAULT nextval('sid'),
+timestamp TIMESTAMP WITH TIME ZONE NOT NULL,
+coordinate GEOMETRY NOT NULL
+);
+
+
+CREATE OR REPLACE SEQUENCE aid START 1;
+CREATE TABLE areas (
+    id INTEGER PRIMARY KEY DEFAULT nextval('aid'),
+    place_name VARCHAR(255) NOT NULL,
+    polygon GEOMETRY NOT NULL
+);
+```
+
+and the sleigh location table data looked like:
+
+```sql
+INSERT INTO sleigh_locations (timestamp, coordinate) VALUES
+('2024-12-24 22:00:00+00', ST_Point(37.717634, 55.805825));
+```
+
+I edited the `areas` table the same way, for instance the first area looked
+like:
+
+```sql
+('New_York', ST_GeomFromText('POLYGON((-74.25909 40.477399, -73.700272 40.477399, -73.700272 40.917577, -74.25909 40.917577, -74.25909 40.477399))')),
+```
+
+```r
+con_day15 <- dbConnect(duckdb(), "2024-advent-of-sql-data/advent_day_15.duckdb")
+
+dbExecute(
+  con_day15, "INSTALL spatial; LOAD spatial;"
+)
+
+dbGetQuery(
+  con_day15,
+  "
+ SELECT areas.place_name
+ FROM areas
+ JOIN sleigh_locations on ST_Within(sleigh_locations.coordinate, areas.polygon)
+  "
+)
+```
+
+## Day 16
+
+Day 16 required the same data preparation as for day 15.
+
+```r
+con_day16 <- dbConnect(duckdb(), "2024-advent-of-sql-data/advent_day_16.duckdb")
+
+dbExecute(
+  con_day16, "INSTALL spatial; LOAD spatial;"
+)
+
+dbGetQuery(
+  con_day16,
+  "
+  SELECT sleigh_locations.timestamp, areas.place_name
+  FROM sleigh_locations
+  JOIN areas on ST_Within(sleigh_locations.coordinate, areas.polygon)
+  "
+) |>
+  summarize(time_spent = max(timestamp) - min(timestamp), .by = "place_name") |>
+  slice_max(time_spent)
+
+dbDisconnect(con_day16, shutdown = TRUE)
+```
+
+## Day 17
+
+```r
+con_day17 <- dbConnect(duckdb(), "2024-advent-of-sql-data/advent_day_17.duckdb")
+dbExecute(con_day17, "INSTALL icu; LOAD icu;")
+dbGetQuery(
+  con_day17,
+  "SELECT
+     *,
+     ('2024-12-24' || ' ' || business_start_time || ' ' || timezone)::TIMESTAMPTZ AS start_time_utc,
+     ('2024-12-24' || ' ' || business_end_time || ' ' || timezone)::TIMESTAMPTZ AS end_time_utc
+   From Workshops,
+ "
+) |> filter(
+  ## meeting cannot start before the earliest open workshop
+  start_time_utc >= max(start_time_utc)
+) |>
+  pull(start_time_utc)
+```
+
+## Day 18
+
+
+
+
+## Day 19
+
+Replace `SERIAL` with a `SEQUENCE`.
+
+
+```sql
+DROP TABLE IF EXISTS employees CASCADE;
+
+CREATE OR REPLACE SEQUENCE eid START 1;
+CREATE TABLE employees (
+employee_id INTEGER PRIMARY KEY DEFAULT nextval('eid'),
+name VARCHAR(100) NOT NULL,
+salary DECIMAL(10, 2) NOT NULL,
+year_end_performance_scores INTEGER[] NOT NULL
+);
+```
+
+The main challenge here, is that the result is a large number, and by default R
+does not print enough significant digits to get the correct answer. There are
+several ways to get the correct number displayed but, in the end, used
+`tibble::num()` which was new to me.
+
+```r
+con_day19 <- dbConnect(duckdb(), "2024-advent-of-sql-data/advent_day_19.duckdb")
+
+dbExecute(
+  con_day19,
+  "CREATE OR REPLACE VIEW average_score AS
+    (SELECT
+    *,
+    year_end_performance_scores[len(year_end_performance_scores)] AS last_score
+   FROM employees)
+")
+
+avg_score <- tbl(con_day19, "average_score") |>
+  summarize(avg_score = mean(last_score)) |>
+  pull(avg_score)
+
+res <- tbl(con_day19, "average_score") |>
+  mutate(gets_bonus = last_score >= avg_score) |>
+  mutate(total_comp = case_when(
+    gets_bonus ~ round(salary * 1.15, 2),
+    TRUE ~ salary
+  )) |> 
+  summarize(total = sum(total_comp)) |>
+  pull(total)
+
+tibble::num(res, digits = 2)
+
+dbDisconnect(con_day19, shutdown = TRUE)
+```
+
+## Day 20
+
+Replace `SERIAL` with `SEQUENCE`, so the beginning of the file looks like:
+
+```sql
+DROP TABLE IF EXISTS web_requests CASCADE;
+CREATE OR REPLACE SEQUENCE id START 1;
+CREATE TABLE web_requests (
+  request_id INTEGER PRIMARY KEY DEFAULT nextval('id'),
+  url TEXT NOT NULL
+  );
+```
+
+```r
+con_day20 <- dbConnect(duckdb(), "2024-advent-of-sql-data/advent_day_20.duckdb")
+
+dbGetQuery(
+  con_day20,
+  "SELECT
+    *,
+    string_split(regexp_extract(url, '\\?(.+)', 1), '&') AS query
+   FROM web_requests
+   WHERE contains(url, 'utm_source=advent-of-sql')
+   ORDER BY len(list_distinct(list_transform(query, p -> p.split('=')[1]))) DESC, url
+   LIMIT 1
+"
+21) |>
+  pull(url)
+
+dbDisconnect(con_day20, shutdown = TRUE)
+```
+
+## Day 21
+
+
+Replace `SERIAL` with `SEQUENCE`, so the beginning of the file looks like:
+
+```sql
+DROP TABLE IF EXISTS sales CASCADE;
+
+CREATE OR REPLACE SEQUENCE id START 1;
+CREATE TABLE sales (
+  id INTEGER PRIMARY KEY DEFAULT nextval('id'),
+  sale_date DATE NOT NULL,
+  amount DECIMAL(10, 2) NOT NULL
+);
+```
+
+```r
+con_day21 <- dbConnect(duckdb(), "2024-advent-of-sql-data/advent_day_21.duckdb")
+
+dbGetQuery(
+  con_day21,
+  "
+  SELECT *
+  FROM (
+    SELECT
+      year(sale_date) AS year,
+      quarter(sale_date) AS quarter,
+      sum(amount) AS total_sale,
+      lag(total_sale, 1) OVER (ORDER BY year, quarter) AS prev_sale,
+      (total_sale-prev_sale)/prev_sale AS growth
+    FROM sales
+    GROUP BY year, quarter
+    ORDER BY year, quarter
+  )
+  ORDER BY growth DESC"
+)
+
+dbDisconnect(con_day21, shutdown = TRUE)
+```
+
+## Day 22
+
+Once again, I used `SEQUENCE` to replace `SERIAL`:
+
+```sql
+DROP TABLE IF EXISTS elves CASCADE;
+CREATE OR REPLACE SEQUENCE id START 1;
+CREATE TABLE elves (
+  id INTEGER PRIMARY KEY DEFAULT nextval('id'),
+  elf_name VARCHAR(255) NOT NULL,
+  skills TEXT NOT NULL
+);
+```
+
+```r
+con_day22 <- dbConnect(duckdb(), "2024-advent-of-sql-data/advent_day_22.duckdb")
+
+dbGetQuery(
+  con_day22,
+  "SELECT
+     count(id)
+   FROM elves
+   WHERE str_split(skills, ',').list_contains('SQL')
+   "
+)
+
+dbDisconnect(con_day22, shutdown = TRUE)
+```
+
+## Day 23
+
+```r
+con_day23 <- dbConnect(duckdb(), "2024-advent-of-sql-data/advent_day_23.duckdb")
+
+seq_id <- tbl(con_day23, "sequence_table") |>
+  collect()
+
+full_seq <- tibble(id = seq(min(seq_id$id), max(seq_id$id)))
+
+left_join(full_seq, seq_id, keep = TRUE) |>
+  filter(is.na(id.y)) |>
+  mutate(next_id = id.x - lag(id.x)) |>
+  mutate(next_id = tidyr::replace_na(next_id, 1)) |>
+  mutate(next_id = cumsum(next_id != 1)) |>
+  nest_by(next_id) |>
+  mutate(res = paste(data$id.x, collapse = ","))
 ```
