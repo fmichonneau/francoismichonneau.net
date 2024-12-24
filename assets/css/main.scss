@@ -2,7 +2,7 @@
 # Only the main Sass file needs front matter (the dashes are enough)
 ---
 
-$doc-font-size              : 16;
+$doc-font-size              : 16px;
 
 
 /* =========================================================================
@@ -59,10 +59,26 @@ a {
   display: flex;
 }
 
-
 .language-python {
   border-left: 5px solid mix($success-color, #000, 40%);
 }
+
+
+.language-sql::before {
+  content: "SQL";
+  padding: .1rem .5rem 0 0.5rem;
+  background: mix(#8D5FD3, #000, 40%);
+  border-radius: 0 5px 0 0;
+  display: flex;
+}
+
+.language-sql {
+  border-left: 5px solid mix(#8D5FD3, #000, 40%);
+}
+
+
+
+
 
 summary > p {
   display: inline;
