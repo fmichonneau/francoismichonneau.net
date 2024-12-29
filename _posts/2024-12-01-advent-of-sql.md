@@ -126,8 +126,6 @@ create a tidy version to solve the problem.
 
 ## Day 2
 
-### Data Preparation
-
 The SQL dump for this challenge used the `SERIAL` data type which is
 [not supported](https://github.com/duckdb/duckdb/issues/1768) by DuckDB.
 `SERIAL` is a convenience to create unique, auto-incrementing, ids. The
