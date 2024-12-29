@@ -1065,9 +1065,11 @@ dbDisconnect(con_day23, shutdown = TRUE)
 
 ## Day 24
 
-The data could be imported directly into DuckDB. For this challenge,
-manipulating the data with the dplyr verbs felt like the most efficient way of
-solving it.
+The data could be imported directly
+into DuckDB. For this challenge,
+manipulating the data with the dplyr
+verbs felt like the most efficient
+way to get to the solution.
 
 ```r
 con_day24 <- dbConnect(
