@@ -70,7 +70,6 @@ social:
   name                   : # If the user or organization name differs from the site's name
   links: # An array of links to social media profiles
    - "https://github.com/fmichonneau"
-   - "https://twitter.com/fmic_"
 
 # Analytics
 analytics:
@@ -106,7 +105,6 @@ author:
   stackoverflow    :
   steam            :
   tumblr           :
-  twitter          : "fmic_"
   vine             :
   weibo            :
   xing             :
