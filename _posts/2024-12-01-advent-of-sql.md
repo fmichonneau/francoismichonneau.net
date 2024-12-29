@@ -819,7 +819,45 @@ dbGetQuery(
 
 ## Day 18
 
+The data for this challenge is the same as for day 8, and requires the same
+preparation: replacing `SERIAL` with `INTEGER`. Instead of using the same
+(inefficient) recursive function in R as for day 8, here I learned how to use
+them in DuckDB to compute the managerial paths. The wording of this challenge
+seems confusing and it seemed uncessary to compute the number of peers with the
+same manager to find the answer.
 
+```r
+con_day18 <- dbConnect(
+  duckdb(),
+  "2024-advent-of-sql-data/advent_day_18.duckdb"
+)
+
+dbGetQuery(
+  con_day18,
+  "
+  WITH RECURSIVE path_tbl(staff_id, path) AS (
+      SELECT staff_id, [manager_id] AS path
+      FROM staff
+      WHERE manager_id IS NULL
+    UNION ALL
+      SELECT staff.staff_id, list_prepend(staff.manager_id, path_tbl.path)
+      FROM staff, path_tbl
+      WHERE staff.manager_id = path_tbl.staff_id
+  )
+  SELECT path_tbl.staff_id, staff.manager_id, len(path) AS level
+  FROM path_tbl
+  JOIN staff ON staff.staff_id = path_tbl.staff_id
+  ORDER BY path_tbl.staff_id, level DESC
+  "
+) |>
+  mutate(
+    total_peers_same_level = n(),
+    .by = c(level)
+  ) |> 
+  arrange(desc(total_peers_same_level), level, staff_id)
+
+dbDisconnect(con_day18, shutdown = TRUE)
+```
 
 
 ## Day 19
@@ -899,8 +937,7 @@ dbGetQuery(
    WHERE contains(url, 'utm_source=advent-of-sql')
    ORDER BY len(list_distinct(list_transform(query, p -> p.split('=')[1]))) DESC, url
    LIMIT 1
-"
-21) |>
+  ") |>
   pull(url)
 
 dbDisconnect(con_day20, shutdown = TRUE)
@@ -940,8 +977,8 @@ dbGetQuery(
     GROUP BY year, quarter
     ORDER BY year, quarter
   )
-  ORDER BY growth DESC"
-)
+  ORDER BY growth DESC
+")
 
 dbDisconnect(con_day21, shutdown = TRUE)
 ```
@@ -961,11 +998,15 @@ CREATE TABLE elves (
 ```
 
 ```r
-con_day22 <- dbConnect(duckdb(), "2024-advent-of-sql-data/advent_day_22.duckdb")
+con_day22 <- dbConnect(
+  duckdb(),
+  "2024-advent-of-sql-data/advent_day_22.duckdb"
+)
 
 dbGetQuery(
   con_day22,
-  "SELECT
+  "
+  SELECT
      count(id)
    FROM elves
    WHERE str_split(skills, ',').list_contains('SQL')
@@ -977,19 +1018,55 @@ dbDisconnect(con_day22, shutdown = TRUE)
 
 ## Day 23
 
+The data could be imported as provided, and chose to solve the challenge with
+dplyr.
+
 ```r
-con_day23 <- dbConnect(duckdb(), "2024-advent-of-sql-data/advent_day_23.duckdb")
+con_day23 <- dbConnect(
+  duckdb(),
+  "2024-advent-of-sql-data/advent_day_23.duckdb"
+)
 
 seq_id <- tbl(con_day23, "sequence_table") |>
   collect()
 
 full_seq <- tibble(id = seq(min(seq_id$id), max(seq_id$id)))
 
+## join complete and provided sequence and keep both
 left_join(full_seq, seq_id, keep = TRUE) |>
+  ## the NAs are the gaps
   filter(is.na(id.y)) |>
-  mutate(next_id = id.x - lag(id.x)) |>
-  mutate(next_id = tidyr::replace_na(next_id, 1)) |>
+  ## identify groups
+  mutate(next_id = id.x - lag(id.x, default = 1)) |>
   mutate(next_id = cumsum(next_id != 1)) |>
+  ## format as expected
   nest_by(next_id) |>
   mutate(res = paste(data$id.x, collapse = ","))
+
+dbDisconnect(con_day23, shutdown = TRUE)
+```
+
+## Day 24
+
+The data could be imported directly into DuckDB. For this challenge,
+manipulating the data with the dplyr verbs felt like the most efficient way of
+solving it.
+
+```r
+con_day24 <- dbConnect(
+  duckdb(),
+  "2024-advent-of-sql-data/advent_day_24.duckdb"
+)
+
+tbl(con_day24, "user_plays") |>
+  left_join(tbl(con_day24, "songs")) |>
+  mutate(has_skip = as.integer(duration < song_duration)) |>
+  summarize(
+    n_plays = n(),
+    n_skips = sum(has_skip),
+    .by = song_title
+  ) |>
+  arrange(desc(n_plays), n_skips)
+
+dbDisconnect(con_day24, shutdown = TRUE)
 ```
