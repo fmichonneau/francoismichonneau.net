@@ -19,26 +19,42 @@ toc: true
 
 ## Quick Overview
 
-Advent of Code is a popular advent calendar of programming puzzles. I
-have attempted to do it in the past with R but I always gave up half-way
-through the month because it was taking too much of my time. Last year,
-I had fun going through the challenges of the [Hanukkah of
-Data](https://hanukkah.bluebird.sh/). This year, Bob Rudis, via his
-excellent Daily Drop Newsletter, pointed to Advent of SQL. I am
-attempting to solve the challenges using DuckDB and/or dplyr. I
-appreciate that the challenges so far can be solved relatively quickly.
+[Advent of
+Code](https://adventofcode.com/) is
+a popular advent calendar of
+programming puzzles. I have
+attempted to do it in the past using
+R but I always gave up after a few
+days because it was taking too much
+of my time, and prefer programming
+puzzles that work with data. Last
+year, I had fun going through the
+challenges of the [Hanukkah of
+Data](https://hanukkah.bluebird.sh/).
+This year, [Bob
+Rudis](https://rud.is/), via his
+excellent [Daily Drop
+Newsletter](https://dailydrop.hrbrmstr.dev/),
+pointed to [Advent of
+SQL](https://adventofsql.com/). I
+solved the challenges using DuckDB
+and/or {dplyr}. I appreciated that I
+could solve all the challenges
+relatively quickly.
 
-My answers to the challenges and some annotations are in this post. I’ll
-update the post as the challenges get published and I find time to solve
-them.
+My answers to the challenges and some annotations are in this post. 
 
 ## Data import
 
-The Advent of SQL provides data for each challenge as a SQL file. They
-use Postgres for this challenge and while the compatibility between
-Postgres and DuckDB is pretty high, some features are not available in
-DuckDB, and the data files need to be modified to be able to import data
-with DuckDB.
+The Advent of SQL provides data for
+each challenge as a SQL file. They
+use Postgres, and
+while the compatibility between
+Postgres and DuckDB is pretty good,
+some features are not available in
+DuckDB, and the SQL dump files need to
+be modified to be able to import
+data with DuckDB.
 
 To create a DuckDB database from a SQL file:
 
@@ -213,9 +229,8 @@ get_menu_version <- function(menu_data) {
 
 menu_versions <- purrr::map_chr(menus$menu_data, get_menu_version)
 
+## There are 3 different versions
 unique(menu_versions)
-
-## only 3 different versions
 
 ## Extract the number of guests based on the XML schema
 get_guest_number <- function(menu_data, xml_version) {
@@ -266,6 +281,12 @@ CREATE TABLE toy_production (
   );
 ```
 
+This challenge required to dive into DuckDB’s functions to work with
+lists. While there is a `list_intersect()` function, there does not seem
+to be a `list_setdiff()` so instead I combined `list_where()` with
+`list_transform()` and `list_contains()` to get there. I would be happy
+to hear alternative approaches!
+
 ``` r
 con <- dbConnect(duckdb(), "2024-advent-of-sql-data/advent_day_04.duckdb")
 
@@ -287,15 +308,14 @@ dbGetQuery(
 dbDisconnect(con_day04, shutdown = TRUE)
 ```
 
-This challenge required to dive into DuckDB’s functions to work with
-lists. While there is a `list_intersect()` function, there does not seem
-to be a `list_setdiff()` so instead I combined `list_where()` with
-`list_transform()` and `list_contains()` to get there. I would be happy
-to hear alternative approaches!
-
 ## Day 5
 
 The data could be imported directly from the SQL dump.
+
+Solving this challenge required using the `lead()` function from the
+tidyverse to calculate the change in production and its percentage. I
+then used `slice_max()` to extract the row with the largest percentage
+change.
 
 ``` r
 con_day05 <- dbConnect(duckdb(), "2024-advent-of-sql-data/advent_day_05.duckdb")
@@ -308,11 +328,6 @@ tbl(con_day05, "toy_production") |>
 
 dbDisconnect(con_day05, shutdown = TRUE)
 ```
-
-Solving this challenge required using the `lead()` function from the
-tidyverse to calculate the change in production and its percentage. I
-then used `slice_max()` to extract the row with the largest percentage
-change.
 
 ## Day 6
 
@@ -402,7 +417,11 @@ dbDisconnect(con_day07, shutdown = TRUE)
 
 ## Day 8
 
-Again, the original data dump used `SERIAL` which I substituted for `INTEGER` to be able to import the data into DuckDB, so the beginning of the file looks like:
+Again, the original data dump used
+`SERIAL` which I substituted for
+`INTEGER` to be able to import the
+data into DuckDB, so the beginning
+of the file looks like:
 
 
 ```sql
@@ -417,7 +436,7 @@ CREATE TABLE staff (
 I was in the rush that day, and the solution I came up with is quite hacky and
 slow. All the computation takes place in R using a recursive function. This
 challenge is a good opportunity to learn recursive CTEs but I'll need to come
-back to it.
+back to it. (See [Day 18](#day-18) for the resurvie CTE approach).
 
 ```r
 con_day08 <- dbConnect(duckdb(), "2024-advent-of-sql-data/advent_day_08.duckdb")
