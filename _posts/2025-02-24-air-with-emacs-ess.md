@@ -15,7 +15,7 @@ written in Rust.
 It is very [fast and opiniated](https://www.tidyverse.org/blog/2025/02/air/). It
 integrates with VSCode and Positron, RStudio (and soon with Zed).
 
-Maybe there is a better way at integrating it with Emacs and ESS but for the
+Maybe there is a better way of integrating it with Emacs and ESS but for the
 time being, I wrote this short snippet that uses its command line interface to
 reformat the current buffer on save:
 
