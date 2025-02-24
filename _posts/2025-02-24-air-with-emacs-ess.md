@@ -2,7 +2,7 @@
 title: "Using Air to reformat code with Emacs ESS"
 excerpt: "A snippet to add to Emacs configuration file to use the new R code formatter Air"
 layout: "single"
-date: "2025-02-25"
+date: "2025-02-24"
 type: "post"
 published: true
 categories: ["Hacking"]
@@ -19,7 +19,7 @@ Maybe there is a better way at integrating it with Emacs and ESS but for the
 time being, I wrote this short snippet that uses its command line interface to
 reformat the current buffer on save:
 
-```
+```lisp
 ;; use Air to format the content of the file
 (defun run-air-on-r-save ()
   "Run Air after saving .R files and refresh buffer."
