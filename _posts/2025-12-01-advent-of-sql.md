@@ -71,3 +71,59 @@ DBI::dbGetQuery(
   "
 )
 ```
+
+## Day 3
+
+Copy and paste from the challenge:
+
+> Using the hotline_messages table, update any record that has "sorry" (case insensitive) in the transcript and doesn't currently have a status assigned to have a status of "approved".
+> Then delete any records where the tag is "penguin prank", "time-loop advisory", "possible dragon", or "nonsense alert" or if the caller's name is "Test Caller".
+> After updating and deleting the records as described, write a final query that returns how many messages currently have a status of "approved" and how many still need to be reviewed (i.e., status is `NULL`).
+
+```r
+# Create DuckDB database with (no need to edit the file):
+# duckdb ./data_duckdb/advent_day_03.duckdb < ./data_sql/day3-inserts.sql
+
+con <- DBI::dbConnect(duckdb::duckdb(), "data_duckdb/advent_day_03.duckdb")
+
+DBI::dbExecute(
+  con,
+  "
+  UPDATE hotline_messages
+  SET status = 'approved' 
+  WHERE LOWER(transcript) LIKE '%sorry%'
+    AND status IS NULL;
+  "
+)
+
+DBI::dbExecute(
+  con,
+  "
+  DELETE FROM hotline_messages
+  WHERE tag IN (
+    'penguin prank',
+    'time-loop advisory',
+    'possible dragon',
+    'nonsense alert'
+    )
+    OR caller_name = 'Test Caller';
+  "
+)
+
+DBI::dbGetQuery(
+  con,
+  "
+  SELECT clean_status, COUNT(clean_status)
+  FROM (
+    SELECT
+    status, 
+      CASE 
+        WHEN status IS NULL THEN 'TBD'
+        ELSE 'approved'
+      END as clean_status
+    FROM hotline_messages
+    )
+  GROUP BY clean_status;
+"
+)
+```
