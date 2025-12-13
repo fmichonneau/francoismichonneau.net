@@ -127,3 +127,56 @@ DBI::dbGetQuery(
 "
 )
 ```
+
+## Day 4 
+
+Copy and paste from the challenge:
+
+> Using the official_shifts and last_minute_signups tables, create a combined de-duplicated volunteer list.
+> Ensure the list has standardized role labels of Stage Setup, Cocoa Station, Parking Support, Choir Assistant, Snow Shoveling, Handwarmer Handout.
+> Make sure that the timeslot formats follow John's official shifts format.
+
+I used the snake case format for the role, it looks like the challenge actually asked for title case. I left the 'ELSE TBD' clauses in there as I used them when building the queries to make sure I caught all the cases. I had also checked for unique values in the time slots and given there were just a few I went for a CASE WHEN approach rather than something more sophisticated.
+
+```r
+# Create DuckDB database with (no need to edit the file):
+# duckdb ./data_duckdb/advent_day_04.duckdb < ./data_sql/day4-inserts.sql
+
+con <- DBI::dbConnect(duckdb::duckdb(), "data_duckdb/advent_day_04.duckdb")
+
+DBI::dbGetQuery(
+  con,
+  "SELECT * FROM official_shifts"
+)
+
+DBI::dbGetQuery(
+  con,
+  "SELECT
+  volunteer_name,
+  CASE
+    WHEN assigned_task ILIKE '%choir%' THEN 'choir_assistant'
+    WHEN assigned_task ILIKE '%stage%' THEN 'stage_setup'
+    WHEN assigned_task ILIKE '%cocoa%' THEN 'cocoa_station'
+    WHEN assigned_task ILIKE '%parking%' THEN 'parking_support'
+    WHEN assigned_task ILIKE '%shovel%' THEN 'snow_shoveling'
+    WHEN assigned_task ILIKE '%hand%' THEN 'handwarmer_handout'
+    ELSE 'TBD'
+  END as role,
+  CASE
+    WHEN (time_slot='10AM' OR time_slot ='10 am') THEN '10:00 AM'
+    WHEN (time_slot='2 PM' OR time_slot='2 pm') THEN '2:00 PM'
+    WHEN time_slot = 'noon' THEN '12:00 PM'
+    ELSE 'TBD'
+  END as shift_time
+  FROM last_minute_signups
+ 
+  UNION
+
+  SELECT volunteer_name,
+         role,
+         shift_time
+  FROM official_shifts
+  ORDER BY volunteer_name;
+"
+)
+```
