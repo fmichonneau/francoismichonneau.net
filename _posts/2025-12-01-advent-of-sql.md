@@ -180,3 +180,81 @@ DBI::dbGetQuery(
 "
 )
 ```
+
+## Day 5
+
+Copy and paste from the challenge:
+
+> Challenge: Write a query that returns the top 3 artists per user. Order the results by the most played.
+
+
+```r 
+## Create DuckDB database with (no need to edit the file):
+# duckdb ./data_duckdb/advent_day_05.duckdb < ./data_sql/day5-inserts.sql
+
+con <- DBI::dbConnect(duckdb::duckdb(), "data_duckdb/advent_day_05.duckdb")
+
+dbGetQuery(
+  con,
+  "
+  SELECT * FROM(
+    SELECT 
+      user_name,
+      artist,
+      COUNT(artist) AS n,
+      row_number() OVER (PARTITION BY user_name ORDER BY n DESC) as top
+    FROM listening_logs
+    GROUP BY user_name, artist
+    ORDER BY user_name, n DESC
+  )
+  WHERE top <= 3;
+  "
+)
+```
+
+## Day 6
+
+> Challenge: Generate a report that returns the dates and families that have no delivery assigned after December 14th, using the families and deliveries_assigned.
+
+> Each row in the report should be a date and family name that represents the dates in which families don't have a delivery assigned yet.
+
+> Label the columns as unassigned_date and name. Order the results by unassigned_date and name, respectively, both in ascending order.
+
+```r
+con <- dbConnect(duckdb::duckdb(), "data_duckdb/advent_day_06.duckdb")
+
+dbGetQuery(
+  con,
+  "WITH december_2025 AS
+     (SELECT date::DATE date
+      FROM generate_series(
+        DATE '2025-12-15',
+        DATE '2025-12-31',
+        INTERVAL '1 day'
+      ) AS t(date)
+      ),
+
+  full_info AS (
+    SELECT december_2025.date,
+      families.id AS family_id,
+      families.family_name
+    FROM families
+    CROSS JOIN december_2025
+  )
+
+  SELECT
+    full_info.family_id AS full_fid,
+    full_info.family_name,
+    full_info.date AS full_date,
+    deliveries_assigned.*
+  FROM full_info
+  LEFT JOIN deliveries_assigned ON (
+     full_info.date = deliveries_assigned.gift_date AND
+     deliveries_assigned.family_id = full_info.family_id
+  )
+  WHERE deliveries_assigned.gift_name IS NULL
+  ORDER BY date ASC, family_name ASC 
+  ;
+ "
+)
+```
