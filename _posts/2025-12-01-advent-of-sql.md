@@ -215,12 +215,13 @@ dbGetQuery(
 ## Day 6
 
 > Challenge: Generate a report that returns the dates and families that have no delivery assigned after December 14th, using the families and deliveries_assigned.
-
 > Each row in the report should be a date and family name that represents the dates in which families don't have a delivery assigned yet.
-
 > Label the columns as unassigned_date and name. Order the results by unassigned_date and name, respectively, both in ascending order.
 
 ```r
+## Create DuckDB database with (no need to edit the file):
+# duckdb ./data_duckdb/advent_day_06.duckdb < ./data_sql/day6-inserts.sql
+
 con <- dbConnect(duckdb::duckdb(), "data_duckdb/advent_day_06.duckdb")
 
 dbGetQuery(
@@ -256,5 +257,75 @@ dbGetQuery(
   ORDER BY date ASC, family_name ASC 
   ;
  "
+)
+```
+
+## Day 7
+
+> Challenge: Get the stewards a list of all the passengers and the cocoa car(s) they can be served from that has at least one of their favorite mixins.
+> Remember only the top three most-stocked cocoa cars remained operational, so the passengers must be served from one of those cars.
+
+```r
+# Create DuckDB database with (no need to edit the file):
+# duckdb ./data_duckdb/advent_day_07.duckdb < ./data_sql/day7-inserts.sql
+
+con <- dbConnect(duckdb::duckdb(), "data_duckdb/advent_day_07.duckdb")
+
+dbGetQuery(
+  con,
+  "
+  WITH available_mixins AS (
+    SELECT
+      car_id AS mixins_car_id,
+      available_mixins
+    FROM cocoa_cars
+    ORDER BY total_stock DESC
+    LIMIT 3
+  )
+
+  SELECT 
+    passenger_name,
+    string_agg(mixins_car_id) AS available_cars
+  FROM passengers
+  JOIN available_mixins ON (list_has_any(passengers.favorite_mixins, available_mixins.available_mixins))
+  GROUP BY passenger_name
+  ORDER BY passenger_name
+  "
+)
+```
+
+## Day 8
+
+> Generate a report, using the products and price_changes tables for leadership that returns the product_name, current_price, previous_price, and the difference between the current and previous prices.
+
+I took a (maybe?) unconventional approach by using the list functions to solve this challenge. I was focused on getting the price difference first. Using the lag would have reduced the redundancy or the `list(... ORDER BY rn)`.
+
+```r
+# Create DuckDB database with (no need to edit the file):
+# duckdb ./data_duckdb/advent_day_08.duckdb < ./data_sql/day8-inserts.sql
+
+con <- dbConnect(duckdb::duckdb(), "data_duckdb/advent_day_08.duckdb")
+
+dbGetQuery(
+  con,
+  "
+  WITH sub_prices AS (SELECT 
+    product_id,
+    price,
+    effective_timestamp,
+    row_number() OVER (PARTITION BY product_id ORDER BY effective_timestamp DESC) AS rn
+  FROM price_changes)
+
+  SELECT
+    product_name,
+    list(price ORDER BY rn)[2] AS current_price,
+    list(price ORDER by rn)[1] AS previous_price,
+    list_reduce(list(price ORDER by rn), lambda x,y : x - y) AS price_change
+  FROM  sub_prices
+  JOIN products USING (product_id)
+  WHERE rn < 3
+  GROUP BY product_id, product_name
+  ORDER BY product_id;
+  "
 )
 ```
