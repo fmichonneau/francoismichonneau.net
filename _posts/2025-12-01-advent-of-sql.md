@@ -329,3 +329,39 @@ dbGetQuery(
   "
 )
 ```
+
+## Day 9 
+
+> Build a report using the orders table that shows the latest order for each customer, along with their requested shipping method, gift wrap choice (as true or false), and the risk flag in separate columns.
+> Order the report by the most recent order first so Evergreen Market can reach out to them ASAP.
+
+```r
+# Edit the orders table definition to replace `JSONB` with `JSON`.
+
+# Create DuckDB database with :
+# duckdb ./data_duckdb/advent_day_09.duckdb < ./data_sql/day9-inserts.sql
+
+library(duckdb)
+con <- dbConnect(duckdb::duckdb(), "data_duckdb/advent_day_09.duckdb")
+dbExecute(con, "INSTALL json; LOAD JSON;")
+dbGetQuery(
+  con,
+  "
+  WITH customer_orders AS (
+    SELECT *,
+      row_number() OVER (PARTITION BY customer_id ORDER BY created_at DESC) AS rn
+    FROM orders
+    ORDER BY customer_id, rn
+  )
+
+  SELECT
+    customer_id,
+    json_extract_string(order_data, '$.shipping.method') AS shipping_method,
+    json_extract_string(order_data, '$.gift.wrapped')::BOOL AS gift_wrap,
+    json_extract_string(order_data, '$.risk.flag') AS risk_flag
+  FROM customer_orders 
+  WHERE rn = 1
+  ORDER BY created_at DESC;
+  "
+)
+```
