@@ -365,3 +365,52 @@ dbGetQuery(
   "
 )
 ```
+
+## Day 10
+
+>Challenge:
+>Clean-up the deliveries table to remove any records where the delivery_location is 'Volcano Rim', 'Drifting Igloo', 'Abandoned Lighthouse', 'The Vibes'.
+>Move those records to the misdelivered_presents with all the same columns as deliveries plus a flagged_at column with the current time and a reason column with "Invalid delivery location" listed as the reason for each moved record.
+>Make sure your final step shows the misdelivered_presents records that you just moved (i.e. don't include any existing records from the misdelivered_presents table).
+
+I first solved the challenge by using CTEs to return the appropriate sets of rows. After watching the solution, I discovered `RETURNING`. I don't think I have ever used operations in SQL that were destructive, so that was new to me. It seems (and don't quote me on that) that it's not possible to do a CTE using `DELETE` in duckDB. Instead, I relied on a temporary table, first combined with an anti-join to delete the records from the `deliveries` table, and then combined with an `INSERT` to add these records to the `misdelivered_presents`. I still got to use `RETURNING` to only see the insert rows at the end of the query.
+
+The last few queries at the end validated that the tables were modified correctly.
+
+```r
+# Create DuckDB database with (no need to edit the file):
+# duckdb ./data_duckdb/advent_day_10.duckdb < ./data_sql/day10-inserts.sql
+
+con <- dbConnect(duckdb::duckdb(), "data_duckdb/advent_day_10.duckdb")
+
+dbGetQuery(
+  con,
+  "
+    CREATE TEMPORARY TABLE deliveries_to_remove AS (
+      SELECT * FROM deliveries
+      WHERE delivery_location IN
+        ('Volcano Rim', 'Drifting Igloo', 'Abandoned Lighthouse', 'The Vibes')
+    );
+
+    CREATE OR REPLACE TABLE deliveries AS (
+      SELECT * FROM deliveries
+      ANTI JOIN deliveries_to_remove USING (id)
+    );
+
+    INSERT INTO misdelivered_presents
+    SELECT
+      id, child_name, delivery_location, gift_name, scheduled_at, NOW(), 'Invalid Delivery Location'
+    FROM deliveries_to_remove
+    RETURNING *
+  "
+)
+
+dbGetQuery(con, "SELECT * FROM deliveries;")
+dbGetQuery(
+  con,
+  "SELECT * FROM deliveries
+      WHERE delivery_location IN
+        ('Volcano Rim', 'Drifting Igloo', 'Abandoned Lighthouse', 'The Vibes')"
+)
+dbGetQuery(con, "SELECT * FROM misdelivered_presents;")
+```
